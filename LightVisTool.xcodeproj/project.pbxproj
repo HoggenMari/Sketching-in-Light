@@ -1,0 +1,621 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		7E303EE41CCF09ED00241163 /* line2_pattern.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7E303EE31CCF09ED00241163 /* line2_pattern.jpg */; };
+		7E303EE81CCF0F9D00241163 /* line3_pattern.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7E303EE71CCF0F9D00241163 /* line3_pattern.jpg */; };
+		7E303EEA1CCF5E0F00241163 /* lamp line 3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7E303EE91CCF5E0F00241163 /* lamp line 3.jpg */; };
+		7E303EEC1CD18F4300241163 /* line4_pattern.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7E303EEB1CD18F4300241163 /* line4_pattern.jpg */; };
+		7E303EEE1CD1A34000241163 /* ipad_vistool_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E303EED1CD1A34000241163 /* ipad_vistool_icon.png */; };
+		7E3D8EC01CC8C353002ABA9B /* LightPatternCollectioViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3D8EBF1CC8C353002ABA9B /* LightPatternCollectioViewCell.swift */; };
+		7E3D8EC51CC9BC28002ABA9B /* green_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E3D8EC31CC9BC28002ABA9B /* green_icon.png */; };
+		7E3D8EC61CC9BC28002ABA9B /* green_pattern.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7E3D8EC41CC9BC28002ABA9B /* green_pattern.jpg */; };
+		7E3D8EC81CC9BCCE002ABA9B /* red_pattern.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7E3D8EC71CC9BCCE002ABA9B /* red_pattern.jpg */; };
+		7E3D8ECA1CC9C746002ABA9B /* blue_pattern.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7E3D8EC91CC9C746002ABA9B /* blue_pattern.jpg */; };
+		7E3D8ECE1CC9DBED002ABA9B /* brightness_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E3D8ECD1CC9DBED002ABA9B /* brightness_icon.png */; };
+		7E3D8ED01CC9DC05002ABA9B /* brightness_pattern.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7E3D8ECF1CC9DC05002ABA9B /* brightness_pattern.jpg */; };
+		7E3D8ED21CC9F66C002ABA9B /* circle_pattern.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7E3D8ED11CC9F66C002ABA9B /* circle_pattern.jpg */; };
+		7E3D8ED41CC9FF3A002ABA9B /* rect_pattern.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7E3D8ED31CC9FF3A002ABA9B /* rect_pattern.jpg */; };
+		7E3D8ED61CCA0976002ABA9B /* line_pattern.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7E3D8ED51CCA0976002ABA9B /* line_pattern.jpg */; };
+		7E40DD381CC4CFBE00440435 /* FontAwesome.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7E40DD371CC4CF0D00440435 /* FontAwesome.otf */; };
+		7E40DD3A1CC4D1C600440435 /* default.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E40DD391CC4D1C600440435 /* default.png */; };
+		7E40DD3C1CC4D7D400440435 /* RedLightPattern.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E40DD3B1CC4D7D400440435 /* RedLightPattern.swift */; };
+		7ED00A471CC124BD00AC0A16 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED00A461CC124BD00AC0A16 /* AppDelegate.swift */; };
+		7ED00A491CC124BD00AC0A16 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED00A481CC124BD00AC0A16 /* ViewController.swift */; };
+		7ED00A4C1CC124BD00AC0A16 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7ED00A4A1CC124BD00AC0A16 /* Main.storyboard */; };
+		7ED00A4E1CC124BD00AC0A16 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7ED00A4D1CC124BD00AC0A16 /* Assets.xcassets */; };
+		7ED00A511CC124BD00AC0A16 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7ED00A4F1CC124BD00AC0A16 /* LaunchScreen.storyboard */; };
+		7ED00A5C1CC124BD00AC0A16 /* LightVisToolTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED00A5B1CC124BD00AC0A16 /* LightVisToolTests.swift */; };
+		7ED00A671CC124BD00AC0A16 /* LightVisToolUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED00A661CC124BD00AC0A16 /* LightVisToolUITests.swift */; };
+		7ED00A751CC2737A00AC0A16 /* BackgroundLight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED00A741CC2737A00AC0A16 /* BackgroundLight.swift */; };
+		7ED00A771CC3338E00AC0A16 /* UIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED00A761CC3338E00AC0A16 /* UIDevice.swift */; };
+		7ED00A791CC3678B00AC0A16 /* weather (1).png in Resources */ = {isa = PBXBuildFile; fileRef = 7ED00A781CC3678B00AC0A16 /* weather (1).png */; };
+		7ED00A7B1CC36D3000AC0A16 /* paint.png in Resources */ = {isa = PBXBuildFile; fileRef = 7ED00A7A1CC36D3000AC0A16 /* paint.png */; };
+		7ED00A7D1CC374E400AC0A16 /* paint (1).png in Resources */ = {isa = PBXBuildFile; fileRef = 7ED00A7C1CC374E400AC0A16 /* paint (1).png */; };
+		7ED00A7F1CC3751D00AC0A16 /* paint (2).png in Resources */ = {isa = PBXBuildFile; fileRef = 7ED00A7E1CC3751D00AC0A16 /* paint (2).png */; };
+		7ED00A811CC39F1A00AC0A16 /* circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 7ED00A801CC39F1A00AC0A16 /* circle.png */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		7ED00A581CC124BD00AC0A16 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7ED00A3B1CC124BD00AC0A16 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7ED00A421CC124BD00AC0A16;
+			remoteInfo = LightVisTool;
+		};
+		7ED00A631CC124BD00AC0A16 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7ED00A3B1CC124BD00AC0A16 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7ED00A421CC124BD00AC0A16;
+			remoteInfo = LightVisTool;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		7E303EE31CCF09ED00241163 /* line2_pattern.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = line2_pattern.jpg; sourceTree = "<group>"; };
+		7E303EE71CCF0F9D00241163 /* line3_pattern.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = line3_pattern.jpg; sourceTree = "<group>"; };
+		7E303EE91CCF5E0F00241163 /* lamp line 3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "lamp line 3.jpg"; sourceTree = "<group>"; };
+		7E303EEB1CD18F4300241163 /* line4_pattern.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = line4_pattern.jpg; sourceTree = "<group>"; };
+		7E303EED1CD1A34000241163 /* ipad_vistool_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ipad_vistool_icon.png; sourceTree = "<group>"; };
+		7E3D8EBF1CC8C353002ABA9B /* LightPatternCollectioViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LightPatternCollectioViewCell.swift; path = ../LightPatternCollectioViewCell.swift; sourceTree = "<group>"; };
+		7E3D8EC31CC9BC28002ABA9B /* green_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = green_icon.png; sourceTree = "<group>"; };
+		7E3D8EC41CC9BC28002ABA9B /* green_pattern.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = green_pattern.jpg; sourceTree = "<group>"; };
+		7E3D8EC71CC9BCCE002ABA9B /* red_pattern.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = red_pattern.jpg; sourceTree = "<group>"; };
+		7E3D8EC91CC9C746002ABA9B /* blue_pattern.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = blue_pattern.jpg; sourceTree = "<group>"; };
+		7E3D8ECD1CC9DBED002ABA9B /* brightness_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = brightness_icon.png; sourceTree = "<group>"; };
+		7E3D8ECF1CC9DC05002ABA9B /* brightness_pattern.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = brightness_pattern.jpg; sourceTree = "<group>"; };
+		7E3D8ED11CC9F66C002ABA9B /* circle_pattern.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = circle_pattern.jpg; sourceTree = "<group>"; };
+		7E3D8ED31CC9FF3A002ABA9B /* rect_pattern.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = rect_pattern.jpg; sourceTree = "<group>"; };
+		7E3D8ED51CCA0976002ABA9B /* line_pattern.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = line_pattern.jpg; sourceTree = "<group>"; };
+		7E40DD371CC4CF0D00440435 /* FontAwesome.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome.otf; path = ../FontAwesome.otf; sourceTree = "<group>"; };
+		7E40DD391CC4D1C600440435 /* default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default.png; sourceTree = "<group>"; };
+		7E40DD3B1CC4D7D400440435 /* RedLightPattern.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RedLightPattern.swift; sourceTree = "<group>"; };
+		7ED00A431CC124BD00AC0A16 /* LightVisTool.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LightVisTool.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7ED00A461CC124BD00AC0A16 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		7ED00A481CC124BD00AC0A16 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		7ED00A4B1CC124BD00AC0A16 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		7ED00A4D1CC124BD00AC0A16 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		7ED00A501CC124BD00AC0A16 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		7ED00A521CC124BD00AC0A16 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7ED00A571CC124BD00AC0A16 /* LightVisToolTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LightVisToolTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7ED00A5B1CC124BD00AC0A16 /* LightVisToolTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightVisToolTests.swift; sourceTree = "<group>"; };
+		7ED00A5D1CC124BD00AC0A16 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7ED00A621CC124BD00AC0A16 /* LightVisToolUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LightVisToolUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7ED00A661CC124BD00AC0A16 /* LightVisToolUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightVisToolUITests.swift; sourceTree = "<group>"; };
+		7ED00A681CC124BD00AC0A16 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7ED00A741CC2737A00AC0A16 /* BackgroundLight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackgroundLight.swift; sourceTree = "<group>"; };
+		7ED00A761CC3338E00AC0A16 /* UIDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIDevice.swift; sourceTree = "<group>"; };
+		7ED00A781CC3678B00AC0A16 /* weather (1).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weather (1).png"; sourceTree = "<group>"; };
+		7ED00A7A1CC36D3000AC0A16 /* paint.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = paint.png; sourceTree = "<group>"; };
+		7ED00A7C1CC374E400AC0A16 /* paint (1).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "paint (1).png"; sourceTree = "<group>"; };
+		7ED00A7E1CC3751D00AC0A16 /* paint (2).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "paint (2).png"; sourceTree = "<group>"; };
+		7ED00A801CC39F1A00AC0A16 /* circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = circle.png; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		7ED00A401CC124BD00AC0A16 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7ED00A541CC124BD00AC0A16 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7ED00A5F1CC124BD00AC0A16 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		7ED00A3A1CC124BD00AC0A16 = {
+			isa = PBXGroup;
+			children = (
+				7ED00A451CC124BD00AC0A16 /* LightVisTool */,
+				7ED00A5A1CC124BD00AC0A16 /* LightVisToolTests */,
+				7ED00A651CC124BD00AC0A16 /* LightVisToolUITests */,
+				7ED00A441CC124BD00AC0A16 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		7ED00A441CC124BD00AC0A16 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7ED00A431CC124BD00AC0A16 /* LightVisTool.app */,
+				7ED00A571CC124BD00AC0A16 /* LightVisToolTests.xctest */,
+				7ED00A621CC124BD00AC0A16 /* LightVisToolUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7ED00A451CC124BD00AC0A16 /* LightVisTool */ = {
+			isa = PBXGroup;
+			children = (
+				7E3D8EBF1CC8C353002ABA9B /* LightPatternCollectioViewCell.swift */,
+				7ED00A461CC124BD00AC0A16 /* AppDelegate.swift */,
+				7ED00A481CC124BD00AC0A16 /* ViewController.swift */,
+				7ED00A4A1CC124BD00AC0A16 /* Main.storyboard */,
+				7ED00A761CC3338E00AC0A16 /* UIDevice.swift */,
+				7ED00A4D1CC124BD00AC0A16 /* Assets.xcassets */,
+				7E40DD371CC4CF0D00440435 /* FontAwesome.otf */,
+				7E3D8EC31CC9BC28002ABA9B /* green_icon.png */,
+				7E3D8EC91CC9C746002ABA9B /* blue_pattern.jpg */,
+				7E3D8EC41CC9BC28002ABA9B /* green_pattern.jpg */,
+				7E303EED1CD1A34000241163 /* ipad_vistool_icon.png */,
+				7E3D8ECD1CC9DBED002ABA9B /* brightness_icon.png */,
+				7E303EE91CCF5E0F00241163 /* lamp line 3.jpg */,
+				7E303EE71CCF0F9D00241163 /* line3_pattern.jpg */,
+				7E3D8ECF1CC9DC05002ABA9B /* brightness_pattern.jpg */,
+				7E3D8EC71CC9BCCE002ABA9B /* red_pattern.jpg */,
+				7ED00A801CC39F1A00AC0A16 /* circle.png */,
+				7E303EEB1CD18F4300241163 /* line4_pattern.jpg */,
+				7E303EE31CCF09ED00241163 /* line2_pattern.jpg */,
+				7E3D8ED51CCA0976002ABA9B /* line_pattern.jpg */,
+				7E40DD391CC4D1C600440435 /* default.png */,
+				7E3D8ED11CC9F66C002ABA9B /* circle_pattern.jpg */,
+				7ED00A781CC3678B00AC0A16 /* weather (1).png */,
+				7ED00A7E1CC3751D00AC0A16 /* paint (2).png */,
+				7E3D8ED31CC9FF3A002ABA9B /* rect_pattern.jpg */,
+				7ED00A7C1CC374E400AC0A16 /* paint (1).png */,
+				7ED00A7A1CC36D3000AC0A16 /* paint.png */,
+				7ED00A4F1CC124BD00AC0A16 /* LaunchScreen.storyboard */,
+				7ED00A521CC124BD00AC0A16 /* Info.plist */,
+				7ED00A741CC2737A00AC0A16 /* BackgroundLight.swift */,
+				7E40DD3B1CC4D7D400440435 /* RedLightPattern.swift */,
+			);
+			path = LightVisTool;
+			sourceTree = "<group>";
+		};
+		7ED00A5A1CC124BD00AC0A16 /* LightVisToolTests */ = {
+			isa = PBXGroup;
+			children = (
+				7ED00A5B1CC124BD00AC0A16 /* LightVisToolTests.swift */,
+				7ED00A5D1CC124BD00AC0A16 /* Info.plist */,
+			);
+			path = LightVisToolTests;
+			sourceTree = "<group>";
+		};
+		7ED00A651CC124BD00AC0A16 /* LightVisToolUITests */ = {
+			isa = PBXGroup;
+			children = (
+				7ED00A661CC124BD00AC0A16 /* LightVisToolUITests.swift */,
+				7ED00A681CC124BD00AC0A16 /* Info.plist */,
+			);
+			path = LightVisToolUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		7ED00A421CC124BD00AC0A16 /* LightVisTool */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7ED00A6B1CC124BD00AC0A16 /* Build configuration list for PBXNativeTarget "LightVisTool" */;
+			buildPhases = (
+				7ED00A3F1CC124BD00AC0A16 /* Sources */,
+				7ED00A401CC124BD00AC0A16 /* Frameworks */,
+				7ED00A411CC124BD00AC0A16 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LightVisTool;
+			productName = LightVisTool;
+			productReference = 7ED00A431CC124BD00AC0A16 /* LightVisTool.app */;
+			productType = "com.apple.product-type.application";
+		};
+		7ED00A561CC124BD00AC0A16 /* LightVisToolTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7ED00A6E1CC124BD00AC0A16 /* Build configuration list for PBXNativeTarget "LightVisToolTests" */;
+			buildPhases = (
+				7ED00A531CC124BD00AC0A16 /* Sources */,
+				7ED00A541CC124BD00AC0A16 /* Frameworks */,
+				7ED00A551CC124BD00AC0A16 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7ED00A591CC124BD00AC0A16 /* PBXTargetDependency */,
+			);
+			name = LightVisToolTests;
+			productName = LightVisToolTests;
+			productReference = 7ED00A571CC124BD00AC0A16 /* LightVisToolTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		7ED00A611CC124BD00AC0A16 /* LightVisToolUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7ED00A711CC124BD00AC0A16 /* Build configuration list for PBXNativeTarget "LightVisToolUITests" */;
+			buildPhases = (
+				7ED00A5E1CC124BD00AC0A16 /* Sources */,
+				7ED00A5F1CC124BD00AC0A16 /* Frameworks */,
+				7ED00A601CC124BD00AC0A16 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7ED00A641CC124BD00AC0A16 /* PBXTargetDependency */,
+			);
+			name = LightVisToolUITests;
+			productName = LightVisToolUITests;
+			productReference = 7ED00A621CC124BD00AC0A16 /* LightVisToolUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		7ED00A3B1CC124BD00AC0A16 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0720;
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = "Marius Hoggenmüller";
+				TargetAttributes = {
+					7ED00A421CC124BD00AC0A16 = {
+						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = 5LU8AYG8P3;
+					};
+					7ED00A561CC124BD00AC0A16 = {
+						CreatedOnToolsVersion = 7.2;
+						TestTargetID = 7ED00A421CC124BD00AC0A16;
+					};
+					7ED00A611CC124BD00AC0A16 = {
+						CreatedOnToolsVersion = 7.2;
+						TestTargetID = 7ED00A421CC124BD00AC0A16;
+					};
+				};
+			};
+			buildConfigurationList = 7ED00A3E1CC124BD00AC0A16 /* Build configuration list for PBXProject "LightVisTool" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 7ED00A3A1CC124BD00AC0A16;
+			productRefGroup = 7ED00A441CC124BD00AC0A16 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				7ED00A421CC124BD00AC0A16 /* LightVisTool */,
+				7ED00A561CC124BD00AC0A16 /* LightVisToolTests */,
+				7ED00A611CC124BD00AC0A16 /* LightVisToolUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		7ED00A411CC124BD00AC0A16 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7E303EEC1CD18F4300241163 /* line4_pattern.jpg in Resources */,
+				7E3D8ECA1CC9C746002ABA9B /* blue_pattern.jpg in Resources */,
+				7E3D8EC51CC9BC28002ABA9B /* green_icon.png in Resources */,
+				7E3D8ED61CCA0976002ABA9B /* line_pattern.jpg in Resources */,
+				7E40DD381CC4CFBE00440435 /* FontAwesome.otf in Resources */,
+				7E3D8EC61CC9BC28002ABA9B /* green_pattern.jpg in Resources */,
+				7E3D8ED41CC9FF3A002ABA9B /* rect_pattern.jpg in Resources */,
+				7E3D8ECE1CC9DBED002ABA9B /* brightness_icon.png in Resources */,
+				7E303EEA1CCF5E0F00241163 /* lamp line 3.jpg in Resources */,
+				7E303EE81CCF0F9D00241163 /* line3_pattern.jpg in Resources */,
+				7ED00A791CC3678B00AC0A16 /* weather (1).png in Resources */,
+				7ED00A511CC124BD00AC0A16 /* LaunchScreen.storyboard in Resources */,
+				7ED00A7B1CC36D3000AC0A16 /* paint.png in Resources */,
+				7E303EEE1CD1A34000241163 /* ipad_vistool_icon.png in Resources */,
+				7E3D8EC81CC9BCCE002ABA9B /* red_pattern.jpg in Resources */,
+				7E303EE41CCF09ED00241163 /* line2_pattern.jpg in Resources */,
+				7ED00A4E1CC124BD00AC0A16 /* Assets.xcassets in Resources */,
+				7E3D8ED21CC9F66C002ABA9B /* circle_pattern.jpg in Resources */,
+				7ED00A7D1CC374E400AC0A16 /* paint (1).png in Resources */,
+				7E3D8ED01CC9DC05002ABA9B /* brightness_pattern.jpg in Resources */,
+				7ED00A7F1CC3751D00AC0A16 /* paint (2).png in Resources */,
+				7ED00A4C1CC124BD00AC0A16 /* Main.storyboard in Resources */,
+				7ED00A811CC39F1A00AC0A16 /* circle.png in Resources */,
+				7E40DD3A1CC4D1C600440435 /* default.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7ED00A551CC124BD00AC0A16 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7ED00A601CC124BD00AC0A16 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7ED00A3F1CC124BD00AC0A16 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7ED00A491CC124BD00AC0A16 /* ViewController.swift in Sources */,
+				7E3D8EC01CC8C353002ABA9B /* LightPatternCollectioViewCell.swift in Sources */,
+				7E40DD3C1CC4D7D400440435 /* RedLightPattern.swift in Sources */,
+				7ED00A751CC2737A00AC0A16 /* BackgroundLight.swift in Sources */,
+				7ED00A471CC124BD00AC0A16 /* AppDelegate.swift in Sources */,
+				7ED00A771CC3338E00AC0A16 /* UIDevice.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7ED00A531CC124BD00AC0A16 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7ED00A5C1CC124BD00AC0A16 /* LightVisToolTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7ED00A5E1CC124BD00AC0A16 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7ED00A671CC124BD00AC0A16 /* LightVisToolUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		7ED00A591CC124BD00AC0A16 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7ED00A421CC124BD00AC0A16 /* LightVisTool */;
+			targetProxy = 7ED00A581CC124BD00AC0A16 /* PBXContainerItemProxy */;
+		};
+		7ED00A641CC124BD00AC0A16 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7ED00A421CC124BD00AC0A16 /* LightVisTool */;
+			targetProxy = 7ED00A631CC124BD00AC0A16 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		7ED00A4A1CC124BD00AC0A16 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7ED00A4B1CC124BD00AC0A16 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		7ED00A4F1CC124BD00AC0A16 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7ED00A501CC124BD00AC0A16 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		7ED00A691CC124BD00AC0A16 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Debug;
+		};
+		7ED00A6A1CC124BD00AC0A16 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		7ED00A6C1CC124BD00AC0A16 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				INFOPLIST_FILE = LightVisTool/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "-.LightVisTool";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		7ED00A6D1CC124BD00AC0A16 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				INFOPLIST_FILE = LightVisTool/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "-.LightVisTool";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		7ED00A6F1CC124BD00AC0A16 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = LightVisToolTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "de.uni-muenchen.media-architecture.LightVisToolTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LightVisTool.app/LightVisTool";
+			};
+			name = Debug;
+		};
+		7ED00A701CC124BD00AC0A16 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = LightVisToolTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "de.uni-muenchen.media-architecture.LightVisToolTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LightVisTool.app/LightVisTool";
+			};
+			name = Release;
+		};
+		7ED00A721CC124BD00AC0A16 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = LightVisToolUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "de.uni-muenchen.media-architecture.LightVisToolUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = LightVisTool;
+				USES_XCTRUNNER = YES;
+			};
+			name = Debug;
+		};
+		7ED00A731CC124BD00AC0A16 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = LightVisToolUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "de.uni-muenchen.media-architecture.LightVisToolUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = LightVisTool;
+				USES_XCTRUNNER = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		7ED00A3E1CC124BD00AC0A16 /* Build configuration list for PBXProject "LightVisTool" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7ED00A691CC124BD00AC0A16 /* Debug */,
+				7ED00A6A1CC124BD00AC0A16 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7ED00A6B1CC124BD00AC0A16 /* Build configuration list for PBXNativeTarget "LightVisTool" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7ED00A6C1CC124BD00AC0A16 /* Debug */,
+				7ED00A6D1CC124BD00AC0A16 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7ED00A6E1CC124BD00AC0A16 /* Build configuration list for PBXNativeTarget "LightVisToolTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7ED00A6F1CC124BD00AC0A16 /* Debug */,
+				7ED00A701CC124BD00AC0A16 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7ED00A711CC124BD00AC0A16 /* Build configuration list for PBXNativeTarget "LightVisToolUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7ED00A721CC124BD00AC0A16 /* Debug */,
+				7ED00A731CC124BD00AC0A16 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 7ED00A3B1CC124BD00AC0A16 /* Project object */;
+}
