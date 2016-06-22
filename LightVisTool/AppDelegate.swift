@@ -18,10 +18,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var blue: CGFloat = 1.0
     var counter: CGFloat = 1.0
     var mode:Int = 0
-    var backwardLoop: Bool = true;
-    var smooth: Bool = true;
-    var notification: Bool = false;
-    var counterUp = true;
+    var backwardLoop: Bool = true
+    var smooth: Bool = true
+    var notification: Bool = false
+    var counterUp = true
+    var text: String = "HELLOWORLD"
+    var record: Bool = false
+    var recordCounter: CGFloat = 0.0
+    var viewSizeWidth: CGFloat?
+    var viewSizeHeight: CGFloat?
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {

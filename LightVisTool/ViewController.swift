@@ -11,7 +11,7 @@ import UIKit
 class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
     let reuseIdentifier = "cell" // also enter this string as the cell identifier in the storyboard
-    var items = ["None", "Fade Brightness", "Fade Red", "Fade Green", "Fade Blue", "Ellipse", "Rectangle", "Horizontal Line", "Vertical Line", "Horizontal Box", "Vertical Box"]
+    var items = ["None", "Fade Brightness", "Fade Red", "Fade Green", "Fade Blue", "Ellipse", "Rectangle", "Horizontal Line", "Vertical Line", "Horizontal Box", "Vertical Box", "Text", "LightPattern"]
 
     var images:NSArray = ["red_pattern.jpg", "green_pattern.jpg", "red_pattern.jpg", "green_pattern.jpg","circle.png", "default.png", "circle.png", "default.png"]
 
@@ -26,7 +26,10 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         UIImage(named: "line_pattern.jpg")!,
         UIImage(named: "line2_pattern.jpg")!,
         UIImage(named: "line3_pattern.jpg")!,
+        UIImage(named: "line4_pattern.jpg")!,
+        UIImage(named: "line4_pattern.jpg")!,
         UIImage(named: "line4_pattern.jpg")!
+
 
     ]
 
@@ -55,6 +58,12 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     @IBOutlet var lightPatternImage: UIImageView!
     
+    @IBOutlet var textOptionView: UIView!
+    @IBOutlet var lightPatternOptionView: UIView!
+    @IBOutlet var textLabel: UITextField!
+    
+    @IBOutlet var recordButtonOut: UIButton!
+    
     let screenSizeWidth = UIScreen.mainScreen().bounds.width
     let screenSizeHeight = UIScreen.mainScreen().bounds.height
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
@@ -69,6 +78,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     let modelName = UIDevice().type.rawValue
 
     var timer = NSTimer()
+    var recTimer = NSTimer()
     
     var play: Bool = true
     var speed: CGFloat = 1.0
@@ -86,8 +96,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             ipadSizeHeight = ipadDiagonal*sqrt(1.0/(pow(ipadFormat,2.0)+1))
             ipadSizeWidth = ipadFormat*ipadDiagonal*sqrt(1.0/(pow(ipadFormat, 2.0)+1.0))
             
-            backgroundLightSizeWidth = (screenSizeWidth/ipadSizeWidth)*0.93*5.9
-            backgroundLightSizeHeight = (screenSizeWidth/ipadSizeWidth)*0.93*4.03
+            backgroundLightSizeWidth = (screenSizeWidth/ipadSizeWidth)*0.85*5.9
+            backgroundLightSizeHeight = (screenSizeWidth/ipadSizeWidth)*0.87*4.03
         }else{
             ipadDiagonal = 12.9
             ipadFormat = 1.3333
@@ -95,8 +105,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             ipadSizeHeight = ipadDiagonal*sqrt(1.0/(pow(ipadFormat,2.0)+1))
             ipadSizeWidth = ipadFormat*ipadDiagonal*sqrt(1.0/(pow(ipadFormat, 2.0)+1.0))
             
-            backgroundLightSizeWidth = (screenSizeWidth/ipadSizeWidth)*1.03*5.9*1.32989690721649
-            backgroundLightSizeHeight = (screenSizeWidth/ipadSizeWidth)*1.03*4.03*1.32989690721649
+            backgroundLightSizeWidth = (screenSizeWidth/ipadSizeWidth)*0.95*5.9*1.32989690721649
+            backgroundLightSizeHeight = (screenSizeWidth/ipadSizeWidth)*0.97*4.03*1.32989690721649
         }
         
         lightPatternCollectionView.dataSource = self
@@ -118,6 +128,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         
         timer = NSTimer.scheduledTimerWithTimeInterval(0.05, target:self, selector: Selector("updateCounter"), userInfo: nil, repeats: true)
 
+        
+        var A:Chard = Chard()
+        
         //drawRectangle()
     }
 
@@ -224,7 +237,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         }else if(appDelegate.smooth){
             timeProgress.value = Float(appDelegate.counter)
         }else{
-            timeProgress.value = Float(roundToPlaces(appDelegate.counter, places:1))
+            timeProgress.value = Float(appDelegate.counter)//Float(roundToPlaces(appDelegate.counter, places:1))
         }
         //NSLog("Counter: %f", appDelegate.counter)
         backgroundLight.setNeedsDisplay()
@@ -260,6 +273,17 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         print("You selected cell #\(indexPath.item)!")
         lightPatternLabel.text = self.items[indexPath.item]
         lightPatternImage.image = self.logoImage[indexPath.item]
+        
+        if(indexPath.item==11){
+            lightPatternOptionView.hidden = true
+            textOptionView.hidden = false
+        }else if(indexPath.item==12){
+            textOptionView.hidden = true
+            lightPatternOptionView.hidden = false
+        }else{
+            lightPatternOptionView.hidden = true
+            textOptionView.hidden = true
+        }
         
         appDelegate.mode = indexPath.item
         
@@ -304,6 +328,41 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             timeProgress.alpha = 1.0
             speedLabel.alpha = 1.0
         }
+    }
+    
+    @IBAction func textLabelEditEnd(sender: UITextField) {
+        //print("action")
+        appDelegate.text = (sender.text?.uppercaseString)!
+    }
+    
+    @IBAction func endOnExit(sender: UITextField) {
+        print("actionTest")
+    }
+    
+
+    @IBAction func recordButton(sender: UIButton) {
+        
+        appDelegate.record = !appDelegate.record
+        if(appDelegate.record){
+            recordButtonOut.setTitle("Stop Recording", forState: UIControlState.Normal)
+            appDelegate.recordCounter = 0.0
+            recTimer = NSTimer.scheduledTimerWithTimeInterval(0.05, target:self, selector: Selector("updateRecCounter"), userInfo: nil, repeats: true)
+        }else{
+            recordButtonOut .setTitle("Record New LightPattern", forState: UIControlState.Normal)
+            recordButtonOut.alpha = 0.75
+            recTimer.invalidate()
+        }
+        
+    }
+    
+    func updateRecCounter() {
+        appDelegate.recordCounter += 0.05
+        if(Int(appDelegate.recordCounter)%2==0){
+          recordButtonOut.alpha = 0.25
+        }else{
+          recordButtonOut.alpha = 0.75
+        }
+        print(appDelegate.recordCounter)
     }
     
     func roundToPlaces(value:CGFloat, places:Int) -> CGFloat {
