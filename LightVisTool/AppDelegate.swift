@@ -27,6 +27,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var recordCounter: CGFloat = 0.0
     var viewSizeWidth: CGFloat?
     var viewSizeHeight: CGFloat?
+    var row: Int = 0
+    var activeImage = UIImage()
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {

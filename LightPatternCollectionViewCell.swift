@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LightPatternCollectioViewCell: UICollectionViewCell {
+class LightPatternCollectionViewCell: UICollectionViewCell {
    
     @IBOutlet var myLabel: UILabel!
     @IBOutlet var myImage: UIImageView!

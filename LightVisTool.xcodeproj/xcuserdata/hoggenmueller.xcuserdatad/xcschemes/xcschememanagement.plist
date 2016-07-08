@@ -4,6 +4,21 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>KeyboardTool.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
+		<key>LightPadKeyboard.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
+		<key>LightVisKeyboard.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
 		<key>LightVisTool.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -12,6 +27,21 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>7E26558B1D28F44A005E6D07</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>7E26559F1D28F7BC005E6D07</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>7E2655AE1D28F8A1005E6D07</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>7ED00A421CC124BD00AC0A16</key>
 		<dict>
 			<key>primary</key>
@@ -23,6 +53,11 @@
 			<true/>
 		</dict>
 		<key>7ED00A611CC124BD00AC0A16</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>7EF873D61D28F9B400374C2E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
