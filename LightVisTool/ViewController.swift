@@ -27,8 +27,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         UIImage(named: "line3_pattern.jpg")!,
         UIImage(named: "line4_pattern.jpg")!,
         UIImage(named: "text_pattern.jpg")!,
-        UIImage(named: "default.png")!,
-        UIImage(named: "default.png")!
+        UIImage(named: "light_pattern.jpg")!,
+        UIImage(named: "image_pattern.jpg")!
 
 
     ]
@@ -42,6 +42,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     
     @IBOutlet var backgroundLight: RedLightPattern!
+    @IBOutlet var previewLight: PreviewLight!
+    
     @IBOutlet var heightConstraint: NSLayoutConstraint!
     @IBOutlet var widthConstraint: NSLayoutConstraint!
     
@@ -74,6 +76,12 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     var images = [UIImage]()
     var photo = UIImage()
     
+    @IBOutlet var drawCollection: UICollectionView!
+    @IBOutlet var drawView: UIView!
+    let drawCollectionViewIdentifier = "drawCell"
+    
+    @IBOutlet var colorPicker: SwiftHSVColorPicker!
+    
     let screenSizeWidth = UIScreen.mainScreen().bounds.width
     let screenSizeHeight = UIScreen.mainScreen().bounds.height
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
@@ -89,12 +97,13 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
 
     var timer = NSTimer()
     var recTimer = NSTimer()
+    var drawTimer = NSTimer()
+
     
-    var play: Bool = true
     var speed: CGFloat = 1.0
     
     var maxTextPos:Int = 7
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -118,7 +127,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             ipadSizeWidth = ipadFormat*ipadDiagonal*sqrt(1.0/(pow(ipadFormat, 2.0)+1.0))
             
             backgroundLightSizeWidth = (screenSizeWidth/ipadSizeWidth)*0.95*5.9*1.32989690721649
-            backgroundLightSizeHeight = (screenSizeWidth/ipadSizeWidth)*0.97*4.03*1.32989690721649
+            backgroundLightSizeHeight = (screenSizeWidth/ipadSizeWidth)*0.98*4.03*1.32989690721649
         }
         
         lightPatternCollectionView.dataSource = self
@@ -148,11 +157,30 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         imageCollectionView.delegate = self
         lightPatternCollectionView.dataSource = self
         imageCollectionView.dataSource = self
+        drawCollection.delegate = self
+        drawCollection.dataSource = self
         self.view.addSubview(lightPatternCollectionView)
         self.view.addSubview(imageCollectionView)
+        self.view.addSubview(drawCollection)
         
         FetchCustomAlbumPhotos()
+        
+        appDelegate.img_draw.append(UIImage())
+        appDelegate.img_draw.append(UIImage())
+
         //drawRectangle()
+        
+        colorPicker.setViewColor(appDelegate.selectedColor)
+        appDelegate.selectedColor = UIColor.whiteColor()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.reloadCollection), name: "reloadCollection", object: nil)
+
+    }
+    
+    func reloadCollection(){
+        drawCollection.reloadData()
+        previewLight.setNeedsDisplay()
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -195,8 +223,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     @IBAction func playButtonPressed(sender: UIButton) {
         NSLog("Pressed")
         if(appDelegate.mode != 0){
-            play = !play
-            if(play){
+            appDelegate.play = !appDelegate.play
+            if(appDelegate.play){
                 playButton .setTitle("\u{f04c}", forState: UIControlState.Normal)
                 timer = NSTimer.scheduledTimerWithTimeInterval(0.05, target:self, selector: Selector("updateCounter"), userInfo: nil, repeats: true)
             }else{
@@ -264,8 +292,6 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         }
         //NSLog("Counter: %f", appDelegate.counter)
         backgroundLight.setNeedsDisplay()
-        
-
     }
     
     // MARK: - UICollectionViewDataSource protocol
@@ -275,9 +301,11 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         
         if collectionView == self.lightPatternCollectionView {
             return self.items.count
-        } else {
-            print(images.count)
+        } else if collectionView == self.imageCollectionView {
+            //print(images.count)
             return images.count
+        } else {
+            return appDelegate.drawFrames + 1
         }
     }
     
@@ -291,14 +319,30 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             cell.myImage.image = self.logoImage[indexPath.item]
         
             return cell
-        } else {
+        } else if collectionView == self.imageCollectionView {
             let cell = collectionView.dequeueReusableCellWithReuseIdentifier(imageCollectionViewIdentifier, forIndexPath: indexPath) as! ImageCollectionViewCell
             
             //if let image = cell.viewWithTag(1000) as? UIImageView {
-                print("add image")
+                //print("add image")
                 print(indexPath.item)
                 cell.image.image = images[indexPath.item]
             //}
+            
+            return cell
+        } else {
+            let cell = collectionView.dequeueReusableCellWithReuseIdentifier(drawCollectionViewIdentifier, forIndexPath: indexPath) as! DrawCollectionViewCell
+            
+            //if(indexPath.item<appDelegate.drawFrames){
+            cell.image.image = appDelegate.img_draw[indexPath.item]
+            cell.backgroundColor = UIColor.clearColor()
+            cell.contentView.layer.borderColor = UIColor.whiteColor().CGColor
+            cell.contentView.layer.borderWidth = 1
+            //print("IndexPath: "+String(indexPath.item)+" DrawFrames: "+String(appDelegate.drawFrames))
+            if(indexPath.item==appDelegate.drawFrames){
+                cell.image.image = UIImage(named: "add.png")!
+                cell.backgroundColor = UIColor.grayColor()
+            }
+            //}//else if(indexPath.item == indexPath.)
             
             return cell
         }
@@ -310,7 +354,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         // handle tap events
-        print("You selected cell #\(indexPath.item)!")
+        //print("You selected cell #\(indexPath.item)!")
         
         if collectionView == self.lightPatternCollectionView {
         lightPatternLabel.text = self.items[indexPath.item]
@@ -320,17 +364,27 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             lightPatternOptionView.hidden = true
             textOptionView.hidden = false
             imageCollectionView.hidden = true
+            drawCollection.hidden = true;
+            drawView.hidden = true;
         }else if(indexPath.item==12){
             textOptionView.hidden = true
             lightPatternOptionView.hidden = false
             imageCollectionView.hidden = true
+            drawCollection.hidden = false;
+            drawView.hidden = false;
         }else if(indexPath.item==13){
             textOptionView.hidden = true
             lightPatternOptionView.hidden = true
             imageCollectionView.hidden = false
+            drawCollection.hidden = true;
+            drawView.hidden = true;
+            FetchCustomAlbumPhotos()
         }else{
+            drawCollection.hidden = true;
             lightPatternOptionView.hidden = true
             textOptionView.hidden = true
+            imageCollectionView.hidden = true
+            drawView.hidden = true;
         }
         
         if(indexPath.item==0){
@@ -349,10 +403,34 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             speedLabel.alpha = 0.5
             timer.invalidate()
             speedLabel.alpha = 1.0
-            play = false
+            appDelegate.play = false
             
-        }else{
-            play = true
+        }else if(indexPath.item==12){
+            appDelegate.play = true
+            timer.invalidate()
+            timeProgress.userInteractionEnabled = true
+            if(appDelegate.notification == false){
+                smooth.alpha = 1.0
+                smoothLabel.alpha = 1.0
+                backwardLoop.alpha = 1.0
+                backwardsLabel.alpha = 1.0
+                timeProgress.thumbTintColor = UIColor.whiteColor()
+            }
+            timeProgress.alpha = 1.0
+            stepper.alpha = 1.0
+            speedLabel.alpha = 1.0
+            notification.alpha = 1.0
+            notificationLabel.alpha = 1.0
+            playButton.setTitleColor(UIColor.init(white: 1, alpha: 1), forState: UIControlState.Normal)
+            playButton .setTitle("\u{f04b}", forState: UIControlState.Normal)
+            timer.invalidate()
+            drawTimer = NSTimer.scheduledTimerWithTimeInterval(0.05, target:self, selector: #selector(ViewController.drawTimerUpdate), userInfo: nil, repeats: true)
+            speedLabel.alpha = 1.0
+            appDelegate.play = false
+
+        }
+        else{
+            appDelegate.play = true
             timer.invalidate()
             timeProgress.userInteractionEnabled = true
             if(appDelegate.notification == false){
@@ -377,10 +455,36 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         appDelegate.counter = 0.0
         timeProgress.value = Float(appDelegate.counter)
         backgroundLight.setNeedsDisplay()
-        } else {
+        } else if collectionView == self.imageCollectionView {
         appDelegate.activeImage = images[indexPath.item]
+        backgroundLight.setNeedsDisplay()
+        } else {
+            //print("selected: "+String(indexPath.item))
+            if(indexPath.item==appDelegate.drawFrames){
+                //print("last: "+String(appDelegate.drawFrames))
+                appDelegate.img_draw.append(UIImage())
+                appDelegate.drawFrames++
+                appDelegate.currentFrame = appDelegate.drawFrames-1
+                backgroundLight.setNeedsDisplay()
+                previewLight.setNeedsDisplay()
+                drawCollection.reloadData()
+
+
+            }else{
+                appDelegate.currentFrame = indexPath.item
+                backgroundLight.setNeedsDisplay()
+                previewLight.setNeedsDisplay()
+            }
         }
 
+    }
+    
+    func drawTimerUpdate(){
+        
+        backgroundLight.setNeedsDisplay()
+        previewLight.setNeedsDisplay()
+        appDelegate.selectedColor = colorPicker.color
+        
     }
 
     @IBAction func backwordSwitchChanged(sender: UISwitch) {
@@ -465,6 +569,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
           recordButtonOut.alpha = 0.75
         }
         //print(appDelegate.recordCounter)
+        
     }
     
     func roundToPlaces(value:CGFloat, places:Int) -> CGFloat {
@@ -497,6 +602,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         let imageManager = PHCachingImageManager()
         
         //        let imageManager = PHImageManager.defaultManager()
+        
+        images.removeAll()
         
         photoAssets.enumerateObjectsUsingBlock{(object: AnyObject!,
             count: Int,

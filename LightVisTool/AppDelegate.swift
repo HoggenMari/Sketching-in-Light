@@ -29,7 +29,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var viewSizeHeight: CGFloat?
     var row: Int = 0
     var activeImage = UIImage()
-
+    var img_draw = Array<UIImage>()
+    var drawFrames:Int = 1
+    var currentFrame:Int = 0
+    var play: Bool = false;
+    var selectedColor: UIColor = UIColor.whiteColor()
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
