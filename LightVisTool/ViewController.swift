@@ -147,8 +147,24 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         
         NSLog("LightBackground x: %f y: %f %f", ((backgroundLightSizeWidth))*(ipadSizeWidth/screenSizeWidth), (backgroundLightSizeHeight)*(ipadSizeWidth/screenSizeWidth))
         
-        timer = NSTimer.scheduledTimerWithTimeInterval(0.05, target:self, selector: Selector("updateCounter"), userInfo: nil, repeats: true)
+        //timer = NSTimer.scheduledTimerWithTimeInterval(0.05, target:self, selector: Selector("updateCounter"), userInfo: nil, repeats: true)
 
+        playButton.setTitle("\u{f04b}", forState: UIControlState.Normal)
+        playButton.setTitleColor(UIColor.init(white: 1, alpha: 0.25), forState: UIControlState.Normal)
+        timeProgress.thumbTintColor = UIColor.grayColor()
+        timeProgress.userInteractionEnabled = false
+        smooth.alpha = 0.5
+        smoothLabel.alpha = 0.5
+        backwardLoop.alpha = 0.5
+        backwardsLabel.alpha = 0.5
+        notification.alpha = 0.5
+        notificationLabel.alpha = 0.5
+        timeProgress.alpha = 0.5
+        stepper.alpha = 0.5
+        speedLabel.alpha = 0.5
+        speedLabel.alpha = 1.0
+        appDelegate.play = false
+        
         
         var A:Chard = Chard()
         
@@ -267,11 +283,16 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                     appDelegate.counterUp = !appDelegate.counterUp;
                 }
             }else{
-                if(appDelegate.counter<1.0 && appDelegate.counterUp){
+                if((appDelegate.counter+0.001*speed)<=1.0 && appDelegate.counterUp){
                     appDelegate.counter += 0.001*speed
-                }else if(appDelegate.counter>0.0 && !appDelegate.counterUp){
+                }else if((appDelegate.counter-0.001*speed)>=0.0 && !appDelegate.counterUp){
                     appDelegate.counter -= 0.001*speed
                 }else{
+                    if(appDelegate.counterUp){
+                        appDelegate.counter = 1-0.001*speed
+                    }else{
+                        appDelegate.counter = 0.001*speed
+                    }
                     appDelegate.counterUp = !appDelegate.counterUp;
                 }
             }

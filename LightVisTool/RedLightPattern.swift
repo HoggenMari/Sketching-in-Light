@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Darwin
 
 class RedLightPattern: UIView {
 
@@ -300,9 +301,13 @@ class RedLightPattern: UIView {
                     let (r, g, b, a) = getPixelColor(img, pos: CGPoint(x: ix,y: 11-iy))
                     CGContextSetRGBFillColor(context, appDelegate.red * r, appDelegate.green * g, appDelegate.blue * b, appDelegate.brigtness * a)
                 }else if(appDelegate.mode == 12){
-                    let (r, g, b, a) = getPixelColor(img, pos: CGPoint(x: ix,y: iy))
-                    CGContextSetRGBFillColor(context, appDelegate.red * r, appDelegate.green * g, appDelegate.blue * b, appDelegate.brigtness * a)
-                
+                    if(appDelegate.play){
+                        let (r, g, b, a) = getPixelColor(img, pos: CGPoint(x: ix,y: 11-iy))
+                        CGContextSetRGBFillColor(context, appDelegate.red * r, appDelegate.green * g, appDelegate.blue * b, appDelegate.brigtness * a)
+                    }else{
+                        let (r, g, b, a) = getPixelColor(img, pos: CGPoint(x: ix,y: iy))
+                        CGContextSetRGBFillColor(context, appDelegate.red * r, appDelegate.green * g, appDelegate.blue * b, appDelegate.brigtness * a)
+                    }
                     /*if(appDelegate.recordCounter != lastRecCounterInc){
                         lightSequence.append(img)
                         sequenceCounter++
@@ -511,9 +516,48 @@ class RedLightPattern: UIView {
     
     func drawImageSequence(value:CGFloat) -> UIImage {
         
-        var num = Int((value-0.01)*CGFloat(appDelegate.drawFrames))
-        print("NUMBER: "+String(num))
-        return appDelegate.img_draw[num];
+        
+        
+        UIGraphicsBeginImageContextWithOptions(CGSize(width: 17, height: 12), false, 1)
+        let context = UIGraphicsGetCurrentContext()
+        
+        var num = Int((value)*CGFloat(appDelegate.drawFrames))
+        var num2: Int
+        
+        var timer = CGFloat(appDelegate.counter - CGFloat(Int((value)*CGFloat(appDelegate.drawFrames)))*CGFloat(1/CGFloat(appDelegate.drawFrames))) * CGFloat(appDelegate.drawFrames)
+        
+        if(appDelegate.counterUp){
+            if(num<appDelegate.drawFrames-1){
+                num2 = num + 1
+            }else{
+                num2 = num
+            }
+        }else{
+            if(num>0){
+                num2 = num - 1
+            }else{
+                num2 = 0
+            }
+        }
+        
+        //var num2 = (value)
+        
+        
+        
+        
+        CGContextSetAlpha(context, 1)//1-timer)//1-pow(timer,2))
+        CGContextDrawImage(context, CGRect(x: 0, y:0, width: 17, height: 12), appDelegate.img_draw[num].CGImage)
+        CGContextSetAlpha(context, pow(timer,1))//0.5)//timer)//pow(timer,3))
+        CGContextDrawImage(context, CGRect(x: 0, y:0, width: 17, height: 12), appDelegate.img_draw[num2].CGImage)
+        
+        img = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+
+        
+        
+        
+        print("NUMBER: "+String(num)+" "+String(num2)+" "+String((1-timer)+timer))
+        return img;
     }
     
     
@@ -996,7 +1040,7 @@ class RedLightPattern: UIView {
         let a = CGFloat(data[pixelInfo+3]) / CGFloat(255.0)
         
         //NSLog("Pixel: %f %f %f %f %f", pos.x, pos.y, r, g, b)
-        
+
         return (r, g, b, a)
     }
     
@@ -1005,6 +1049,6 @@ class RedLightPattern: UIView {
         return CGFloat(round(Double(value) * divisor) / divisor)
     }
     
-    
+
 
 }
