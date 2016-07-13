@@ -542,12 +542,12 @@ class RedLightPattern: UIView {
         
         //var num2 = (value)
         
+        //CGContextSetBlendMode(context, CGBlendMode.Difference)
         
         
-        
-        CGContextSetAlpha(context, 1)//1-timer)//1-pow(timer,2))
+        CGContextSetAlpha(context, 1-pow((timer-0.25),5))
         CGContextDrawImage(context, CGRect(x: 0, y:0, width: 17, height: 12), appDelegate.img_draw[num].CGImage)
-        CGContextSetAlpha(context, pow(timer,1))//0.5)//timer)//pow(timer,3))
+        CGContextSetAlpha(context, pow((timer),2))
         CGContextDrawImage(context, CGRect(x: 0, y:0, width: 17, height: 12), appDelegate.img_draw[num2].CGImage)
         
         img = UIGraphicsGetImageFromCurrentImageContext()
