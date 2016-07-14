@@ -11,5 +11,5 @@ import UIKit
 class DrawCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet var image: UIImageView!
-    
+   
 }

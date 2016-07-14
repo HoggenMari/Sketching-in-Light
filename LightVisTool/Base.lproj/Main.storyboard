@@ -24,10 +24,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view hidden="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GJc-mm-2MJ">
-                                <rect key="frame" x="94" y="385" width="654" height="205"/>
+                                <rect key="frame" x="94" y="385" width="654" height="215"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sSN-8X-INK" customClass="SwiftHSVColorPicker" customModule="LightVisTool" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="65" width="100" height="138"/>
+                                        <rect key="frame" x="0.0" y="66" width="150" height="165"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
                                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="erX-cf-nYn" customClass="PreviewLight" customModule="LightVisTool" customModuleProvider="target">
@@ -335,25 +335,25 @@
                             <collectionView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="gnp-vK-dWF">
                                 <rect key="frame" x="261" y="385" width="240" height="55"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="Wfs-Xh-osN"/>
-                                    <constraint firstAttribute="width" constant="250" id="ebt-La-geL"/>
+                                    <constraint firstAttribute="height" constant="55" id="Wfs-Xh-osN"/>
+                                    <constraint firstAttribute="width" constant="220" id="ebt-La-geL"/>
                                 </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Wo0-de-TxR">
-                                    <size key="itemSize" width="70" height="50"/>
+                                    <size key="itemSize" width="70" height="55"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="drawCell" id="aeT-u1-2Xi" customClass="DrawCollectionViewCell" customModule="LightVisTool" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="3" width="70" height="50"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="70" height="55"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="70" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="70" height="55"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0DP-MS-0hr">
-                                                    <rect key="frame" x="0.0" y="1" width="70" height="48"/>
+                                                    <rect key="frame" x="0.0" y="1" width="70" height="53"/>
                                                 </imageView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -373,9 +373,32 @@
                                     <constraint firstAttribute="width" constant="400" id="qs0-94-YyA"/>
                                 </constraints>
                             </view>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hPL-Qx-r3x">
+                                <rect key="frame" x="508" y="293" width="24" height="24"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="24" id="9Gf-PO-Kxa"/>
+                                    <constraint firstAttribute="height" constant="24" id="hsv-na-aoR"/>
+                                </constraints>
+                                <state key="normal" title="Button" image="dup.png"/>
+                                <connections>
+                                    <action selector="duplicateImage:" destination="BYZ-38-t0r" eventType="touchUpInside" id="zUG-y1-jaB"/>
+                                </connections>
+                            </button>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CdV-Wz-UQw">
+                                <rect key="frame" x="508" y="320" width="24" height="24"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="24" id="MuO-cW-3sY"/>
+                                    <constraint firstAttribute="height" constant="24" id="mQg-um-b45"/>
+                                </constraints>
+                                <state key="normal" title="Button" image="bin.png"/>
+                                <connections>
+                                    <action selector="deleteImage:" destination="BYZ-38-t0r" eventType="touchUpInside" id="mAI-VV-a7J"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="hPL-Qx-r3x" firstAttribute="top" secondItem="gnp-vK-dWF" secondAttribute="top" id="0VJ-dc-P7T"/>
                             <constraint firstItem="grC-4U-l47" firstAttribute="leading" secondItem="XMM-2N-bTL" secondAttribute="leading" id="1CN-q0-ajy"/>
                             <constraint firstAttribute="leadingMargin" secondItem="XMM-2N-bTL" secondAttribute="leading" id="1ql-js-Yrm"/>
                             <constraint firstItem="Ano-Sy-wkb" firstAttribute="top" secondItem="XMM-2N-bTL" secondAttribute="bottom" constant="8" id="5hE-Fh-Ihq"/>
@@ -385,6 +408,7 @@
                             <constraint firstItem="CCl-tI-nZM" firstAttribute="leading" secondItem="VoX-bK-Bwo" secondAttribute="trailing" constant="56" id="C82-ct-75a"/>
                             <constraint firstItem="OIB-yv-gtT" firstAttribute="leading" secondItem="ws1-yM-Ei8" secondAttribute="trailing" constant="36" id="GC9-a3-XQy"/>
                             <constraint firstItem="dAL-O5-Jfg" firstAttribute="leading" secondItem="XMM-2N-bTL" secondAttribute="leading" id="GMF-tk-E6f"/>
+                            <constraint firstItem="hPL-Qx-r3x" firstAttribute="leading" secondItem="gnp-vK-dWF" secondAttribute="trailing" constant="15" id="JLH-zu-PLP"/>
                             <constraint firstItem="KeB-yy-f5K" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="15" id="KSx-Vm-v99"/>
                             <constraint firstItem="NkJ-jj-lot" firstAttribute="top" secondItem="Nxr-sQ-9HV" secondAttribute="bottom" constant="27" id="KY1-9V-EjR"/>
                             <constraint firstItem="ws1-yM-Ei8" firstAttribute="leading" secondItem="XMM-2N-bTL" secondAttribute="trailing" constant="40" id="L3m-G6-tgN"/>
@@ -392,7 +416,9 @@
                             <constraint firstItem="VoX-bK-Bwo" firstAttribute="baseline" secondItem="F12-9v-Y7L" secondAttribute="baseline" id="Lfs-Ca-hvB"/>
                             <constraint firstItem="OIB-yv-gtT" firstAttribute="top" secondItem="ws1-yM-Ei8" secondAttribute="top" id="Lpw-pd-ZaL"/>
                             <constraint firstAttribute="trailingMargin" secondItem="JmH-zP-uQD" secondAttribute="trailing" id="Lxx-Fh-2sd"/>
+                            <constraint firstItem="CdV-Wz-UQw" firstAttribute="leading" secondItem="hPL-Qx-r3x" secondAttribute="leading" id="MpT-GC-yhy"/>
                             <constraint firstItem="Ano-Sy-wkb" firstAttribute="leading" secondItem="grC-4U-l47" secondAttribute="leading" id="RCn-rh-l6v"/>
+                            <constraint firstItem="TIc-rT-uV2" firstAttribute="top" secondItem="GJc-mm-2MJ" secondAttribute="bottom" id="RIV-M5-DUF"/>
                             <constraint firstItem="XMM-2N-bTL" firstAttribute="top" secondItem="grC-4U-l47" secondAttribute="bottom" constant="8" id="RdM-Pt-xds"/>
                             <constraint firstItem="aeG-6p-XSc" firstAttribute="centerY" secondItem="NkJ-jj-lot" secondAttribute="centerY" id="RyK-8X-QaT"/>
                             <constraint firstItem="Spq-OO-pm0" firstAttribute="centerY" secondItem="RCY-3L-kJG" secondAttribute="centerY" id="TWe-bm-GOe"/>
@@ -418,13 +444,15 @@
                             <constraint firstItem="3oN-fV-oQx" firstAttribute="leading" secondItem="XMM-2N-bTL" secondAttribute="leading" id="czR-sV-73Y"/>
                             <constraint firstItem="VoX-bK-Bwo" firstAttribute="leading" secondItem="F12-9v-Y7L" secondAttribute="trailing" constant="17" id="dKo-kk-yQc"/>
                             <constraint firstItem="Nxr-sQ-9HV" firstAttribute="centerY" secondItem="ws1-yM-Ei8" secondAttribute="centerY" id="dPb-wn-E5t"/>
+                            <constraint firstItem="TIc-rT-uV2" firstAttribute="top" secondItem="GJc-mm-2MJ" secondAttribute="bottom" id="doD-PH-vq9"/>
                             <constraint firstItem="gnp-vK-dWF" firstAttribute="top" secondItem="OIB-yv-gtT" secondAttribute="top" id="eL0-pG-gOa"/>
+                            <constraint firstItem="CdV-Wz-UQw" firstAttribute="top" secondItem="hPL-Qx-r3x" secondAttribute="bottom" constant="8" id="env-sB-5ke"/>
                             <constraint firstItem="Nxr-sQ-9HV" firstAttribute="leading" secondItem="OIB-yv-gtT" secondAttribute="leading" id="fqa-vt-W0y"/>
                             <constraint firstItem="Z1N-ep-nD3" firstAttribute="leading" secondItem="CCl-tI-nZM" secondAttribute="leading" id="fzB-dW-Yo6"/>
                             <constraint firstItem="aeG-6p-XSc" firstAttribute="leading" secondItem="NkJ-jj-lot" secondAttribute="trailing" constant="8" id="gRh-Pi-3ai"/>
                             <constraint firstItem="YK9-7t-rBZ" firstAttribute="trailing" secondItem="JmH-zP-uQD" secondAttribute="trailing" id="h42-VE-qvK"/>
                             <constraint firstItem="Z1N-ep-nD3" firstAttribute="top" secondItem="CCl-tI-nZM" secondAttribute="bottom" constant="5" id="h78-m4-H8X"/>
-                            <constraint firstItem="TIc-rT-uV2" firstAttribute="top" secondItem="GJc-mm-2MJ" secondAttribute="bottom" constant="10" id="hkt-Zl-bDi"/>
+                            <constraint firstItem="TIc-rT-uV2" firstAttribute="top" secondItem="GJc-mm-2MJ" secondAttribute="bottom" id="hkt-Zl-bDi"/>
                             <constraint firstItem="x9x-Zx-UcA" firstAttribute="top" secondItem="3oN-fV-oQx" secondAttribute="bottom" constant="5" id="jCF-Ms-6gP"/>
                             <constraint firstItem="5si-ga-A6a" firstAttribute="top" secondItem="x9x-Zx-UcA" secondAttribute="bottom" constant="4" id="jXj-T8-YQS"/>
                             <constraint firstItem="YK9-7t-rBZ" firstAttribute="leading" secondItem="peM-QV-Cgc" secondAttribute="trailing" constant="10" id="jgK-wk-RFn"/>
@@ -450,8 +478,10 @@
                         <outlet property="blue" destination="5si-ga-A6a" id="lZx-Oe-36Q"/>
                         <outlet property="brightness" destination="XMM-2N-bTL" id="4eo-xN-317"/>
                         <outlet property="colorPicker" destination="sSN-8X-INK" id="NBh-xY-IyQ"/>
+                        <outlet property="deleteButton" destination="CdV-Wz-UQw" id="lii-x8-ckX"/>
                         <outlet property="drawCollection" destination="gnp-vK-dWF" id="m06-zB-tpG"/>
                         <outlet property="drawView" destination="GJc-mm-2MJ" id="nOv-CJ-zN8"/>
+                        <outlet property="duplicateButton" destination="hPL-Qx-r3x" id="Pyq-Ph-mI1"/>
                         <outlet property="green" destination="3oN-fV-oQx" id="h3t-mv-PM1"/>
                         <outlet property="heightConstraint" destination="d7q-OH-VrP" id="13J-8S-5BU"/>
                         <outlet property="imageCollectionView" destination="YK9-7t-rBZ" id="otC-pe-9tQ"/>
@@ -481,6 +511,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="bin.png" width="128" height="128"/>
         <image name="default.png" width="640" height="480"/>
+        <image name="dup.png" width="128" height="128"/>
     </resources>
 </document>

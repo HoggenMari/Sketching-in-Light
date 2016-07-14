@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		7E0342411D2FC5F50050043F /* RedLightPattern.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0342401D2FC5F50050043F /* RedLightPattern.swift */; };
+		7E0644121D36359A00772B68 /* AlphaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0644111D36359A00772B68 /* AlphaView.swift */; };
+		7E0644161D37664A00772B68 /* alpha.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E0644151D37664A00772B68 /* alpha.png */; };
+		7E06441A1D376A2000772B68 /* bin.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E0644191D376A2000772B68 /* bin.png */; };
+		7E06441C1D376B1900772B68 /* dup.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E06441B1D376B1900772B68 /* dup.png */; };
 		7E303EE41CCF09ED00241163 /* line2_pattern.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7E303EE31CCF09ED00241163 /* line2_pattern.jpg */; };
 		7E303EE81CCF0F9D00241163 /* line3_pattern.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7E303EE71CCF0F9D00241163 /* line3_pattern.jpg */; };
 		7E303EEA1CCF5E0F00241163 /* lamp line 3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7E303EE91CCF5E0F00241163 /* lamp line 3.jpg */; };
@@ -122,6 +126,10 @@
 
 /* Begin PBXFileReference section */
 		7E0342401D2FC5F50050043F /* RedLightPattern.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RedLightPattern.swift; sourceTree = "<group>"; };
+		7E0644111D36359A00772B68 /* AlphaView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlphaView.swift; sourceTree = "<group>"; };
+		7E0644151D37664A00772B68 /* alpha.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = alpha.png; sourceTree = "<group>"; };
+		7E0644191D376A2000772B68 /* bin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bin.png; sourceTree = "<group>"; };
+		7E06441B1D376B1900772B68 /* dup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dup.png; sourceTree = "<group>"; };
 		7E303EE31CCF09ED00241163 /* line2_pattern.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = line2_pattern.jpg; sourceTree = "<group>"; };
 		7E303EE71CCF0F9D00241163 /* line3_pattern.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = line3_pattern.jpg; sourceTree = "<group>"; };
 		7E303EE91CCF5E0F00241163 /* lamp line 3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "lamp line 3.jpg"; sourceTree = "<group>"; };
@@ -282,9 +290,12 @@
 		7E7052421D29003B007466D6 /* icons */ = {
 			isa = PBXGroup;
 			children = (
+				7E0644151D37664A00772B68 /* alpha.png */,
 				7E4FA2771D3246440021442E /* add.png */,
 				7E7052431D291DF2007466D6 /* text_pattern.jpg */,
 				7E3D8EC91CC9C746002ABA9B /* blue_pattern.jpg */,
+				7E06441B1D376B1900772B68 /* dup.png */,
+				7E0644191D376A2000772B68 /* bin.png */,
 				7E3D8EC41CC9BC28002ABA9B /* green_pattern.jpg */,
 				7E303EED1CD1A34000241163 /* ipad_vistool_icon.png */,
 				7E3D8ECD1CC9DBED002ABA9B /* brightness_icon.png */,
@@ -333,6 +344,7 @@
 			isa = PBXGroup;
 			children = (
 				7E806E9B1D32597B0003B679 /* BrightnessView.swift */,
+				7E0644111D36359A00772B68 /* AlphaView.swift */,
 				7E806E9C1D32597B0003B679 /* SwiftHSVColorPicker.swift */,
 				7E806E9D1D32597B0003B679 /* ColorUtils.swift */,
 				7E806E9E1D32597B0003B679 /* ColorWheel.swift */,
@@ -486,6 +498,7 @@
 				7E8CEE7F1D1913EE001F5ED3 /* char_0.png in Resources */,
 				7E303EEC1CD18F4300241163 /* line4_pattern.jpg in Resources */,
 				7E3D8ECA1CC9C746002ABA9B /* blue_pattern.jpg in Resources */,
+				7E06441A1D376A2000772B68 /* bin.png in Resources */,
 				7E3D8EC51CC9BC28002ABA9B /* green_icon.png in Resources */,
 				7E8CEE761D1913A1001F5ED3 /* char_8.png in Resources */,
 				7E3D8ED61CCA0976002ABA9B /* line_pattern.jpg in Resources */,
@@ -513,12 +526,14 @@
 				7E8CEE7C1D1913A1001F5ED3 /* char_2.png in Resources */,
 				7E8CEE751D1913A1001F5ED3 /* char_9.png in Resources */,
 				7E8CEE781D1913A1001F5ED3 /* char_6.png in Resources */,
+				7E0644161D37664A00772B68 /* alpha.png in Resources */,
 				7E8CEE741D1913A1001F5ED3 /* char_2.png in Resources */,
 				7EF4C9B31D33554A007316EC /* image_pattern.jpg in Resources */,
 				7EAE0F351D18147D005C5DFF /* char_R.png in Resources */,
 				7E3D8EC81CC9BCCE002ABA9B /* red_pattern.jpg in Resources */,
 				7EAE0F0B1D168FB6005C5DFF /* char_A.png in Resources */,
 				7E303EE41CCF09ED00241163 /* line2_pattern.jpg in Resources */,
+				7E06441C1D376B1900772B68 /* dup.png in Resources */,
 				7EAE0F3E1D18147D005C5DFF /* char_I.png in Resources */,
 				7EAE0F341D18147D005C5DFF /* char_S.png in Resources */,
 				7EAE0F321D18147D005C5DFF /* char_U.png in Resources */,
@@ -582,6 +597,7 @@
 				7E806EA11D32597B0003B679 /* SwiftHSVColorPicker.swift in Sources */,
 				7ED00A751CC2737A00AC0A16 /* PreviewLight.swift in Sources */,
 				7E806EA31D32597B0003B679 /* ColorWheel.swift in Sources */,
+				7E0644121D36359A00772B68 /* AlphaView.swift in Sources */,
 				7ED00A471CC124BD00AC0A16 /* AppDelegate.swift in Sources */,
 				7ED00A771CC3338E00AC0A16 /* UIDevice.swift in Sources */,
 				7E806EA01D32597B0003B679 /* BrightnessView.swift in Sources */,

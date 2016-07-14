@@ -116,8 +116,8 @@ class PreviewLight: UIView {
                 CGContextSetLineCap(UIGraphicsGetCurrentContext(),CGLineCap.Round)
                 CGContextSetLineWidth(UIGraphicsGetCurrentContext(), minBrushWidth)
                 var components = CGColorGetComponents(appDelegate.selectedColor.CGColor)
-                
-                CGContextSetRGBStrokeColor(UIGraphicsGetCurrentContext(), components[0], components[1], components[2], 1.0)
+                                
+                CGContextSetRGBStrokeColor(UIGraphicsGetCurrentContext(), components[0], components[1], components[2], components[3])
                 CGContextStrokePath(UIGraphicsGetCurrentContext())
                 //img = UIGraphicsGetImageFromCurrentImageContext()
                 appDelegate.img_draw[appDelegate.currentFrame] = UIGraphicsGetImageFromCurrentImageContext()
@@ -149,7 +149,7 @@ class PreviewLight: UIView {
             
             var components = CGColorGetComponents(appDelegate.selectedColor.CGColor)
             
-            CGContextSetRGBStrokeColor(UIGraphicsGetCurrentContext(), components[0], components[1], components[2], 1.0)
+            CGContextSetRGBStrokeColor(UIGraphicsGetCurrentContext(), components[0], components[1], components[2], components[3])
             CGContextMoveToPoint(UIGraphicsGetCurrentContext(), x1, y1)
             CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), x1, y1)
             CGContextStrokePath(UIGraphicsGetCurrentContext())

@@ -7,12 +7,13 @@
 
 import UIKit
 
-class BrightnessView: UIView {
+class AlphaView: UIView {
     
     var delegate: SwiftHSVColorPicker?
-
-    var colorLayer: CAGradientLayer!
     
+    var colorLayer: CAGradientLayer!
+    var alphaLayer: CALayer!
+
     var point: CGPoint!
     var indicator = CAShapeLayer()
     var indicatorColor: CGColorRef = UIColor.lightGrayColor().CGColor
@@ -34,10 +35,16 @@ class BrightnessView: UIView {
         if (!ok) {
             print("SwiftHSVColorPicker: exception <The color provided to SwiftHSVColorPicker is not convertible to HSV>")
         }
+        
+        alphaLayer = CALayer()
+        alphaLayer.frame = CGRectMake(0, 2, self.frame.width, 10)
+        alphaLayer.contents = createAlphaLayer(alphaLayer.frame.size)
+        self.layer.addSublayer(alphaLayer)
+        
         colorLayer = CAGradientLayer()
         colorLayer.colors = [
-            UIColor.blackColor().CGColor,
-            UIColor(hue: hue, saturation: saturation, brightness: 1, alpha: 1).CGColor
+            UIColor.clearColor().CGColor,
+            UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: 1).CGColor
         ]
         colorLayer.locations = [0.0, 1.0]
         colorLayer.startPoint = CGPointMake(0.0, 0.5)
@@ -51,6 +58,7 @@ class BrightnessView: UIView {
         indicator.fillColor = indicatorColor
         indicator.lineWidth = indicatorBorderWidth
         self.layer.addSublayer(indicator)
+    
         
         drawIndicator()
     }
@@ -60,6 +68,7 @@ class BrightnessView: UIView {
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        print("Touch")
         touchHandler(touches)
     }
     
@@ -76,7 +85,7 @@ class BrightnessView: UIView {
         point.y = self.frame.height/2
         point.x = getXCoordinate(point.x)
         // Notify delegate of the new brightness
-        delegate?.brightnessSelected(getBrightnessFromPoint())
+        delegate?.alphaSelected(getAlphaFromPoint())
         
         drawIndicator()
     }
@@ -99,7 +108,7 @@ class BrightnessView: UIView {
         }
     }
     
-    func getBrightnessFromPoint() -> CGFloat {
+    func getAlphaFromPoint() -> CGFloat {
         // Get the brightness value for a given point
         return point.x/self.frame.width
     }
@@ -111,8 +120,8 @@ class BrightnessView: UIView {
         if (!ok) {
             print("SwiftHSVColorPicker: exception <The color provided to SwiftHSVColorPicker is not convertible to HSV>")
         }
-
-        return CGPoint(x: brightness * frame.width, y: frame.height / 2)
+        
+        return CGPoint(x: alpha * frame.width, y: frame.height / 2)
     }
     
     func setViewColor(color: UIColor!) {
@@ -123,8 +132,17 @@ class BrightnessView: UIView {
             print("SwiftHSVColorPicker: exception <The color provided to SwiftHSVColorPicker is not convertible to HSV>")
         }
         colorLayer.colors = [
-            UIColor.blackColor().CGColor,
-            UIColor(hue: hue, saturation: saturation, brightness: 1, alpha: alpha).CGColor
+            UIColor.clearColor().CGColor,
+            UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: 1).CGColor
         ]
     }
+    
+    func createAlphaLayer(size: CGSize) -> CGImageRef {
+       
+        var img = UIImage(named: "alpha.png")?.CGImage
+    
+        return img!
+
+    }
+    
 }

@@ -180,7 +180,15 @@ class RedLightPattern: UIView {
             }
         }else if(appDelegate.mode == 12){
             if(appDelegate.play){
-                img = imageWithImage(drawImageSequence(appDelegate.counter), scaledToSize: CGSize(width: 17, height: 12))
+                if(appDelegate.notification){
+                    if(appDelegate.counterUp){
+                        img = imageWithImage(drawImageSequence(0), scaledToSize: CGSize(width: 17, height: 12))
+                    }else{
+                        img = imageWithImage(drawImageSequence(1), scaledToSize: CGSize(width: 17, height: 12))
+                    }
+                }else{
+                    img = imageWithImage(drawImageSequence(appDelegate.counter), scaledToSize: CGSize(width: 17, height: 12))
+                }
             }else{
                 img = imageWithImage(appDelegate.img_draw[appDelegate.currentFrame], scaledToSize: CGSize(width: 17, height: 12))
             }
@@ -516,11 +524,33 @@ class RedLightPattern: UIView {
     
     func drawImageSequence(value:CGFloat) -> UIImage {
         
-        
-        
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 17, height: 12), false, 1)
         let context = UIGraphicsGetCurrentContext()
         
+        if(appDelegate.notification){
+            
+            CGContextSetAlpha(context, 1)
+            if(value==0){
+            CGContextDrawImage(context, CGRect(x: 0, y:0, width: 17, height: 12), appDelegate.img_draw[0].CGImage)
+            }else{
+            CGContextDrawImage(context, CGRect(x: 0, y:0, width: 17, height: 12), appDelegate.img_draw[appDelegate.drawFrames-1].CGImage)
+            }
+            
+            img = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            
+            
+        }else if(!appDelegate.smooth){
+           
+        var num = Int((value)*CGFloat(appDelegate.drawFrames))
+            
+        CGContextDrawImage(context, CGRect(x: 0, y:0, width: 17, height: 12), appDelegate.img_draw[num].CGImage)
+            
+        img = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            
+            
+        }else{
         var num = Int((value)*CGFloat(appDelegate.drawFrames))
         var num2: Int
         
@@ -544,19 +574,34 @@ class RedLightPattern: UIView {
         
         //CGContextSetBlendMode(context, CGBlendMode.Difference)
         
-        
-        CGContextSetAlpha(context, 1-pow((timer-0.25),5))
-        CGContextDrawImage(context, CGRect(x: 0, y:0, width: 17, height: 12), appDelegate.img_draw[num].CGImage)
-        CGContextSetAlpha(context, pow((timer),2))
-        CGContextDrawImage(context, CGRect(x: 0, y:0, width: 17, height: 12), appDelegate.img_draw[num2].CGImage)
-        
+        if(appDelegate.counterUp){
+            if(num != num2){
+                CGContextSetAlpha(context, 1-pow((timer-0.25),5))
+                CGContextDrawImage(context, CGRect(x: 0, y:0, width: 17, height: 12), appDelegate.img_draw[num].CGImage)
+                CGContextSetAlpha(context, pow((timer),2))
+                CGContextDrawImage(context, CGRect(x: 0, y:0, width: 17, height: 12), appDelegate.img_draw[num2].CGImage)
+            }else{
+                CGContextSetAlpha(context, 1)
+                CGContextDrawImage(context, CGRect(x: 0, y:0, width: 17, height: 12), appDelegate.img_draw[num].CGImage)
+            }
+        }else{
+            if(num != num2){
+                CGContextSetAlpha(context, 1-pow(((1-timer)-0.25),5))
+                CGContextDrawImage(context, CGRect(x: 0, y:0, width: 17, height: 12), appDelegate.img_draw[num].CGImage)
+                CGContextSetAlpha(context, pow((1-timer),2))
+                CGContextDrawImage(context, CGRect(x: 0, y:0, width: 17, height: 12), appDelegate.img_draw[num2].CGImage)
+            }else{
+                CGContextSetAlpha(context, 1)
+                CGContextDrawImage(context, CGRect(x: 0, y:0, width: 17, height: 12), appDelegate.img_draw[num].CGImage)
+            }
+        }
         img = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
 
+        }
         
         
-        
-        print("NUMBER: "+String(num)+" "+String(num2)+" "+String((1-timer)+timer))
+        //print("NUMBER: "+String(num)+" "+String(num2)+" "+String((1-timer)+timer))
         return img;
     }
     
@@ -970,7 +1015,8 @@ class RedLightPattern: UIView {
             CGContextSetLineWidth(UIGraphicsGetCurrentContext(), minBrushWidth)
             var components = CGColorGetComponents(appDelegate.selectedColor.CGColor)
             
-            CGContextSetRGBStrokeColor(UIGraphicsGetCurrentContext(), components[0], components[1], components[2], 1.0)
+            CGContextSetRGBStrokeColor(UIGraphicsGetCurrentContext(), components[0], components[1], components[2], components[3])
+            //CGContextSetStrokeColorWithColor(UIGraphicsGetCurrentContext(), appDelegate.selectedColor.CGColor)
             CGContextStrokePath(UIGraphicsGetCurrentContext())
             //img = UIGraphicsGetImageFromCurrentImageContext()
             appDelegate.img_draw[appDelegate.currentFrame] = UIGraphicsGetImageFromCurrentImageContext()
@@ -1001,7 +1047,8 @@ class RedLightPattern: UIView {
         
             var components = CGColorGetComponents(appDelegate.selectedColor.CGColor)
         
-            CGContextSetRGBStrokeColor(UIGraphicsGetCurrentContext(), components[0], components[1], components[2], 1.0)
+            CGContextSetRGBStrokeColor(UIGraphicsGetCurrentContext(), components[0], components[1], components[2], components[3])
+            //CGContextSetStrokeColorWithColor(UIGraphicsGetCurrentContext(), appDelegate.selectedColor.CGColor)
             CGContextMoveToPoint(UIGraphicsGetCurrentContext(), x1, y1)
             CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), x1, y1)
             CGContextStrokePath(UIGraphicsGetCurrentContext())

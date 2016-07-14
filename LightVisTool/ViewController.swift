@@ -71,6 +71,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     @IBOutlet var recordButtonOut: UIButton!
     @IBOutlet var textPosLabel: UILabel!
     
+    @IBOutlet var duplicateButton: UIButton!
+    @IBOutlet var deleteButton: UIButton!
+    
     @IBOutlet var imageCollectionView: UICollectionView!
     let imageCollectionViewIdentifier = "imageCell"
     var images = [UIImage]()
@@ -185,9 +188,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         appDelegate.img_draw.append(UIImage())
 
         //drawRectangle()
-        
+
+        appDelegate.selectedColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
         colorPicker.setViewColor(appDelegate.selectedColor)
-        appDelegate.selectedColor = UIColor.whiteColor()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.reloadCollection), name: "reloadCollection", object: nil)
 
@@ -385,27 +388,35 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             lightPatternOptionView.hidden = true
             textOptionView.hidden = false
             imageCollectionView.hidden = true
-            drawCollection.hidden = true;
-            drawView.hidden = true;
+            drawCollection.hidden = true
+            drawView.hidden = true
+            deleteButton.hidden = true
+            duplicateButton.hidden = true
         }else if(indexPath.item==12){
             textOptionView.hidden = true
             lightPatternOptionView.hidden = false
             imageCollectionView.hidden = true
-            drawCollection.hidden = false;
-            drawView.hidden = false;
+            drawCollection.hidden = false
+            drawView.hidden = false
+            deleteButton.hidden = false
+            duplicateButton.hidden = false
         }else if(indexPath.item==13){
             textOptionView.hidden = true
             lightPatternOptionView.hidden = true
             imageCollectionView.hidden = false
-            drawCollection.hidden = true;
-            drawView.hidden = true;
+            drawCollection.hidden = true
+            drawView.hidden = true
+            deleteButton.hidden = true
+            duplicateButton.hidden = true
             FetchCustomAlbumPhotos()
         }else{
-            drawCollection.hidden = true;
+            drawCollection.hidden = true
             lightPatternOptionView.hidden = true
             textOptionView.hidden = true
             imageCollectionView.hidden = true
-            drawView.hidden = true;
+            drawView.hidden = true
+            deleteButton.hidden = true
+            duplicateButton.hidden = true
         }
         
         if(indexPath.item==0){
@@ -489,8 +500,6 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                 backgroundLight.setNeedsDisplay()
                 previewLight.setNeedsDisplay()
                 drawCollection.reloadData()
-
-
             }else{
                 appDelegate.currentFrame = indexPath.item
                 backgroundLight.setNeedsDisplay()
@@ -667,6 +676,75 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         print("add")
         print(images.count)
     }
+    
+    @IBAction func deleteImage(sender: AnyObject) {
+        print("duplicate")
+        if(appDelegate.drawFrames>1){
+            appDelegate.img_draw.removeAtIndex(appDelegate.currentFrame)
+            appDelegate.drawFrames--
+            appDelegate.currentFrame = appDelegate.drawFrames-1
+            backgroundLight.setNeedsDisplay()
+            previewLight.setNeedsDisplay()
+            drawCollection.reloadData()
+        }else if(appDelegate.drawFrames==1){
+            appDelegate.img_draw.append(UIImage())
+            appDelegate.img_draw.removeAtIndex(appDelegate.currentFrame)
+            appDelegate.currentFrame = appDelegate.drawFrames-1
+            backgroundLight.setNeedsDisplay()
+            previewLight.setNeedsDisplay()
+            drawCollection.reloadData()
+        }
+    }
+    
+    @IBAction func duplicateImage(sender: AnyObject) {
+        print("delete")
+        appDelegate.img_draw.insert(appDelegate.img_draw[appDelegate.currentFrame], atIndex: appDelegate.currentFrame)
+        appDelegate.drawFrames++
+        backgroundLight.setNeedsDisplay()
+        previewLight.setNeedsDisplay()
+        drawCollection.reloadData()
+    }
+    
+    // change background color when user touches cell
+    func collectionView(collectionView: UICollectionView, didHighlightItemAtIndexPath indexPath: NSIndexPath) {
+        if(collectionView == self.drawCollection){
+            var index = collectionView.indexPathsForVisibleItems()
+            print("Test")
+            print(index)
+            
+            
+            var indexes = [NSIndexPath]()
+            // assuming that tableView is your self.tableView defined somewhere
+            for i in 0...drawCollection.numberOfSections() - 1
+            {
+                for j in 0...drawCollection.numberOfItemsInSection(i)-1
+                {
+                    
+                    let index = NSIndexPath(forRow: j, inSection: i)
+                    indexes.append(index)
+                    
+                }
+            }
+            
+            
+            for i in 0 ..< index.count - 1 {
+                print("Count")
+                print(index[i])
+                let cell = collectionView.cellForItemAtIndexPath(index[i]) as! DrawCollectionViewCell
+                cell.contentView.layer.borderColor = UIColor.whiteColor().CGColor
+                cell.contentView.layer.borderWidth = 1
+            }
+            
+            
+            if(indexPath.item != appDelegate.drawFrames){
+                let cell = collectionView.cellForItemAtIndexPath(indexPath) as! DrawCollectionViewCell
+                cell.contentView.layer.borderColor = UIColor.whiteColor().CGColor
+                cell.contentView.layer.borderWidth = 3            }
+        }
+    }
+    
+
+    
 }
 
 

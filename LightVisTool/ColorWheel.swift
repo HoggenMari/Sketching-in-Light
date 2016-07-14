@@ -17,6 +17,10 @@ class ColorWheel: UIView {
     var brightnessLayer: CAShapeLayer!
     var brightness: CGFloat = 1.0
     
+    // Overlay layer for the alpha
+    var alphaLayer: CAShapeLayer!
+    var alph: CGFloat = 1.0
+    
     // Layer for the indicator
     var indicatorLayer: CAShapeLayer!
     var point: CGPoint!
@@ -48,6 +52,11 @@ class ColorWheel: UIView {
         brightnessLayer = CAShapeLayer()
         brightnessLayer.path = UIBezierPath(roundedRect: CGRect(x: 0.5, y: 0.5, width: self.frame.width, height: self.frame.height), cornerRadius: (self.frame.height)/2).CGPath
         self.layer.addSublayer(brightnessLayer)
+        
+        // Layer for the alpha
+        alphaLayer = CAShapeLayer()
+        alphaLayer.path = UIBezierPath(roundedRect: CGRect(x: 0.5, y: 0.5, width: self.frame.width, height: self.frame.height), cornerRadius: (self.frame.height)/2).CGPath
+        self.layer.addSublayer(alphaLayer)
         
         // Layer for the indicator
         indicatorLayer = CAShapeLayer()
@@ -228,7 +237,9 @@ class ColorWheel: UIView {
         }
         self.color = color
         self.brightness = brightness
-        brightnessLayer.fillColor = UIColor(white: 0, alpha: 1.0-self.brightness).CGColor
+        brightnessLayer.fillColor = UIColor(white: 0, alpha: 1-self.brightness).CGColor
+        alphaLayer.fillColor = UIColor(white: 0, alpha: 1-self.alpha).CGColor
+
         point = pointAtHueSaturation(hue, saturation: saturation)
         drawIndicator()
     }
@@ -242,8 +253,22 @@ class ColorWheel: UIView {
             print("SwiftHSVColorPicker: exception <The color provided to SwiftHSVColorPicker is not convertible to HSV>")
         }
         self.brightness = _brightness
-        brightnessLayer.fillColor = UIColor(white: 0, alpha: 1.0-self.brightness).CGColor
-        self.color = UIColor(hue: hue, saturation: saturation, brightness: _brightness, alpha: 1.0)
+        brightnessLayer.fillColor = UIColor(white: 0, alpha: 1-self.brightness).CGColor
+        self.color = UIColor(hue: hue, saturation: saturation, brightness: _brightness, alpha: alpha)
+        drawIndicator()
+    }
+    
+    func setViewAlpha(_alpha: CGFloat) {
+        // Update the brightness of the view
+        
+        var hue: CGFloat = 0.0, saturation: CGFloat = 0.0, brightness: CGFloat = 0.0, alpha: CGFloat = 0.0
+        let ok: Bool = color.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
+        if (!ok) {
+            print("SwiftHSVColorPicker: exception <The color provided to SwiftHSVColorPicker is not convertible to HSV>")
+        }
+        self.alph = _alpha
+        alphaLayer.fillColor = UIColor(white: 1, alpha: 1-self.alph).CGColor
+        self.color = UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: _alpha)
         drawIndicator()
     }
 }
