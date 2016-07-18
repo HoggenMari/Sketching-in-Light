@@ -539,6 +539,31 @@ class RedLightPattern: UIView {
         let context = UIGraphicsGetCurrentContext()
         
         
+        if(appDelegate.notification){
+            
+            CGContextSetAlpha(context, 1)
+            if(value==0){
+                CGContextDrawImage(context, CGRect(x: 0, y:0, width: 17, height: 12), appDelegate.img_draw[0].CGImage)
+            }else{
+                CGContextDrawImage(context, CGRect(x: 0, y:0, width: 17, height: 12), appDelegate.img_draw[appDelegate.drawFrames-1].CGImage)
+            }
+            
+            img = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            
+            
+        }else if(!appDelegate.smooth){
+            
+            var num = Int((value)*CGFloat(appDelegate.drawFrames))
+            
+            CGContextDrawImage(context, CGRect(x: 0, y:0, width: 17, height: 12), appDelegate.img_draw[num].CGImage)
+            
+            img = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            
+            
+        }else{
+        
         var num = Int((value)*CGFloat(appDelegate.drawFrames))
         var num2: Int
         
@@ -561,12 +586,18 @@ class RedLightPattern: UIView {
         //var num2 = (value)
         
         //CGContextSetBlendMode(context, CGBlendMode.Difference)
-        
+            
         if(appDelegate.counterUp){
+            
+            print("CounterUP: ")
+            print(num)
+            print(value)
+
             //if(num != num2){
                 for ix in 0...pixelWidth-1 {
                     for iy in 0...pixelHeight-1 {
                     
+                        if(num2<appDelegate.drawFrames && num2>=0 && num<appDelegate.drawFrames && num>=0){
                         let (r, g, b, a) = getPixelColor(appDelegate.img_draw[num], pos: CGPoint(x: ix,y: 11-iy))
                         let (r1, g1, b1, a1) = getPixelColor(appDelegate.img_draw[num2], pos: CGPoint(x: ix,y: 11-iy))
 
@@ -586,6 +617,7 @@ class RedLightPattern: UIView {
                         CGContextAddRect(context, rectangle)
                         //CGContextStrokePath(context)
                         CGContextFillRect(context, rectangle)
+                        }
                     }
                 }
             //}else{
@@ -594,9 +626,15 @@ class RedLightPattern: UIView {
             //}
         }else{
             //if(num != num2){
+            
+            print("CounterDown: ")
+            print(num)
+            print(value)
+
                 for ix in 0...pixelWidth-1 {
                     for iy in 0...pixelHeight-1 {
                         
+                        if(num2<appDelegate.drawFrames && num2>=0 && num<appDelegate.drawFrames && num>=0){
                         let (r, g, b, a) = getPixelColor(appDelegate.img_draw[num2], pos: CGPoint(x: ix,y: 11-iy))
                         let (r1, g1, b1, a1) = getPixelColor(appDelegate.img_draw[num], pos: CGPoint(x: ix,y: 11-iy))
                         
@@ -616,6 +654,7 @@ class RedLightPattern: UIView {
                         CGContextAddRect(context, rectangle)
                         //CGContextStrokePath(context)
                         CGContextFillRect(context, rectangle)
+                        }
                     }
                 }
            // }else{
@@ -626,6 +665,7 @@ class RedLightPattern: UIView {
         img = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
     
+        }
     
     //print("NUMBER: "+String(num)+" "+String(num2)+" "+String((1-timer)+timer))
     return img;

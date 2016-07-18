@@ -9,7 +9,7 @@
 import UIKit
 import Photos
 
-class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
     
     let reuseIdentifier = "cell" // also enter this string as the cell identifier in the storyboard
     var items = ["None", "Fade Brightness", "Fade Red", "Fade Green", "Fade Blue", "Ellipse", "Rectangle", "Horizontal Line", "Vertical Line", "Horizontal Box", "Vertical Box", "Text", "LightPattern", "Image"]
@@ -196,6 +196,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         colorPicker.setViewColor(appDelegate.selectedColor)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.reloadCollection), name: "reloadCollection", object: nil)
+
+        self.textLabel.delegate = self
 
     }
     
@@ -749,9 +751,12 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         }
     }
     
-
+    func textFieldShouldReturn(userText: UITextField!) -> Bool {
+        userText.resignFirstResponder()
+        return true;
+    }
+    
     
 }
-
 
 
