@@ -187,7 +187,10 @@ class RedLightPattern: UIView {
                         img = imageWithImage(drawImageSequence(1), scaledToSize: CGSize(width: 17, height: 12))
                     }
                 }else{
-                    img = imageWithImage(drawImageSequence(appDelegate.counter), scaledToSize: CGSize(width: 17, height: 12))
+                    //print(appDelegate.drawFrames)
+                    if(appDelegate.drawFrames>1){
+                        img = imageWithImage(drawImageSeqInterpolate(appDelegate.counter), scaledToSize: CGSize(width: 17, height: 12))
+                    }
                 }
             }else{
                 img = imageWithImage(appDelegate.img_draw[appDelegate.currentFrame], scaledToSize: CGSize(width: 17, height: 12))
@@ -204,7 +207,7 @@ class RedLightPattern: UIView {
         
         
         let context = UIGraphicsGetCurrentContext()
-        //CGContextSetLineWidth(context, 4.0)
+        //CGContextSetLineWidth(context, 1)
         CGContextSetStrokeColorWithColor(context,
             UIColor.blackColor().CGColor)
         
@@ -315,6 +318,11 @@ class RedLightPattern: UIView {
                     }else{
                         let (r, g, b, a) = getPixelColor(img, pos: CGPoint(x: ix,y: iy))
                         CGContextSetRGBFillColor(context, appDelegate.red * r, appDelegate.green * g, appDelegate.blue * b, appDelegate.brigtness * a)
+                        
+                        //let intCol = interpolateRGBColorFrom(UIColor.redColor(), end: UIColor.blueColor(), endWithFraction: 0.5)
+                        //let c1 = CGColorGetComponents(intCol.CGColor)
+                        //CGContextSetRGBFillColor(context, c1[0], c1[1], c1[2], c1[3])
+                        
                     }
                     /*if(appDelegate.recordCounter != lastRecCounterInc){
                         lightSequence.append(img)
@@ -350,14 +358,18 @@ class RedLightPattern: UIView {
                 }
                 let x_pos : CGFloat = CGFloat(ix)*viewSizeWidth/CGFloat(pixelWidth)
                 let y_pos : CGFloat = CGFloat(iy)*viewSizeHeight/CGFloat(pixelHeight)
-                let rectangle = CGRectMake(x_pos,y_pos,viewSizeWidth/CGFloat(pixelWidth),viewSizeHeight/CGFloat(pixelHeight))
-                if(appDelegate.mode==12){
-                    CGContextSetStrokeColorWithColor(context, UIColor.whiteColor().CGColor)
-                }else{
-                    CGContextSetStrokeColorWithColor(context, UIColor.blackColor().CGColor)
-                }
+                                
+                let rectangle = CGRectMake(round(x_pos),round(y_pos),round(viewSizeWidth/CGFloat(pixelWidth)),round(viewSizeHeight/CGFloat(pixelHeight)))
+                
                 CGContextAddRect(context, rectangle)
-                CGContextStrokePath(context)
+
+                if(appDelegate.mode==12 && !appDelegate.play){
+                    //CGContextSetStrokeColorWithColor(context, UIColor.whiteColor().CGColor)
+                    CGContextStrokePath(context)
+                }else{
+                    //CGContextSetStrokeColorWithColor(context, UIColor.whiteColor().CGColor)
+                }
+                //CGContextStrokePath(context)
                 CGContextFillRect(context, rectangle)
             }
         }
@@ -521,6 +533,104 @@ class RedLightPattern: UIView {
         return img
     }
     
+    func drawImageSeqInterpolate(value:CGFloat) -> UIImage {
+        
+        UIGraphicsBeginImageContextWithOptions(CGSize(width: 17, height: 12), false, 1)
+        let context = UIGraphicsGetCurrentContext()
+        
+        
+        var num = Int((value)*CGFloat(appDelegate.drawFrames))
+        var num2: Int
+        
+        var timer = CGFloat(appDelegate.counter - CGFloat(Int((value)*CGFloat(appDelegate.drawFrames)))*CGFloat(1/CGFloat(appDelegate.drawFrames))) * CGFloat(appDelegate.drawFrames)
+        
+        if(appDelegate.counterUp){
+            if(num<appDelegate.drawFrames-1){
+                num2 = num + 1
+            }else{
+                num2 = num
+            }
+        }else{
+            if(num>0){
+                num2 = num - 1
+            }else{
+                num2 = 0
+            }
+        }
+        
+        //var num2 = (value)
+        
+        //CGContextSetBlendMode(context, CGBlendMode.Difference)
+        
+        if(appDelegate.counterUp){
+            //if(num != num2){
+                for ix in 0...pixelWidth-1 {
+                    for iy in 0...pixelHeight-1 {
+                    
+                        let (r, g, b, a) = getPixelColor(appDelegate.img_draw[num], pos: CGPoint(x: ix,y: 11-iy))
+                        let (r1, g1, b1, a1) = getPixelColor(appDelegate.img_draw[num2], pos: CGPoint(x: ix,y: 11-iy))
+
+                        let interpol = interpolateRGBColorFrom(UIColor(red: r, green: g, blue: b, alpha: a), end: UIColor(red: r1, green: g1, blue: b1, alpha: a1), endWithFraction: pow(timer,1))
+                        
+                        let c1 = CGColorGetComponents(interpol.CGColor)
+                        
+                        CGContextSetRGBFillColor(context, appDelegate.red * c1[0], appDelegate.green * c1[1], appDelegate.blue * c1[2], appDelegate.brigtness * c1[3])
+                        
+
+                        let rectangle = CGRectMake(CGFloat(ix),CGFloat(iy),CGFloat(1),CGFloat(1))
+                        if(appDelegate.mode==12){
+                            CGContextSetStrokeColorWithColor(context, UIColor.whiteColor().CGColor)
+                        }else{
+                            CGContextSetStrokeColorWithColor(context, UIColor.blackColor().CGColor)
+                        }
+                        CGContextAddRect(context, rectangle)
+                        //CGContextStrokePath(context)
+                        CGContextFillRect(context, rectangle)
+                    }
+                }
+            //}else{
+            //    CGContextSetAlpha(context, 1)
+            //    CGContextDrawImage(context, CGRect(x: 0, y:0, width: 17, height: 12), appDelegate.img_draw[num].CGImage)
+            //}
+        }else{
+            //if(num != num2){
+                for ix in 0...pixelWidth-1 {
+                    for iy in 0...pixelHeight-1 {
+                        
+                        let (r, g, b, a) = getPixelColor(appDelegate.img_draw[num2], pos: CGPoint(x: ix,y: 11-iy))
+                        let (r1, g1, b1, a1) = getPixelColor(appDelegate.img_draw[num], pos: CGPoint(x: ix,y: 11-iy))
+                        
+                        let interpol = interpolateRGBColorFrom(UIColor(red: r, green: g, blue: b, alpha: a), end: UIColor(red: r1, green: g1, blue: b1, alpha: a1), endWithFraction: pow(timer,1))
+                        
+                        let c1 = CGColorGetComponents(interpol.CGColor)
+                        
+                        CGContextSetRGBFillColor(context, appDelegate.red * c1[0], appDelegate.green * c1[1], appDelegate.blue * c1[2], appDelegate.brigtness * c1[3])
+                        
+                        
+                        let rectangle = CGRectMake(CGFloat(ix),CGFloat(iy),CGFloat(1),CGFloat(1))
+                        if(appDelegate.mode==12){
+                            CGContextSetStrokeColorWithColor(context, UIColor.whiteColor().CGColor)
+                        }else{
+                            CGContextSetStrokeColorWithColor(context, UIColor.blackColor().CGColor)
+                        }
+                        CGContextAddRect(context, rectangle)
+                        //CGContextStrokePath(context)
+                        CGContextFillRect(context, rectangle)
+                    }
+                }
+           // }else{
+           //     CGContextSetAlpha(context, 1)
+           //     CGContextDrawImage(context, CGRect(x: 0, y:0, width: 17, height: 12), appDelegate.img_draw[num].CGImage)
+           // }
+        }
+        img = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+    
+    
+    //print("NUMBER: "+String(num)+" "+String(num2)+" "+String((1-timer)+timer))
+    return img;
+    }
+
     
     func drawImageSequence(value:CGFloat) -> UIImage {
         
@@ -1096,6 +1206,58 @@ class RedLightPattern: UIView {
         return CGFloat(round(Double(value) * divisor) / divisor)
     }
     
+
+    func interpolateRGBColorFrom(start: UIColor, end: UIColor, endWithFraction: CGFloat) -> UIColor {
+        
+        var endWithFraction = max(0, endWithFraction)
+        endWithFraction = min(1, endWithFraction)
+        
+        let c1 = CGColorGetComponents(start.CGColor)
+        let c2 = CGColorGetComponents(end.CGColor)
+        
+        let r = c1[0] + (c2[0] - c1[0]) * endWithFraction;
+        let g = c1[1] + (c2[1] - c1[1]) * endWithFraction;
+        let b = c1[2] + (c2[2] - c1[2]) * endWithFraction;
+        let a = c1[3] + (c2[3] - c1[3]) * endWithFraction;
+        
+        return UIColor(red: r, green: g, blue: b, alpha: a) //UIColor (colorLiteralRed: r, green: g, blue: b, alpha: a)
+        
+    }
+    
+    /*+ (UIColor *)interpolateRGBColorFrom:(UIColor *)start to:(UIColor *)end withFraction:(float)f {
+    
+    f = MAX(0, f);
+    f = MIN(1, f);
+    
+    const CGFloat *c1 = CGColorGetComponents(start.CGColor);
+    const CGFloat *c2 = CGColorGetComponents(end.CGColor);
+    
+    CGFloat r = c1[0] + (c2[0] - c1[0]) * f;
+    CGFloat g = c1[1] + (c2[1] - c1[1]) * f;
+    CGFloat b = c1[2] + (c2[2] - c1[2]) * f;
+    CGFloat a = c1[3] + (c2[3] - c1[3]) * f;
+    
+    return [UIColor colorWithRed:r green:g blue:b alpha:a];
+    }
+    
+    + (UIColor *)interpolateHSVColorFrom:(UIColor *)start to:(UIColor *)end withFraction:(float)f {
+    
+    f = MAX(0, f);
+    f = MIN(1, f);
+    
+    CGFloat h1,s1,v1,a1;
+    [start getHue:&h1 saturation:&s1 brightness:&v1 alpha:&a1];
+    
+    CGFloat h2,s2,v2,a2;
+    [end getHue:&h2 saturation:&s2 brightness:&v2 alpha:&a2];
+    
+    CGFloat h = h1 + (h2 - h1) * f;
+    CGFloat s = s1 + (s2 - s1) * f;
+    CGFloat v = v1 + (v2 - v1) * f;
+    CGFloat a = a1 + (a2 - a1) * f;
+    
+    return [UIColor colorWithHue:h saturation:s brightness:v alpha:a];
+    }*/
 
 
 }

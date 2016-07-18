@@ -131,6 +131,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             
             backgroundLightSizeWidth = (screenSizeWidth/ipadSizeWidth)*0.95*5.9*1.32989690721649
             backgroundLightSizeHeight = (screenSizeWidth/ipadSizeWidth)*0.98*4.03*1.32989690721649
+            
+            backgroundLightSizeWidth = round(backgroundLightSizeWidth/17)*17
+            backgroundLightSizeHeight = round(backgroundLightSizeHeight/12)*12
         }
         
         lightPatternCollectionView.dataSource = self
@@ -494,6 +497,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             //print("selected: "+String(indexPath.item))
             if(indexPath.item==appDelegate.drawFrames){
                 //print("last: "+String(appDelegate.drawFrames))
+                appDelegate.play = false;
+                timer.invalidate()
+                playButton .setTitle("\u{f04b}", forState: UIControlState.Normal)
                 appDelegate.img_draw.append(UIImage())
                 appDelegate.drawFrames++
                 appDelegate.currentFrame = appDelegate.drawFrames-1
