@@ -73,6 +73,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     @IBOutlet var duplicateButton: UIButton!
     @IBOutlet var deleteButton: UIButton!
+    @IBOutlet var saveButton: UIButton!
     
     @IBOutlet var imageCollectionView: UICollectionView!
     let imageCollectionViewIdentifier = "imageCell"
@@ -397,6 +398,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             drawView.hidden = true
             deleteButton.hidden = true
             duplicateButton.hidden = true
+            saveButton.hidden = true
         }else if(indexPath.item==12){
             textOptionView.hidden = true
             lightPatternOptionView.hidden = false
@@ -405,6 +407,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             drawView.hidden = false
             deleteButton.hidden = false
             duplicateButton.hidden = false
+            saveButton.hidden = false
         }else if(indexPath.item==13){
             textOptionView.hidden = true
             lightPatternOptionView.hidden = true
@@ -413,6 +416,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             drawView.hidden = true
             deleteButton.hidden = true
             duplicateButton.hidden = true
+            saveButton.hidden = true
             FetchCustomAlbumPhotos()
         }else{
             drawCollection.hidden = true
@@ -422,6 +426,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             drawView.hidden = true
             deleteButton.hidden = true
             duplicateButton.hidden = true
+            saveButton.hidden = true
         }
         
         if(indexPath.item==0){
@@ -499,15 +504,21 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             //print("selected: "+String(indexPath.item))
             if(indexPath.item==appDelegate.drawFrames){
                 //print("last: "+String(appDelegate.drawFrames))
+                
+
                 appDelegate.play = false;
                 timer.invalidate()
                 playButton .setTitle("\u{f04b}", forState: UIControlState.Normal)
-                appDelegate.img_draw.append(UIImage())
+                UIGraphicsBeginImageContextWithOptions(CGSize(width: 17, height: 12), false, 1)
+                let img = UIGraphicsGetImageFromCurrentImageContext()
+                appDelegate.img_draw.append(img)
                 appDelegate.drawFrames++
                 appDelegate.currentFrame = appDelegate.drawFrames-1
                 backgroundLight.setNeedsDisplay()
                 previewLight.setNeedsDisplay()
                 drawCollection.reloadData()
+                self.drawCollection.scrollToItemAtIndexPath(NSIndexPath(forItem: appDelegate.drawFrames, inSection: 0), atScrollPosition: .Right, animated: true)
+
             }else{
                 appDelegate.currentFrame = indexPath.item
                 backgroundLight.setNeedsDisplay()
@@ -756,6 +767,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         return true;
     }
     
+    @IBAction func save(sender: AnyObject) {
+        print("save")
+    }
     
 }
 

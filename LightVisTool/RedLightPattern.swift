@@ -1216,6 +1216,7 @@ class RedLightPattern: UIView {
     
     func getPixelColor(img: UIImage, pos: CGPoint) -> (CGFloat, CGFloat, CGFloat, CGFloat) {
         
+        if(img.CGImage != nil){
         let pixelData = CGDataProviderCopyData(CGImageGetDataProvider(img.CGImage))
         let data: UnsafePointer<UInt8> = CFDataGetBytePtr(pixelData)
         
@@ -1239,6 +1240,10 @@ class RedLightPattern: UIView {
         //NSLog("Pixel: %f %f %f %f %f", pos.x, pos.y, r, g, b)
 
         return (r, g, b, a)
+        
+        }else{
+            return(0, 0, 0, 0)
+        }
     }
     
     func roundToPlaces(value:CGFloat, places:Int) -> CGFloat {

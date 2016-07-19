@@ -27,7 +27,7 @@
                                 <rect key="frame" x="94" y="385" width="654" height="215"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sSN-8X-INK" customClass="SwiftHSVColorPicker" customModule="LightVisTool" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="66" width="150" height="165"/>
+                                        <rect key="frame" x="0.0" y="94" width="290" height="118"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
                                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="erX-cf-nYn" customClass="PreviewLight" customModule="LightVisTool" customModuleProvider="target">
@@ -333,27 +333,27 @@
                                 </variation>
                             </view>
                             <collectionView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="gnp-vK-dWF">
-                                <rect key="frame" x="261" y="385" width="240" height="55"/>
+                                <rect key="frame" x="261" y="385" width="240" height="60"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="55" id="Wfs-Xh-osN"/>
+                                    <constraint firstAttribute="height" constant="60" id="Wfs-Xh-osN"/>
                                     <constraint firstAttribute="width" constant="220" id="ebt-La-geL"/>
                                 </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Wo0-de-TxR">
-                                    <size key="itemSize" width="70" height="55"/>
+                                    <size key="itemSize" width="76" height="60"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="drawCell" id="aeT-u1-2Xi" customClass="DrawCollectionViewCell" customModule="LightVisTool" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="70" height="55"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="76" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="70" height="55"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="76" height="60"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0DP-MS-0hr">
-                                                    <rect key="frame" x="0.0" y="1" width="70" height="53"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="76" height="60"/>
                                                 </imageView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -376,8 +376,8 @@
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hPL-Qx-r3x">
                                 <rect key="frame" x="508" y="293" width="24" height="24"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="24" id="9Gf-PO-Kxa"/>
-                                    <constraint firstAttribute="height" constant="24" id="hsv-na-aoR"/>
+                                    <constraint firstAttribute="width" constant="27" id="9Gf-PO-Kxa"/>
+                                    <constraint firstAttribute="height" constant="27" id="hsv-na-aoR"/>
                                 </constraints>
                                 <state key="normal" title="Button" image="dup.png"/>
                                 <connections>
@@ -387,12 +387,25 @@
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CdV-Wz-UQw">
                                 <rect key="frame" x="508" y="320" width="24" height="24"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="24" id="MuO-cW-3sY"/>
-                                    <constraint firstAttribute="height" constant="24" id="mQg-um-b45"/>
+                                    <constraint firstAttribute="width" constant="27" id="MuO-cW-3sY"/>
+                                    <constraint firstAttribute="height" constant="27" id="mQg-um-b45"/>
                                 </constraints>
                                 <state key="normal" title="Button" image="bin.png"/>
                                 <connections>
                                     <action selector="deleteImage:" destination="BYZ-38-t0r" eventType="touchUpInside" id="mAI-VV-a7J"/>
+                                </connections>
+                            </button>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SAs-9x-HCV">
+                                <rect key="frame" x="447" y="383" width="24" height="24"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="24" id="Ggx-bs-cl9"/>
+                                    <constraint firstAttribute="height" constant="24" id="xO1-SO-eH2"/>
+                                </constraints>
+                                <state key="normal" image="save.png">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="save:" destination="BYZ-38-t0r" eventType="touchUpInside" id="jgR-ub-bu0"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -406,6 +419,7 @@
                             <constraint firstItem="RCY-3L-kJG" firstAttribute="top" secondItem="F12-9v-Y7L" secondAttribute="bottom" constant="5" id="7HF-ji-J9N"/>
                             <constraint firstItem="grC-4U-l47" firstAttribute="top" secondItem="KeB-yy-f5K" secondAttribute="bottom" constant="75" id="BmY-vK-Azm"/>
                             <constraint firstItem="CCl-tI-nZM" firstAttribute="leading" secondItem="VoX-bK-Bwo" secondAttribute="trailing" constant="56" id="C82-ct-75a"/>
+                            <constraint firstItem="SAs-9x-HCV" firstAttribute="trailing" secondItem="peM-QV-Cgc" secondAttribute="trailing" id="G5z-eb-zA8"/>
                             <constraint firstItem="OIB-yv-gtT" firstAttribute="leading" secondItem="ws1-yM-Ei8" secondAttribute="trailing" constant="36" id="GC9-a3-XQy"/>
                             <constraint firstItem="dAL-O5-Jfg" firstAttribute="leading" secondItem="XMM-2N-bTL" secondAttribute="leading" id="GMF-tk-E6f"/>
                             <constraint firstItem="hPL-Qx-r3x" firstAttribute="leading" secondItem="gnp-vK-dWF" secondAttribute="trailing" constant="15" id="JLH-zu-PLP"/>
@@ -467,6 +481,7 @@
                             <constraint firstItem="cIg-ml-xdT" firstAttribute="trailing" secondItem="JmH-zP-uQD" secondAttribute="trailing" id="vef-A6-WFs"/>
                             <constraint firstItem="cIg-ml-xdT" firstAttribute="leading" secondItem="peM-QV-Cgc" secondAttribute="trailing" constant="19" id="wdN-SL-WQ3"/>
                             <constraint firstItem="JmH-zP-uQD" firstAttribute="top" secondItem="yuw-5R-JIt" secondAttribute="bottom" constant="15" id="x6y-og-Vji"/>
+                            <constraint firstItem="SAs-9x-HCV" firstAttribute="centerY" secondItem="OIB-yv-gtT" secondAttribute="centerY" id="xgS-2q-4yG"/>
                             <constraint firstItem="CCl-tI-nZM" firstAttribute="baseline" secondItem="F12-9v-Y7L" secondAttribute="baseline" id="zVk-vz-ILq"/>
                             <constraint firstItem="GJc-mm-2MJ" firstAttribute="top" secondItem="OIB-yv-gtT" secondAttribute="top" id="znY-Ut-x3g"/>
                         </constraints>
@@ -494,6 +509,7 @@
                         <outlet property="playButton" destination="Nxr-sQ-9HV" id="sfz-Qj-LOh"/>
                         <outlet property="previewLight" destination="erX-cf-nYn" id="baR-lk-HFc"/>
                         <outlet property="red" destination="dAL-O5-Jfg" id="b8R-4z-U89"/>
+                        <outlet property="saveButton" destination="SAs-9x-HCV" id="PXA-1V-tLk"/>
                         <outlet property="smooth" destination="Spq-OO-pm0" id="VMQ-sY-E2r"/>
                         <outlet property="smoothLabel" destination="VoX-bK-Bwo" id="VCI-Qt-0px"/>
                         <outlet property="speedLabel" destination="aeG-6p-XSc" id="dQs-bL-P8p"/>
@@ -514,5 +530,6 @@
         <image name="bin.png" width="128" height="128"/>
         <image name="default.png" width="640" height="480"/>
         <image name="dup.png" width="128" height="128"/>
+        <image name="save.png" width="128" height="128"/>
     </resources>
 </document>

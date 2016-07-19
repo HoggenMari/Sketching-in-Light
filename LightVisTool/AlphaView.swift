@@ -37,7 +37,7 @@ class AlphaView: UIView {
         }
         
         alphaLayer = CALayer()
-        alphaLayer.frame = CGRectMake(0, 2, self.frame.width, 10)
+        alphaLayer.frame = CGRectMake(0, 7, self.frame.width, 10)
         alphaLayer.contents = createAlphaLayer(alphaLayer.frame.size)
         self.layer.addSublayer(alphaLayer)
         
@@ -49,7 +49,7 @@ class AlphaView: UIView {
         colorLayer.locations = [0.0, 1.0]
         colorLayer.startPoint = CGPointMake(0.0, 0.5)
         colorLayer.endPoint = CGPointMake(1.0, 0.5)
-        colorLayer.frame = CGRect(x: 0, y: 2, width: self.frame.size.width, height: 10)
+        colorLayer.frame = CGRect(x: 0, y: 7, width: self.frame.size.width, height: 10)
         // Insert the colorLayer into this views layer as a sublayer
         self.layer.insertSublayer(colorLayer, below: layer)
         
@@ -95,8 +95,8 @@ class AlphaView: UIView {
         if (coord < 1) {
             return 1
         }
-        if (coord > frame.size.width - 1 ) {
-            return frame.size.width - 1
+        if (coord > frame.size.width) {
+            return frame.size.width
         }
         return coord
     }
@@ -104,13 +104,13 @@ class AlphaView: UIView {
     func drawIndicator() {
         // Draw the indicator
         if (point != nil) {
-            indicator.path = UIBezierPath(roundedRect: CGRect(x: point.x-10, y: -5, width: 20, height: 20), cornerRadius: 3).CGPath
+            indicator.path = UIBezierPath(roundedRect: CGRect(x: point.x-10, y: 2, width: 20, height: 20), cornerRadius: 3).CGPath
         }
     }
     
     func getAlphaFromPoint() -> CGFloat {
         // Get the brightness value for a given point
-        return point.x/self.frame.width
+        return point.x/frame.size.width
     }
     
     func getPointFromColor(color: UIColor) -> CGPoint {

@@ -42,7 +42,7 @@ class BrightnessView: UIView {
         colorLayer.locations = [0.0, 1.0]
         colorLayer.startPoint = CGPointMake(0.0, 0.5)
         colorLayer.endPoint = CGPointMake(1.0, 0.5)
-        colorLayer.frame = CGRect(x: 0, y: 2, width: self.frame.size.width, height: 10)
+        colorLayer.frame = CGRect(x: 0, y: 7, width: self.frame.size.width, height: 10)
         // Insert the colorLayer into this views layer as a sublayer
         self.layer.insertSublayer(colorLayer, below: layer)
         
@@ -86,8 +86,8 @@ class BrightnessView: UIView {
         if (coord < 1) {
             return 1
         }
-        if (coord > frame.size.width - 1 ) {
-            return frame.size.width - 1
+        if (coord > frame.size.width) {
+            return frame.size.width
         }
         return coord
     }
@@ -95,7 +95,7 @@ class BrightnessView: UIView {
     func drawIndicator() {
         // Draw the indicator
         if (point != nil) {
-            indicator.path = UIBezierPath(roundedRect: CGRect(x: point.x-10, y: -5, width: 20, height: 20), cornerRadius: 3).CGPath
+            indicator.path = UIBezierPath(roundedRect: CGRect(x: point.x-10, y: 2, width: 20, height: 20), cornerRadius: 3).CGPath
         }
     }
     
@@ -107,18 +107,21 @@ class BrightnessView: UIView {
     func getPointFromColor(color: UIColor) -> CGPoint {
         // Update the indicator position for a given color
         var hue: CGFloat = 0.0, saturation: CGFloat = 0.0, brightness: CGFloat = 0.0, alpha: CGFloat = 0.0
+        print(brightness)
         let ok: Bool = color.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
         if (!ok) {
             print("SwiftHSVColorPicker: exception <The color provided to SwiftHSVColorPicker is not convertible to HSV>")
         }
 
-        return CGPoint(x: brightness * frame.width, y: frame.height / 2)
+        return CGPoint(x: brightness * (frame.width), y: frame.height / 2)
     }
     
     func setViewColor(color: UIColor!) {
         // Update the Gradient Layer with a given color
         var hue: CGFloat = 0.0, saturation: CGFloat = 0.0, brightness: CGFloat = 0.0, alpha: CGFloat = 0.0
         let ok: Bool = color.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
+        print(brightness)
+
         if (!ok) {
             print("SwiftHSVColorPicker: exception <The color provided to SwiftHSVColorPicker is not convertible to HSV>")
         }
