@@ -8,6 +8,7 @@
 
 import UIKit
 import Photos
+import CoreData
 
 class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
     
@@ -188,9 +189,24 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         
         FetchCustomAlbumPhotos()
         
-        appDelegate.img_draw.append(UIImage())
-        appDelegate.img_draw.append(UIImage())
 
+        //appDelegate.img_draw.append(UIImage())
+        //appDelegate.img_draw.append(UIImage())
+        
+        
+        
+        appDelegate.imgSeq.append(ImageSequence())
+        //appDelegate.imgSeq[appDelegate.imgSeqCtr].img_draw.append(UIImage())
+        //appDelegate.imgSeq[appDelegate.imgSeqCtr].img_draw.append(UIImage())
+        
+        print("ImageSequenceSize:")
+        print(appDelegate.imgSeq.count)
+        print(appDelegate.imgSeq[appDelegate.imgSeqCtr].img_draw.count)
+
+
+        loadImageSequenceFromCoreData()
+
+        
         //drawRectangle()
 
         appDelegate.selectedColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
@@ -198,11 +214,16 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.reloadCollection), name: "reloadCollection", object: nil)
 
-        self.textLabel.delegate = self
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(updateImageSequencePersistent), name: UIApplicationDidEnterBackgroundNotification, object: nil)
 
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(updateImageSequencePersistent), name: UIApplicationWillTerminateNotification, object: nil)
+
+        self.textLabel.delegate = self
+        
     }
     
     func reloadCollection(){
+        print("Reload collection")
         drawCollection.reloadData()
         previewLight.setNeedsDisplay()
 
@@ -264,6 +285,21 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         NSLog("Sender changed: %f", sender.value)
         appDelegate.counter = CGFloat(sender.value)
         backgroundLight.setNeedsDisplay()
+    }
+    
+    @IBAction func touchDown(sender: AnyObject) {
+        print("touchDown")
+        appDelegate.sliderChanged = true
+    }
+    
+    @IBAction func touchUpInside(sender: AnyObject) {
+        print("touchUpInside")
+        appDelegate.sliderChanged = false
+    }
+    
+    @IBAction func touchUpOutside(sender: AnyObject) {
+        print("touchUpOutside")
+        appDelegate.sliderChanged = false
     }
     
     //@IBAction func stepperPressed(sender: UIStepper) {
@@ -335,7 +371,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             //print(images.count)
             return images.count
         } else {
-            return appDelegate.drawFrames + 1
+            print("numberOfItems")
+            print(appDelegate.imgSeq[appDelegate.seq].drawFrames)
+            return (appDelegate.imgSeq[appDelegate.seq].drawFrames) + 1
         }
     }
     
@@ -362,18 +400,22 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         } else {
             let cell = collectionView.dequeueReusableCellWithReuseIdentifier(drawCollectionViewIdentifier, forIndexPath: indexPath) as! DrawCollectionViewCell
             
-            //if(indexPath.item<appDelegate.drawFrames){
-            cell.image.image = appDelegate.img_draw[indexPath.item]
+            if(indexPath.item<appDelegate.imgSeq[appDelegate.seq].drawFrames){
+            
+            print("CellForItemAtIndexPath")
+            print(appDelegate.seq)
+            print(indexPath.item)
+            cell.image.image = appDelegate.imgSeq[appDelegate.seq].img_draw[indexPath.item]
             cell.backgroundColor = UIColor.clearColor()
             cell.contentView.layer.borderColor = UIColor.whiteColor().CGColor
             cell.contentView.layer.borderWidth = 1
             //print("IndexPath: "+String(indexPath.item)+" DrawFrames: "+String(appDelegate.drawFrames))
-            if(indexPath.item==appDelegate.drawFrames){
+            }else if(indexPath.item==appDelegate.imgSeq[appDelegate.seq].drawFrames){
                 cell.image.image = UIImage(named: "add.png")!
                 cell.backgroundColor = UIColor.grayColor()
             }
             //}//else if(indexPath.item == indexPath.)
-            
+            //}
             return cell
         }
             
@@ -399,7 +441,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             deleteButton.hidden = true
             duplicateButton.hidden = true
             saveButton.hidden = true
-        }else if(indexPath.item==12){
+        }else if(indexPath.item==12 || indexPath.item > 13){
             textOptionView.hidden = true
             lightPatternOptionView.hidden = false
             imageCollectionView.hidden = true
@@ -448,6 +490,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             appDelegate.play = false
             
         }else if(indexPath.item==12){
+            appDelegate.seq = 0
             appDelegate.play = true
             timer.invalidate()
             timeProgress.userInteractionEnabled = true
@@ -469,9 +512,58 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             drawTimer = NSTimer.scheduledTimerWithTimeInterval(0.05, target:self, selector: #selector(ViewController.drawTimerUpdate), userInfo: nil, repeats: true)
             speedLabel.alpha = 1.0
             appDelegate.play = false
-
+            drawCollection.reloadData()
+            backgroundLight.setNeedsDisplay()
+            previewLight.setNeedsDisplay()
+        }else if(indexPath.item>13){
+            appDelegate.seq = indexPath.item - 13
+            appDelegate.play = true
+            timer.invalidate()
+            timeProgress.userInteractionEnabled = true
+            if(appDelegate.notification == false){
+                smooth.alpha = 1.0
+                smoothLabel.alpha = 1.0
+                backwardLoop.alpha = 1.0
+                backwardsLabel.alpha = 1.0
+                timeProgress.thumbTintColor = UIColor.whiteColor()
+            }
+            timeProgress.alpha = 1.0
+            stepper.alpha = 1.0
+            speedLabel.alpha = 1.0
+            notification.alpha = 1.0
+            notificationLabel.alpha = 1.0
+            playButton.setTitleColor(UIColor.init(white: 1, alpha: 1), forState: UIControlState.Normal)
+            playButton .setTitle("\u{f04b}", forState: UIControlState.Normal)
+            timer.invalidate()
+            drawTimer = NSTimer.scheduledTimerWithTimeInterval(0.05, target:self, selector: #selector(ViewController.drawTimerUpdate), userInfo: nil, repeats: true)
+            timer = NSTimer.scheduledTimerWithTimeInterval(0.05, target:self, selector: #selector(ViewController.updateCounter), userInfo: nil, repeats: true)
+            speedLabel.alpha = 1.0
+            appDelegate.play = false
+            drawCollection.reloadData()
+            backgroundLight.setNeedsDisplay()
+            previewLight.setNeedsDisplay()
+        }else{
+            appDelegate.play = true
+            timer.invalidate()
+            timeProgress.userInteractionEnabled = true
+            if(appDelegate.notification == false){
+                smooth.alpha = 1.0
+                smoothLabel.alpha = 1.0
+                backwardLoop.alpha = 1.0
+                backwardsLabel.alpha = 1.0
+                timeProgress.thumbTintColor = UIColor.whiteColor()
+            }
+            timeProgress.alpha = 1.0
+            stepper.alpha = 1.0
+            speedLabel.alpha = 1.0
+            notification.alpha = 1.0
+            notificationLabel.alpha = 1.0
+            playButton.setTitleColor(UIColor.init(white: 1, alpha: 1), forState: UIControlState.Normal)
+            playButton .setTitle("\u{f04c}", forState: UIControlState.Normal)
+            timer = NSTimer.scheduledTimerWithTimeInterval(0.05, target:self, selector: #selector(ViewController.updateCounter), userInfo: nil, repeats: true)
         }
-        else{
+            
+        if(indexPath.item > 13){
             appDelegate.play = true
             timer.invalidate()
             timeProgress.userInteractionEnabled = true
@@ -498,29 +590,41 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         timeProgress.value = Float(appDelegate.counter)
         backgroundLight.setNeedsDisplay()
         } else if collectionView == self.imageCollectionView {
+            
         appDelegate.activeImage = images[indexPath.item]
+            
+        //appDelegate.imgSeq[appDelegate.imgSeqCtr].activeImage = images[indexPath.item]
+            
         backgroundLight.setNeedsDisplay()
+            
         } else {
             //print("selected: "+String(indexPath.item))
-            if(indexPath.item==appDelegate.drawFrames){
+            if(indexPath.item==appDelegate.imgSeq[appDelegate.seq].drawFrames){
                 //print("last: "+String(appDelegate.drawFrames))
                 
 
                 appDelegate.play = false;
                 timer.invalidate()
                 playButton .setTitle("\u{f04b}", forState: UIControlState.Normal)
-                UIGraphicsBeginImageContextWithOptions(CGSize(width: 17, height: 12), false, 1)
-                let img = UIGraphicsGetImageFromCurrentImageContext()
-                appDelegate.img_draw.append(img)
-                appDelegate.drawFrames++
-                appDelegate.currentFrame = appDelegate.drawFrames-1
+                
+                //appDelegate.img_draw.append(UIImage())
+                //appDelegate.drawFrames++
+                //appDelegate.currentFrame = appDelegate.drawFrames-1
+                
+                appDelegate.imgSeq[appDelegate.seq].img_draw.append(UIImage())
+                appDelegate.imgSeq[appDelegate.seq].drawFrames++
+                appDelegate.imgSeq[appDelegate.seq].currentFrame = (appDelegate.imgSeq[appDelegate.seq].drawFrames)-1
+                
                 backgroundLight.setNeedsDisplay()
                 previewLight.setNeedsDisplay()
                 drawCollection.reloadData()
-                self.drawCollection.scrollToItemAtIndexPath(NSIndexPath(forItem: appDelegate.drawFrames, inSection: 0), atScrollPosition: .Right, animated: true)
+                //self.drawCollection.scrollToItemAtIndexPath(NSIndexPath(forItem: appDelegate.drawFrames, inSection: 0), atScrollPosition: .Right, animated: true)
+                
+                self.drawCollection.scrollToItemAtIndexPath(NSIndexPath(forItem: (appDelegate.imgSeq[appDelegate.seq].drawFrames), inSection: 0), atScrollPosition: .Right, animated: true)
+                
 
             }else{
-                appDelegate.currentFrame = indexPath.item
+                appDelegate.imgSeq[appDelegate.seq].currentFrame = indexPath.item
                 backgroundLight.setNeedsDisplay()
                 previewLight.setNeedsDisplay()
             }
@@ -698,17 +802,17 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     @IBAction func deleteImage(sender: AnyObject) {
         print("duplicate")
-        if(appDelegate.drawFrames>1){
-            appDelegate.img_draw.removeAtIndex(appDelegate.currentFrame)
-            appDelegate.drawFrames--
-            appDelegate.currentFrame = appDelegate.drawFrames-1
+        if(appDelegate.imgSeq[appDelegate.seq].drawFrames>1){
+            appDelegate.imgSeq[appDelegate.seq].img_draw.removeAtIndex((appDelegate.imgSeq[appDelegate.seq].currentFrame))
+            appDelegate.imgSeq[appDelegate.seq].drawFrames--
+            appDelegate.imgSeq[appDelegate.seq].currentFrame = (appDelegate.imgSeq[appDelegate.seq].drawFrames)-1
             backgroundLight.setNeedsDisplay()
             previewLight.setNeedsDisplay()
             drawCollection.reloadData()
-        }else if(appDelegate.drawFrames==1){
-            appDelegate.img_draw.append(UIImage())
-            appDelegate.img_draw.removeAtIndex(appDelegate.currentFrame)
-            appDelegate.currentFrame = appDelegate.drawFrames-1
+        }else if(appDelegate.imgSeq[appDelegate.seq].drawFrames==1){
+            appDelegate.imgSeq[appDelegate.seq].img_draw.append(UIImage())
+            appDelegate.imgSeq[appDelegate.seq].img_draw.removeAtIndex((appDelegate.imgSeq[appDelegate.seq].currentFrame))
+            appDelegate.imgSeq[appDelegate.seq].currentFrame = (appDelegate.imgSeq[appDelegate.seq].drawFrames)-1
             backgroundLight.setNeedsDisplay()
             previewLight.setNeedsDisplay()
             drawCollection.reloadData()
@@ -717,8 +821,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     @IBAction func duplicateImage(sender: AnyObject) {
         print("delete")
-        appDelegate.img_draw.insert(appDelegate.img_draw[appDelegate.currentFrame], atIndex: appDelegate.currentFrame)
-        appDelegate.drawFrames++
+        appDelegate.imgSeq[appDelegate.seq].img_draw.insert((appDelegate.imgSeq[appDelegate.seq].img_draw[(appDelegate.imgSeq[appDelegate.seq].currentFrame)]), atIndex: (appDelegate.imgSeq[appDelegate.seq].currentFrame))
+        appDelegate.imgSeq[appDelegate.seq].drawFrames++
         backgroundLight.setNeedsDisplay()
         previewLight.setNeedsDisplay()
         drawCollection.reloadData()
@@ -755,7 +859,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             }
             
             
-            if(indexPath.item != appDelegate.drawFrames){
+            if(indexPath.item != appDelegate.imgSeq[appDelegate.imgSeqCtr].drawFrames){
                 let cell = collectionView.cellForItemAtIndexPath(indexPath) as! DrawCollectionViewCell
                 cell.contentView.layer.borderColor = UIColor.whiteColor().CGColor
                 cell.contentView.layer.borderWidth = 3            }
@@ -769,6 +873,211 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     @IBAction func save(sender: AnyObject) {
         print("save")
+
+        UIGraphicsBeginImageContextWithOptions(CGSize(width:400, height: 280), false, 1)
+        let context = UIGraphicsGetCurrentContext()
+        
+        var img_bg = UIImage(named: "brightness_pattern.jpg")
+        CGContextDrawImage(context, CGRect(x:0, y:0, width:400, height:280), imageWithImage(img_bg!, scaledToSize: CGSize(width: 400, height: 280)).CGImage)
+        
+        CGContextSetAlpha(context, 0.7)
+        
+        // then flip Y axis
+        CGContextTranslateCTM(context, 0, 280);
+        CGContextScaleCTM(context, 1.0, -1.0);
+        
+        CGContextDrawImage(context, CGRect(x:0, y:0, width:400, height:280), imageWithImage(appDelegate.imgSeq[appDelegate.seq].img_draw[0], scaledToSize: CGSize(width:400, height:280)).CGImage)
+        
+        
+        let img = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+
+        
+        logoImage.append(img)
+        appDelegate.imgSeq[appDelegate.seq].preview_image = img
+        
+        var name = "Saved Pattern "+String(appDelegate.imgSeq.count)
+        items.append(name)
+
+        saveImageSequencePersistent()
+        
+        appDelegate.imgSeq.append(ImageSequence())
+        appDelegate.imgSeq.last?.img_draw = appDelegate.imgSeq[appDelegate.seq].img_draw
+        appDelegate.imgSeq.last?.drawFrames = appDelegate.imgSeq[appDelegate.seq].drawFrames
+        
+        appDelegate.imgSeqCtr++
+        backgroundLight.setNeedsDisplay()
+        previewLight.setNeedsDisplay()
+        drawCollection.reloadData()
+        lightPatternCollectionView.reloadData()
+    }
+    
+    
+    func imageWithImage(image:UIImage, scaledToSize newSize:CGSize) -> UIImage{
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0);
+        image.drawInRect(CGRectMake(0, 0, newSize.width, newSize.height))
+        let newImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return newImage
+    }
+    
+    func saveImageSequencePersistent(){
+        
+        let entityDescription =
+            NSEntityDescription.entityForName("SavedImageSequence",
+                                              inManagedObjectContext: appDelegate.managedObjectContext)
+        
+        let savedImageSequence = SavedImageSequence(entity: entityDescription!,
+                               insertIntoManagedObjectContext: appDelegate.managedObjectContext)
+        
+        //savedImageSequence.activeImage = appDelegate.imgSeq[appDelegate.imgSeqCtr].activeImage
+        //savedImageSequence.img_draw = appDelegate.imgSeq[appDelegate.imgSeqCtr].img_draw
+        //savedImageSequence.currentFrame = appDelegate.imgSeq[appDelegate.imgSeqCtr].currentFrame
+        savedImageSequence.currentFrame = Float(appDelegate.imgSeq[appDelegate.seq].currentFrame)
+        savedImageSequence.drawFrames = Float(appDelegate.imgSeq[appDelegate.seq].drawFrames)
+        
+        var thumbnailImageDatas = NSMutableArray()
+        for image in appDelegate.imgSeq[appDelegate.seq].img_draw {
+            print(image)
+            if(image.CGImage != nil){
+            thumbnailImageDatas.addObject(UIImagePNGRepresentation(image)!)
+            }
+            //[thumbnailImageDatas addObject:UIImagePNGRepresentation(resizedImage)];
+        }
+        let thumbnailImageData = NSKeyedArchiver.archivedDataWithRootObject(thumbnailImageDatas)//[NSKeyedArchiver archivedDataWithRootObject:thumbnailImageDatas];
+        
+        print(thumbnailImageData)
+
+        savedImageSequence.img_draw = thumbnailImageData
+        
+        var previewImageData = UIImagePNGRepresentation(appDelegate.imgSeq[appDelegate.seq].preview_image)
+        savedImageSequence.preview_image = previewImageData!
+        
+        savedImageSequence.name = "Saved Pattern "+String(appDelegate.imgSeq.count)
+
+                
+        do {
+            try appDelegate.managedObjectContext.save()
+        } catch {
+            fatalError("Failure to save context: \(error)")
+        }
+        
+    }
+    
+    func updateImageSequencePersistent(){
+        let managedContext = appDelegate.managedObjectContext
+        let fetchRequest = NSFetchRequest(entityName: "SavedImageSequence")
+        
+        appDelegate.imgSeq.count
+        
+        for i in 1...appDelegate.imgSeq.count {
+            let name = "Saved Pattern "+String(i)
+            fetchRequest.predicate = NSPredicate(format: "name == %@", name)
+        
+            var result: [AnyObject]?
+            do {
+                result = try managedContext.executeFetchRequest(fetchRequest)
+            } catch let nserror1 as NSError{
+                result = nil
+            }
+        
+            for resultItem in result! {
+                let imageSequence = resultItem as! SavedImageSequence
+                
+                imageSequence.currentFrame = Float(appDelegate.imgSeq[i].currentFrame)
+                imageSequence.drawFrames = Float(appDelegate.imgSeq[i].drawFrames)
+                
+                var thumbnailImageDatas = NSMutableArray()
+                for image in appDelegate.imgSeq[i].img_draw {
+                    print(image)
+                    if(image.CGImage != nil){
+                        thumbnailImageDatas.addObject(UIImagePNGRepresentation(image)!)
+                    }
+                    //[thumbnailImageDatas addObject:UIImagePNGRepresentation(resizedImage)];
+                }
+                let thumbnailImageData = NSKeyedArchiver.archivedDataWithRootObject(thumbnailImageDatas)//[NSKeyedArchiver archivedDataWithRootObject:thumbnailImageDatas];
+                
+                print(thumbnailImageData)
+                
+                imageSequence.img_draw = thumbnailImageData
+                
+                var previewImageData = UIImagePNGRepresentation(appDelegate.imgSeq[i].preview_image)
+                imageSequence.preview_image = previewImageData!
+                
+                print(imageSequence.name)
+            }
+        }
+        do {
+            try appDelegate.managedObjectContext.save()
+        } catch {
+            fatalError("Failure to save context: \(error)")
+        }
+    }
+    
+    func loadImageSequenceFromCoreData(){
+        
+        let managedContext = appDelegate.managedObjectContext
+        
+        //2
+        let fetchRequest = NSFetchRequest(entityName: "SavedImageSequence")
+        
+        //3
+        //var result: [AnyObject]?
+        //do {
+        //    let results =
+        //        try managedContext.executeFetchRequest(fetchRequest)
+        //    people = results as! [NSManagedObject]
+        //} catch let error as NSError {
+        //    print("Could not fetch \(error), \(error.userInfo)")
+        //}
+        
+        var result: [AnyObject]?
+        do {
+            result = try managedContext.executeFetchRequest(fetchRequest)
+        } catch let nserror1 as NSError{
+            result = nil
+        }
+        
+        for resultItem in result! {
+            let imageSequence = resultItem as! SavedImageSequence
+            var image = UIImage(data: imageSequence.preview_image)//[UIImage imageWithData:selectedDance.danceImage];
+            logoImage.append(image!)
+            var name = "Saved Pattern "+String(appDelegate.imgSeq.count)
+            items.append(name)
+            appDelegate.imgSeq.append(ImageSequence())
+            appDelegate.imgSeqCtr++
+            appDelegate.imgSeq.last?.preview_image = image!
+            
+            var images = Array<UIImage>()
+            var imageDatas = NSKeyedUnarchiver.unarchiveObjectWithData(imageSequence.img_draw) as! NSArray // [NSKeyedUnarchiver unarchiveObjectWithData:self.thumbnailImagesData];
+            for imageData in imageDatas {
+                var img = UIImage(data: imageData as! NSData)!
+                
+                UIGraphicsBeginImageContextWithOptions(CGSize(width:17, height: 12), false, 1)
+                let context = UIGraphicsGetCurrentContext()
+                
+                CGContextDrawImage(context, CGRect(x:0, y:0, width:17, height:12), imageWithImage(img, scaledToSize: CGSize(width: 17, height: 12)).CGImage)
+                let imgCopy = UIGraphicsGetImageFromCurrentImageContext()
+                UIGraphicsEndImageContext()
+                
+                images.append(imgCopy)//[images addObject:[UIImage imageWithData:imageData]];
+            }
+            appDelegate.imgSeq.last?.img_draw = images
+
+            appDelegate.imgSeq.last?.drawFrames = Int(imageSequence.drawFrames)
+            appDelegate.imgSeq.last?.currentFrame = Int(imageSequence.currentFrame)
+            
+            print("imageSeqDrawFrames")
+            print(imageSequence.drawFrames)
+            print(imageSequence.currentFrame)
+            
+            //drawCollection.reloadData()
+            //print(imageSequence.img_draw)
+        }
+        
+        print("ImageSequenceSize")
+        print(appDelegate.imgSeq.count)
+        
     }
     
 }

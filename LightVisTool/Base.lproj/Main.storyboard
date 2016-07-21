@@ -124,6 +124,9 @@
                                 <color key="thumbTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <action selector="progressSliderChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="bYS-Mg-0MA"/>
+                                    <action selector="touchDown:" destination="BYZ-38-t0r" eventType="touchDown" id="g1e-Jo-C0c"/>
+                                    <action selector="touchUpInside:" destination="BYZ-38-t0r" eventType="touchUpInside" id="alH-SF-8zg"/>
+                                    <action selector="touchUpOutside:" destination="BYZ-38-t0r" eventType="touchUpOutside" id="xUi-lJ-AJY"/>
                                 </connections>
                             </slider>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nxr-sQ-9HV">
@@ -423,7 +426,7 @@
                             <constraint firstItem="OIB-yv-gtT" firstAttribute="leading" secondItem="ws1-yM-Ei8" secondAttribute="trailing" constant="36" id="GC9-a3-XQy"/>
                             <constraint firstItem="dAL-O5-Jfg" firstAttribute="leading" secondItem="XMM-2N-bTL" secondAttribute="leading" id="GMF-tk-E6f"/>
                             <constraint firstItem="hPL-Qx-r3x" firstAttribute="leading" secondItem="gnp-vK-dWF" secondAttribute="trailing" constant="15" id="JLH-zu-PLP"/>
-                            <constraint firstItem="KeB-yy-f5K" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="15" id="KSx-Vm-v99"/>
+                            <constraint firstItem="KeB-yy-f5K" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="18" id="KSx-Vm-v99"/>
                             <constraint firstItem="NkJ-jj-lot" firstAttribute="top" secondItem="Nxr-sQ-9HV" secondAttribute="bottom" constant="27" id="KY1-9V-EjR"/>
                             <constraint firstItem="ws1-yM-Ei8" firstAttribute="leading" secondItem="XMM-2N-bTL" secondAttribute="trailing" constant="40" id="L3m-G6-tgN"/>
                             <constraint firstItem="peM-QV-Cgc" firstAttribute="leading" secondItem="Nxr-sQ-9HV" secondAttribute="trailing" constant="17" id="LAa-7l-lfd"/>

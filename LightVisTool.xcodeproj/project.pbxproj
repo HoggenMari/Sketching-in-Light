@@ -34,6 +34,11 @@
 		7E4FA2781D3246440021442E /* add.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E4FA2771D3246440021442E /* add.png */; };
 		7E5F066F1D2F8E7800CE5A62 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5F066E1D2F8E7800CE5A62 /* ImageCollectionViewCell.swift */; };
 		7E7052441D291DF2007466D6 /* text_pattern.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7E7052431D291DF2007466D6 /* text_pattern.jpg */; };
+		7E788C0C1D3F076A00D539A2 /* ImageSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E788C0B1D3F076A00D539A2 /* ImageSequence.swift */; };
+		7E788C0F1D3F456A00D539A2 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7E788C0D1D3F456A00D539A2 /* Model.xcdatamodeld */; };
+		7E788C8D1D3F702F00D539A2 /* ImgSeq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E788C8C1D3F702F00D539A2 /* ImgSeq.swift */; };
+		7E788C921D3F74A800D539A2 /* SavedImageSequence+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E788C901D3F74A800D539A2 /* SavedImageSequence+CoreDataProperties.swift */; };
+		7E788C931D3F74A800D539A2 /* SavedImageSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E788C911D3F74A800D539A2 /* SavedImageSequence.swift */; };
 		7E806EA01D32597B0003B679 /* BrightnessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E806E9B1D32597B0003B679 /* BrightnessView.swift */; };
 		7E806EA11D32597B0003B679 /* SwiftHSVColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E806E9C1D32597B0003B679 /* SwiftHSVColorPicker.swift */; };
 		7E806EA21D32597B0003B679 /* ColorUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E806E9D1D32597B0003B679 /* ColorUtils.swift */; };
@@ -153,6 +158,11 @@
 		7E4FA2771D3246440021442E /* add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = add.png; sourceTree = "<group>"; };
 		7E5F066E1D2F8E7800CE5A62 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		7E7052431D291DF2007466D6 /* text_pattern.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = text_pattern.jpg; sourceTree = "<group>"; };
+		7E788C0B1D3F076A00D539A2 /* ImageSequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageSequence.swift; sourceTree = "<group>"; };
+		7E788C0E1D3F456A00D539A2 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		7E788C8C1D3F702F00D539A2 /* ImgSeq.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImgSeq.swift; sourceTree = "<group>"; };
+		7E788C901D3F74A800D539A2 /* SavedImageSequence+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "SavedImageSequence+CoreDataProperties.swift"; path = "../SavedImageSequence+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		7E788C911D3F74A800D539A2 /* SavedImageSequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SavedImageSequence.swift; path = ../SavedImageSequence.swift; sourceTree = "<group>"; };
 		7E806E9B1D32597B0003B679 /* BrightnessView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrightnessView.swift; sourceTree = "<group>"; };
 		7E806E9C1D32597B0003B679 /* SwiftHSVColorPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftHSVColorPicker.swift; sourceTree = "<group>"; };
 		7E806E9D1D32597B0003B679 /* ColorUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorUtils.swift; sourceTree = "<group>"; };
@@ -346,6 +356,8 @@
 		7ED00A451CC124BD00AC0A16 /* LightVisTool */ = {
 			isa = PBXGroup;
 			children = (
+				7E788C901D3F74A800D539A2 /* SavedImageSequence+CoreDataProperties.swift */,
+				7E788C911D3F74A800D539A2 /* SavedImageSequence.swift */,
 				7E806E9B1D32597B0003B679 /* BrightnessView.swift */,
 				7E0644111D36359A00772B68 /* AlphaView.swift */,
 				7E806E9C1D32597B0003B679 /* SwiftHSVColorPicker.swift */,
@@ -358,6 +370,7 @@
 				7E3D8EBF1CC8C353002ABA9B /* LightPatternCollectionViewCell.swift */,
 				7E0342401D2FC5F50050043F /* RedLightPattern.swift */,
 				7ED00A461CC124BD00AC0A16 /* AppDelegate.swift */,
+				7E788C0D1D3F456A00D539A2 /* Model.xcdatamodeld */,
 				7ED00A481CC124BD00AC0A16 /* ViewController.swift */,
 				7E5F066E1D2F8E7800CE5A62 /* ImageCollectionViewCell.swift */,
 				7ED00A4A1CC124BD00AC0A16 /* Main.storyboard */,
@@ -369,6 +382,8 @@
 				7ED00A521CC124BD00AC0A16 /* Info.plist */,
 				7ED00A741CC2737A00AC0A16 /* PreviewLight.swift */,
 				7EAE0F081D167FDA005C5DFF /* TextCharacter.swift */,
+				7E788C0B1D3F076A00D539A2 /* ImageSequence.swift */,
+				7E788C8C1D3F702F00D539A2 /* ImgSeq.swift */,
 			);
 			path = LightVisTool;
 			sourceTree = "<group>";
@@ -597,12 +612,17 @@
 				7E806EA21D32597B0003B679 /* ColorUtils.swift in Sources */,
 				7EAE0F091D167FDA005C5DFF /* TextCharacter.swift in Sources */,
 				7E5F066F1D2F8E7800CE5A62 /* ImageCollectionViewCell.swift in Sources */,
+				7E788C921D3F74A800D539A2 /* SavedImageSequence+CoreDataProperties.swift in Sources */,
 				7E3D8EC01CC8C353002ABA9B /* LightPatternCollectionViewCell.swift in Sources */,
+				7E788C0F1D3F456A00D539A2 /* Model.xcdatamodeld in Sources */,
 				7E806EA11D32597B0003B679 /* SwiftHSVColorPicker.swift in Sources */,
 				7ED00A751CC2737A00AC0A16 /* PreviewLight.swift in Sources */,
+				7E788C0C1D3F076A00D539A2 /* ImageSequence.swift in Sources */,
 				7E806EA31D32597B0003B679 /* ColorWheel.swift in Sources */,
+				7E788C931D3F74A800D539A2 /* SavedImageSequence.swift in Sources */,
 				7E0644121D36359A00772B68 /* AlphaView.swift in Sources */,
 				7ED00A471CC124BD00AC0A16 /* AppDelegate.swift in Sources */,
+				7E788C8D1D3F702F00D539A2 /* ImgSeq.swift in Sources */,
 				7ED00A771CC3338E00AC0A16 /* UIDevice.swift in Sources */,
 				7E806EA01D32597B0003B679 /* BrightnessView.swift in Sources */,
 			);
@@ -865,6 +885,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		7E788C0D1D3F456A00D539A2 /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				7E788C0E1D3F456A00D539A2 /* Model.xcdatamodel */,
+			);
+			currentVersion = 7E788C0E1D3F456A00D539A2 /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 7ED00A3B1CC124BD00AC0A16 /* Project object */;
 }
