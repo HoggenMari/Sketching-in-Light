@@ -38,6 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var imgSeq = Array<ImageSequence>()
     var imgSeqCtr:Int = 0
     var seq = 0
+    var processing = Array<String>()
     
     var play: Bool = false;
     var selectedColor: UIColor = UIColor.whiteColor()

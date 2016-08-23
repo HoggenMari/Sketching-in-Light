@@ -88,6 +88,10 @@ class RedLightPattern: UIView {
         
         //print("test")
 
+        //appDelegate.mode = 14
+        
+        print(appDelegate.mode)
+        
         if(appDelegate.mode == 5){
             if(appDelegate.notification){
                 if(appDelegate.counterUp){
@@ -178,7 +182,7 @@ class RedLightPattern: UIView {
             }else{
                 img = drawText(appDelegate.counter)
             }
-        }else if(appDelegate.mode == 12 || appDelegate.mode>13){
+        }else if(appDelegate.mode == 12 || appDelegate.mode>14){
             if(appDelegate.play || appDelegate.sliderChanged){
                 if(appDelegate.notification){
                     if(appDelegate.counterUp){
@@ -203,8 +207,11 @@ class RedLightPattern: UIView {
             //}
         }else if(appDelegate.mode == 13){
             img = drawImage(0)
-        }        
+        }else if(appDelegate.mode == 14){
+            img = drawProcessing();
+        }
         
+        //img = drawProcessing();
         
         
         
@@ -335,6 +342,9 @@ class RedLightPattern: UIView {
                 }else if(appDelegate.mode == 13){
                     let (r, g, b, a) = getPixelColor(img, pos: CGPoint(x: ix,y: 11-iy))
                     CGContextSetRGBFillColor(context, appDelegate.red * r, appDelegate.green * g, appDelegate.blue * b, appDelegate.brigtness * a)
+                }else if(appDelegate.mode == 14){
+                    let (r, g, b, a) = getPixelColor(img, pos: CGPoint(x: ix,y: 11-iy))
+                    CGContextSetRGBFillColor(context, appDelegate.red * r, appDelegate.green * g, appDelegate.blue * b, appDelegate.brigtness * a)
                 }/*else{
                 //CGContextSetRGBFillColor(context, appDelegate.red, appDelegate.green, appDelegate.blue, CGFloat(appDelegate.brigtness-CGFloat(1.0/((CGFloat(ix)*appDelegate.counter)))))
                     CGContextSetRGBFillColor(context, appDelegate.red, appDelegate.green, appDelegate.blue, appDelegate.brigtness)
@@ -401,6 +411,58 @@ class RedLightPattern: UIView {
         let newImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return newImage
+    }
+    
+    func hexStringToUIColor (hex:String) -> UIColor {
+        var cString:String = hex.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet() as NSCharacterSet).uppercaseString
+        
+        if (cString.hasPrefix("#")) {
+            cString = cString.substringFromIndex(cString.startIndex.advancedBy(1))
+        }
+        
+        if ((cString.characters.count) != 6) {
+            return UIColor.grayColor()
+        }
+        
+        var rgbValue:UInt32 = 0
+        NSScanner(string: cString).scanHexInt(&rgbValue)
+        
+        return UIColor(
+            red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
+            green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
+            blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
+            alpha: CGFloat(1.0)
+        )
+    }
+    
+    func drawProcessing() -> UIImage {
+        
+        var img:UIImage!
+        UIGraphicsBeginImageContextWithOptions(CGSize(width: 17, height: 12), false, 1)
+        let context = UIGraphicsGetCurrentContext()
+        
+        print(appDelegate.processing.count)
+        if(appDelegate.processing.count != 0){
+        var counter:NSInteger = 0
+        for ix in 0...pixelWidth-1 {
+            for iy in 0...pixelHeight-1 {
+
+                let rectangle = CGRect(x: ix, y: iy, width: 1, height: 1)
+                var color:UIColor = hexStringToUIColor(appDelegate.processing[counter+1])
+                CGContextSetLineWidth(context, 0)
+                CGContextSetFillColorWithColor(context, color.CGColor)
+                //CGContextFillRect(context, CGRect(x: 0, y: 0, width: 17, height: 12))
+                //CGContextSetFillColorWithColor(context, UIColor.init(red: 1, green: 0, blue: 0, alpha: 1).CGColor)
+                CGContextAddRect(context, rectangle)
+                CGContextDrawPath(context, .FillStroke)
+                counter += 1
+            }
+        }
+        }
+        
+        img = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return img
     }
     
     func drawLine(value:CGFloat) -> UIImage {

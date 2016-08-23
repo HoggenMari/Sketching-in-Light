@@ -55,6 +55,12 @@
 		7E8CEE7C1D1913A1001F5ED3 /* char_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E8CEE721D1913A1001F5ED3 /* char_2.png */; };
 		7E8CEE7D1D1913A1001F5ED3 /* char_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E8CEE731D1913A1001F5ED3 /* char_1.png */; };
 		7E8CEE7F1D1913EE001F5ED3 /* char_0.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E8CEE7E1D1913EE001F5ED3 /* char_0.png */; };
+		7E93B6191D6BDFB40079FF9E /* ysocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E93B6141D6BDFB40079FF9E /* ysocket.swift */; };
+		7E93B61A1D6BDFB40079FF9E /* ytcpsocket.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E93B6151D6BDFB40079FF9E /* ytcpsocket.c */; };
+		7E93B61B1D6BDFB40079FF9E /* ytcpsocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E93B6161D6BDFB40079FF9E /* ytcpsocket.swift */; };
+		7E93B61C1D6BDFB40079FF9E /* yudpsocket.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E93B6171D6BDFB40079FF9E /* yudpsocket.c */; };
+		7E93B61D1D6BDFB40079FF9E /* yudpsocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E93B6181D6BDFB40079FF9E /* yudpsocket.swift */; };
+		7E93B6201D6BE4570079FF9E /* wlan.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7E93B61F1D6BE4570079FF9E /* wlan.jpg */; };
 		7EAE0F091D167FDA005C5DFF /* TextCharacter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EAE0F081D167FDA005C5DFF /* TextCharacter.swift */; };
 		7EAE0F0B1D168FB6005C5DFF /* char_A.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EAE0F0A1D168FB6005C5DFF /* char_A.png */; };
 		7EAE0F0F1D169337005C5DFF /* char_B.png in Resources */ = {isa = PBXBuildFile; fileRef = 7EAE0F0E1D169337005C5DFF /* char_B.png */; };
@@ -179,6 +185,13 @@
 		7E8CEE721D1913A1001F5ED3 /* char_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = char_2.png; path = Assets.xcassets/char_2.png; sourceTree = "<group>"; };
 		7E8CEE731D1913A1001F5ED3 /* char_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = char_1.png; sourceTree = "<group>"; };
 		7E8CEE7E1D1913EE001F5ED3 /* char_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = char_0.png; sourceTree = "<group>"; };
+		7E93B6141D6BDFB40079FF9E /* ysocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ysocket.swift; sourceTree = "<group>"; };
+		7E93B6151D6BDFB40079FF9E /* ytcpsocket.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ytcpsocket.c; sourceTree = "<group>"; };
+		7E93B6161D6BDFB40079FF9E /* ytcpsocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ytcpsocket.swift; sourceTree = "<group>"; };
+		7E93B6171D6BDFB40079FF9E /* yudpsocket.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = yudpsocket.c; sourceTree = "<group>"; };
+		7E93B6181D6BDFB40079FF9E /* yudpsocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = yudpsocket.swift; sourceTree = "<group>"; };
+		7E93B61E1D6BE1030079FF9E /* LightVisTool-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LightVisTool-Bridging-Header.h"; sourceTree = "<group>"; };
+		7E93B61F1D6BE4570079FF9E /* wlan.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wlan.jpg; sourceTree = "<group>"; };
 		7EAE0F081D167FDA005C5DFF /* TextCharacter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextCharacter.swift; sourceTree = "<group>"; };
 		7EAE0F0A1D168FB6005C5DFF /* char_A.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = char_A.png; sourceTree = "<group>"; };
 		7EAE0F0E1D169337005C5DFF /* char_B.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = char_B.png; sourceTree = "<group>"; };
@@ -302,6 +315,7 @@
 		7E7052421D29003B007466D6 /* icons */ = {
 			isa = PBXGroup;
 			children = (
+				7E93B61F1D6BE4570079FF9E /* wlan.jpg */,
 				7E0CFDAC1D3E2F7F00B51D80 /* save.png */,
 				7E0644151D37664A00772B68 /* alpha.png */,
 				7E4FA2771D3246440021442E /* add.png */,
@@ -356,6 +370,11 @@
 		7ED00A451CC124BD00AC0A16 /* LightVisTool */ = {
 			isa = PBXGroup;
 			children = (
+				7E93B6141D6BDFB40079FF9E /* ysocket.swift */,
+				7E93B6151D6BDFB40079FF9E /* ytcpsocket.c */,
+				7E93B6161D6BDFB40079FF9E /* ytcpsocket.swift */,
+				7E93B6171D6BDFB40079FF9E /* yudpsocket.c */,
+				7E93B6181D6BDFB40079FF9E /* yudpsocket.swift */,
 				7E788C901D3F74A800D539A2 /* SavedImageSequence+CoreDataProperties.swift */,
 				7E788C911D3F74A800D539A2 /* SavedImageSequence.swift */,
 				7E806E9B1D32597B0003B679 /* BrightnessView.swift */,
@@ -384,6 +403,7 @@
 				7EAE0F081D167FDA005C5DFF /* TextCharacter.swift */,
 				7E788C0B1D3F076A00D539A2 /* ImageSequence.swift */,
 				7E788C8C1D3F702F00D539A2 /* ImgSeq.swift */,
+				7E93B61E1D6BE1030079FF9E /* LightVisTool-Bridging-Header.h */,
 			);
 			path = LightVisTool;
 			sourceTree = "<group>";
@@ -573,6 +593,7 @@
 				7EAE0F411D181513005C5DFF /* char_M.png in Resources */,
 				7E3D8ED01CC9DC05002ABA9B /* brightness_pattern.jpg in Resources */,
 				7EAE0F3F1D18147D005C5DFF /* char_H.png in Resources */,
+				7E93B6201D6BE4570079FF9E /* wlan.jpg in Resources */,
 				7EAE0F361D18147D005C5DFF /* char_Q.png in Resources */,
 				7EAE0F181D17EE29005C5DFF /* char_E.png in Resources */,
 				7EAE0F3C1D18147D005C5DFF /* char_K.png in Resources */,
@@ -605,6 +626,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7E93B61C1D6BDFB40079FF9E /* yudpsocket.c in Sources */,
+				7E93B6191D6BDFB40079FF9E /* ysocket.swift in Sources */,
 				7ED00A491CC124BD00AC0A16 /* ViewController.swift in Sources */,
 				7E4F55591D3213E70019B66E /* DrawCollectionViewCell.swift in Sources */,
 				7E0342411D2FC5F50050043F /* RedLightPattern.swift in Sources */,
@@ -617,6 +640,7 @@
 				7E788C0F1D3F456A00D539A2 /* Model.xcdatamodeld in Sources */,
 				7E806EA11D32597B0003B679 /* SwiftHSVColorPicker.swift in Sources */,
 				7ED00A751CC2737A00AC0A16 /* PreviewLight.swift in Sources */,
+				7E93B61B1D6BDFB40079FF9E /* ytcpsocket.swift in Sources */,
 				7E788C0C1D3F076A00D539A2 /* ImageSequence.swift in Sources */,
 				7E806EA31D32597B0003B679 /* ColorWheel.swift in Sources */,
 				7E788C931D3F74A800D539A2 /* SavedImageSequence.swift in Sources */,
@@ -624,6 +648,8 @@
 				7ED00A471CC124BD00AC0A16 /* AppDelegate.swift in Sources */,
 				7E788C8D1D3F702F00D539A2 /* ImgSeq.swift in Sources */,
 				7ED00A771CC3338E00AC0A16 /* UIDevice.swift in Sources */,
+				7E93B61D1D6BDFB40079FF9E /* yudpsocket.swift in Sources */,
+				7E93B61A1D6BDFB40079FF9E /* ytcpsocket.c in Sources */,
 				7E806EA01D32597B0003B679 /* BrightnessView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -775,6 +801,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "-.LightVisTool";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "LightVisTool/LightVisTool-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -793,6 +820,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "-.LightVisTool";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "LightVisTool/LightVisTool-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

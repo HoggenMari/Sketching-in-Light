@@ -13,7 +13,7 @@ import CoreData
 class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
     
     let reuseIdentifier = "cell" // also enter this string as the cell identifier in the storyboard
-    var items = ["None", "Fade Brightness", "Fade Red", "Fade Green", "Fade Blue", "Ellipse", "Rectangle", "Horizontal Line", "Vertical Line", "Horizontal Box", "Vertical Box", "Text", "LightPattern", "Image"]
+    var items = ["None", "Fade Brightness", "Fade Red", "Fade Green", "Fade Blue", "Ellipse", "Rectangle", "Horizontal Line", "Vertical Line", "Horizontal Box", "Vertical Box", "Text", "LightPattern", "Image", "Processing"]
 
     var logoImage: [UIImage] = [
         UIImage(named: "default.png")!,
@@ -29,7 +29,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         UIImage(named: "line4_pattern.jpg")!,
         UIImage(named: "text_pattern.jpg")!,
         UIImage(named: "light_pattern.jpg")!,
-        UIImage(named: "image_pattern.jpg")!
+        UIImage(named: "image_pattern.jpg")!,
+        UIImage(named: "wlan.jpg")!
+
 
 
     ]
@@ -111,6 +113,28 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), { () -> Void in
+            let server:UDPServer=UDPServer(addr:"",port:53282)
+            let run:Bool=true
+            while run{
+                var (data,remoteip,remoteport)=server.recv(2048)
+                print("recive")
+                if let d=data{
+                    if let str=String(bytes: d, encoding: NSUTF8StringEncoding){
+                        
+                        let separators = NSCharacterSet(charactersInString: "#")
+                        let fullName : String = str
+                        self.appDelegate.processing = fullName.componentsSeparatedByCharactersInSet(separators)
+                        print(self.appDelegate.processing[1])
+                    }
+                }
+                print(remoteip)
+                //server.close()
+                //break
+            }
+        })        
         
         NSLog("Model-Name %@", modelName)
         
@@ -218,6 +242,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
 
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(updateImageSequencePersistent), name: UIApplicationWillTerminateNotification, object: nil)
 
+        var client:TCPClient = TCPClient(addr: "www.apple.com", port: 80)
+        
         self.textLabel.delegate = self
         
     }
@@ -441,7 +467,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             deleteButton.hidden = true
             duplicateButton.hidden = true
             saveButton.hidden = true
-        }else if(indexPath.item==12 || indexPath.item > 13){
+        }else if(indexPath.item==12 || indexPath.item > 14){
             textOptionView.hidden = true
             lightPatternOptionView.hidden = false
             imageCollectionView.hidden = true
@@ -471,7 +497,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             saveButton.hidden = true
         }
         
-        if(indexPath.item==0){
+        if(indexPath.item==0 || indexPath.item==14){
             playButton.setTitle("\u{f04b}", forState: UIControlState.Normal)
             playButton.setTitleColor(UIColor.init(white: 1, alpha: 0.25), forState: UIControlState.Normal)
             timeProgress.thumbTintColor = UIColor.grayColor()
@@ -515,8 +541,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             drawCollection.reloadData()
             backgroundLight.setNeedsDisplay()
             previewLight.setNeedsDisplay()
-        }else if(indexPath.item>13){
-            appDelegate.seq = indexPath.item - 13
+        }else if(indexPath.item>14){
+            appDelegate.seq = indexPath.item - 14
             appDelegate.play = true
             timer.invalidate()
             timeProgress.userInteractionEnabled = true
@@ -563,7 +589,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             timer = NSTimer.scheduledTimerWithTimeInterval(0.05, target:self, selector: #selector(ViewController.updateCounter), userInfo: nil, repeats: true)
         }
             
-        if(indexPath.item > 13){
+        if(indexPath.item > 14){
             appDelegate.play = true
             timer.invalidate()
             timeProgress.userInteractionEnabled = true
