@@ -58,7 +58,7 @@ a {
   text-align: center;
   background-color: #159957;
   background-image: linear-gradient(120deg, #155799, #159957); 
-  background-image: url("https://github.com/HoggenMari/Sketching-in-Light/blob/gh-pages/images/P1070033v2.jpg?raw=true");
+  background-image: url("https://raw.githubusercontent.com/HoggenMari/Sketching-in-Light/gh-pages/images/P1070033v2.jpg");
 }
 
 @media screen and (min-width: 64em) {
