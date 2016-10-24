@@ -10,7 +10,7 @@ body {
   color: #606c71; }
 
 a {
-  color: #1e6bb8;
+  color: #d53122;
   text-decoration: none; }
   a:hover {
     text-decoration: underline; }
@@ -56,7 +56,7 @@ a {
 .page-header {
   color: #fff;
   text-align: center;
-  background-color: #159957;
+  background-color: #b52a1d;
   background-image: linear-gradient(120deg, #155799, #159957); 
   background-image: url("https://raw.githubusercontent.com/HoggenMari/Sketching-in-Light/gh-pages/images/img.jpg");
   background-size:cover;
@@ -115,7 +115,7 @@ a {
   margin-top: 2rem;
   margin-bottom: 1rem;
   font-weight: normal;
-  color: #159957; }
+  color: #b52a1d; }
 .main-content p {
   margin-bottom: 1em; }
 .main-content code {
