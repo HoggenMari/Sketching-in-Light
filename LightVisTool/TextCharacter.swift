@@ -16,11 +16,11 @@ class Chard {
 
     func Chard () {
         for _ in 0...height {
-            array.append(Array(count:width, repeatedValue:Bool()))
+            array.append(Array(repeating: Bool(), count: width))
         }
     }
     
-    func Chard(charArray: Array<Array<Bool>>) {
+    func Chard(_ charArray: Array<Array<Bool>>) {
         array = charArray
     }
 
@@ -38,8 +38,8 @@ class TextCharacter {
   
   }
     
-  func initColumns(numberOfColumns: Int) {
-    columns = Array<PixelSetColumn?>(count: numberOfColumns, repeatedValue: nil);
+  func initColumns(_ numberOfColumns: Int) {
+    columns = Array<PixelSetColumn?>(repeating: nil, count: numberOfColumns);
     
     //for (int i = 0; i < numberOfColumns; i++) {
     //  columns[i] = new PixelSetColumn();
@@ -60,7 +60,7 @@ class PixelSet {
     var pixels = Array<Bool?>();
 
     func PixelSet() {
-        pixels = Array<Bool?>(count: 4, repeatedValue: nil) ;
+        pixels = Array<Bool?>(repeating: nil, count: 4) ;
     }
     
     func getPixels() -> Array<Bool?> {
@@ -73,7 +73,7 @@ class PixelSetColumn {
     var pixelSets = Array<PixelSet?>();
     
     func PixelSetColumn() {
-        pixelSets = Array<PixelSet?>(count: 4, repeatedValue: nil);
+        pixelSets = Array<PixelSet?>(repeating: nil, count: 4);
         
         //for i in 0...pixelSets.count-1 {
         //    pixelSets[i] = new PixelSet()

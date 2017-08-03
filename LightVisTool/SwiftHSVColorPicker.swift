@@ -7,13 +7,13 @@
 
 import UIKit
 
-public class SwiftHSVColorPicker: UIView {
+open class SwiftHSVColorPicker: UIView {
     var colorWheel: ColorWheel!
     var brightnessView: BrightnessView!
     var alphaView: AlphaView!
     var selectedColorView: SelectedColorView!
 
-    public var color: UIColor!
+    open var color: UIColor!
     var hue: CGFloat = 1.0
     var saturation: CGFloat = 1.0
     var brightness: CGFloat = 1.0
@@ -21,14 +21,14 @@ public class SwiftHSVColorPicker: UIView {
     
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        self.backgroundColor = UIColor.clearColor()
+        self.backgroundColor = UIColor.clear
     }
     
     override public init(frame: CGRect) {
         super.init(frame: frame)
     }
     
-    public func setViewColor(color: UIColor) {
+    open func setViewColor(_ color: UIColor) {
         var hue: CGFloat = 1.0, saturation: CGFloat = 1.0, brightness: CGFloat = 1.0, alpha: CGFloat = 1.0
         let ok: Bool = color.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
         if (!ok) {
@@ -85,7 +85,7 @@ public class SwiftHSVColorPicker: UIView {
         
     }
     
-    func hueAndSaturationSelected(hue: CGFloat, saturation: CGFloat) {
+    func hueAndSaturationSelected(_ hue: CGFloat, saturation: CGFloat) {
         self.hue = hue
         self.saturation = saturation
         self.color = UIColor(hue: self.hue, saturation: self.saturation, brightness: self.brightness, alpha: self.alph)
@@ -94,7 +94,7 @@ public class SwiftHSVColorPicker: UIView {
         alphaView.setViewColor(self.color)
     }
     
-    func brightnessSelected(brightness: CGFloat) {
+    func brightnessSelected(_ brightness: CGFloat) {
         self.brightness = brightness
         self.color = UIColor(hue: self.hue, saturation: self.saturation, brightness: self.brightness, alpha: self.alph)
         colorWheel.setViewBrightness(brightness)
@@ -102,7 +102,7 @@ public class SwiftHSVColorPicker: UIView {
         alphaView.setViewColor(self.color)
     }
     
-    func alphaSelected(alpha: CGFloat) {
+    func alphaSelected(_ alpha: CGFloat) {
         self.alph = alpha
         self.color = UIColor(hue: self.hue, saturation: self.saturation, brightness: self.brightness, alpha: self.alph)
         colorWheel.setViewBrightness(brightness)

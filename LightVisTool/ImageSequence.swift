@@ -8,15 +8,15 @@
 
 import UIKit
 
-public class ImageSequence {
+open class ImageSequence {
 
 
-    public var activeImage = UIImage()
-    public var preview_image = UIImage()
-    public var img_draw = Array<UIImage>()
-    public var drawFrames:Int = 1
-    public var currentFrame:Int = 0
-    public var name:String = ""
+    open var activeImage = UIImage()
+    open var preview_image = UIImage()
+    open var img_draw = Array<UIImage>()
+    open var drawFrames:Int = 1
+    open var currentFrame:Int = 0
+    open var name:String = ""
 
 
     init() {

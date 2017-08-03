@@ -89,9 +89,11 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     @IBOutlet var colorPicker: SwiftHSVColorPicker!
     
-    let screenSizeWidth = UIScreen.mainScreen().bounds.width
-    let screenSizeHeight = UIScreen.mainScreen().bounds.height
-    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    @IBOutlet var ip_label: UILabel!
+    
+    let screenSizeWidth = UIScreen.main.bounds.width
+    let screenSizeHeight = UIScreen.main.bounds.height
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
     var ipadDiagonal:CGFloat = 12.9
     var ipadFormat:CGFloat = 1.333984375
@@ -100,11 +102,11 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     var ipadSizeWidth: CGFloat = 0.0
     var ipadSizeHeight: CGFloat = 0.0
     let test = sqrt(1.0/100.0)
-    let modelName = UIDevice().type.rawValue
+    let modelName = UIDevice.current.modelName
 
-    var timer = NSTimer()
-    var recTimer = NSTimer()
-    var drawTimer = NSTimer()
+    var timer = Timer()
+    var recTimer = Timer()
+    var drawTimer = Timer()
 
     
     var speed: CGFloat = 1.0
@@ -115,18 +117,18 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         super.viewDidLoad()
         
         
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), { () -> Void in
+        DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.background).async(execute: { () -> Void in
             let server:UDPServer=UDPServer(addr:"",port:53282)
             let run:Bool=true
             while run{
                 var (data,remoteip,remoteport)=server.recv(2048)
                 print("recive")
                 if let d=data{
-                    if let str=String(bytes: d, encoding: NSUTF8StringEncoding){
+                    if let str=String(bytes: d, encoding: String.Encoding.utf8){
                         
-                        let separators = NSCharacterSet(charactersInString: "#")
+                        let separators = CharacterSet(charactersIn: "#")
                         let fullName : String = str
-                        self.appDelegate.processing = fullName.componentsSeparatedByCharactersInSet(separators)
+                        self.appDelegate.processing = fullName.components(separatedBy: separators)
                         print(self.appDelegate.processing[1])
                     }
                 }
@@ -181,10 +183,10 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         
         //timer = NSTimer.scheduledTimerWithTimeInterval(0.05, target:self, selector: Selector("updateCounter"), userInfo: nil, repeats: true)
 
-        playButton.setTitle("\u{f04b}", forState: UIControlState.Normal)
-        playButton.setTitleColor(UIColor.init(white: 1, alpha: 0.25), forState: UIControlState.Normal)
-        timeProgress.thumbTintColor = UIColor.grayColor()
-        timeProgress.userInteractionEnabled = false
+        playButton.setTitle("\u{f04b}", for: UIControlState())
+        playButton.setTitleColor(UIColor.init(white: 1, alpha: 0.25), for: UIControlState())
+        timeProgress.thumbTintColor = UIColor.gray
+        timeProgress.isUserInteractionEnabled = false
         smooth.alpha = 0.5
         smoothLabel.alpha = 0.5
         backwardLoop.alpha = 0.5
@@ -236,11 +238,11 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         appDelegate.selectedColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
         colorPicker.setViewColor(appDelegate.selectedColor)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.reloadCollection), name: "reloadCollection", object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.reloadCollection), name: NSNotification.Name(rawValue: "reloadCollection"), object: nil)
 
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(updateImageSequencePersistent), name: UIApplicationDidEnterBackgroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateImageSequencePersistent), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
 
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(updateImageSequencePersistent), name: UIApplicationWillTerminateNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateImageSequencePersistent), name: NSNotification.Name.UIApplicationWillTerminate, object: nil)
 
         var client:TCPClient = TCPClient(addr: "www.apple.com", port: 80)
         
@@ -267,63 +269,63 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         //backgroundLight
     }*/
 
-    @IBAction func redChanged(sender: UISlider) {
+    @IBAction func redChanged(_ sender: UISlider) {
         NSLog("Red Value Changed: %f", sender.value)
         appDelegate.red = CGFloat(sender.value)
         backgroundLight.setNeedsDisplay()
     }
     
-    @IBAction func greenChanged(sender: UISlider) {
+    @IBAction func greenChanged(_ sender: UISlider) {
         NSLog("Green Value Changed: %f", sender.value)
         appDelegate.green = CGFloat(sender.value)
         backgroundLight.setNeedsDisplay()
     }
     
-    @IBAction func blueChanged(sender: UISlider) {
+    @IBAction func blueChanged(_ sender: UISlider) {
         NSLog("Blue Value Changed: %f", sender.value)
         appDelegate.blue = CGFloat(sender.value)
         backgroundLight.setNeedsDisplay()
     }
     
-    @IBAction func brightnessChanged(sender: UISlider) {
+    @IBAction func brightnessChanged(_ sender: UISlider) {
         NSLog("Brightness Value Changed: %f", sender.value)
         appDelegate.brigtness = CGFloat(sender.value)
         backgroundLight.setNeedsDisplay()
         //backgroundLight
     }
     
-    @IBAction func playButtonPressed(sender: UIButton) {
+    @IBAction func playButtonPressed(_ sender: UIButton) {
         NSLog("Pressed")
         if(appDelegate.mode != 0){
             appDelegate.play = !appDelegate.play
             if(appDelegate.play){
-                playButton .setTitle("\u{f04c}", forState: UIControlState.Normal)
-                timer = NSTimer.scheduledTimerWithTimeInterval(0.05, target:self, selector: Selector("updateCounter"), userInfo: nil, repeats: true)
+                playButton .setTitle("\u{f04c}", for: UIControlState())
+                timer = Timer.scheduledTimer(timeInterval: 0.05, target:self, selector: #selector(ViewController.updateCounter), userInfo: nil, repeats: true)
             }else{
-                playButton .setTitle("\u{f04b}", forState: UIControlState.Normal)
+                playButton .setTitle("\u{f04b}", for: UIControlState())
                 timer.invalidate()
                 speedLabel.alpha = 1.0
             }
         }
     }
     
-    @IBAction func progressSliderChanged(sender: UISlider) {
+    @IBAction func progressSliderChanged(_ sender: UISlider) {
         NSLog("Sender changed: %f", sender.value)
         appDelegate.counter = CGFloat(sender.value)
         backgroundLight.setNeedsDisplay()
     }
     
-    @IBAction func touchDown(sender: AnyObject) {
+    @IBAction func touchDown(_ sender: AnyObject) {
         print("touchDown")
         appDelegate.sliderChanged = true
     }
     
-    @IBAction func touchUpInside(sender: AnyObject) {
+    @IBAction func touchUpInside(_ sender: AnyObject) {
         print("touchUpInside")
         appDelegate.sliderChanged = false
     }
     
-    @IBAction func touchUpOutside(sender: AnyObject) {
+    @IBAction func touchUpOutside(_ sender: AnyObject) {
         print("touchUpOutside")
         appDelegate.sliderChanged = false
     }
@@ -332,7 +334,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     //    NSLog("Stepper pressed")
     //}
     
-    @IBAction func stepperPressed(sender: UIStepper) {
+    @IBAction func stepperPressed(_ sender: UIStepper) {
         NSLog("Stepper pressed %f", sender.value)
         speed = 1 * pow(2.0, CGFloat(sender.value))
         let s = (NSString(format: "%.2f", speed) as String)+" x"
@@ -389,7 +391,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     // MARK: - UICollectionViewDataSource protocol
     
     // tell the collection view how many cells to make
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         if collectionView == self.lightPatternCollectionView {
             return self.items.count
@@ -404,17 +406,17 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     // make a cell for each cell index path
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         if collectionView == self.lightPatternCollectionView {
-            let cell = collectionView.dequeueReusableCellWithReuseIdentifier(lightPatternCollectionViewIdentifier, forIndexPath: indexPath) as! LightPatternCollectionViewCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: lightPatternCollectionViewIdentifier, for: indexPath) as! LightPatternCollectionViewCell
         
             cell.myLabel.text = self.items[indexPath.item]
             cell.myImage.image = self.logoImage[indexPath.item]
         
             return cell
         } else if collectionView == self.imageCollectionView {
-            let cell = collectionView.dequeueReusableCellWithReuseIdentifier(imageCollectionViewIdentifier, forIndexPath: indexPath) as! ImageCollectionViewCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: imageCollectionViewIdentifier, for: indexPath) as! ImageCollectionViewCell
             
             //if let image = cell.viewWithTag(1000) as? UIImageView {
                 //print("add image")
@@ -424,7 +426,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             
             return cell
         } else {
-            let cell = collectionView.dequeueReusableCellWithReuseIdentifier(drawCollectionViewIdentifier, forIndexPath: indexPath) as! DrawCollectionViewCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: drawCollectionViewIdentifier, for: indexPath) as! DrawCollectionViewCell
             
             if(indexPath.item<appDelegate.imgSeq[appDelegate.seq].drawFrames){
             
@@ -432,13 +434,13 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             print(appDelegate.seq)
             print(indexPath.item)
             cell.image.image = appDelegate.imgSeq[appDelegate.seq].img_draw[indexPath.item]
-            cell.backgroundColor = UIColor.clearColor()
-            cell.contentView.layer.borderColor = UIColor.whiteColor().CGColor
+            cell.backgroundColor = UIColor.clear
+            cell.contentView.layer.borderColor = UIColor.white.cgColor
             cell.contentView.layer.borderWidth = 1
             //print("IndexPath: "+String(indexPath.item)+" DrawFrames: "+String(appDelegate.drawFrames))
             }else if(indexPath.item==appDelegate.imgSeq[appDelegate.seq].drawFrames){
                 cell.image.image = UIImage(named: "add.png")!
-                cell.backgroundColor = UIColor.grayColor()
+                cell.backgroundColor = UIColor.gray
             }
             //}//else if(indexPath.item == indexPath.)
             //}
@@ -450,7 +452,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     // MARK: - UICollectionViewDelegate protocol
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         // handle tap events
         //print("You selected cell #\(indexPath.item)!")
         
@@ -459,49 +461,49 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         lightPatternImage.image = self.logoImage[indexPath.item]
         
         if(indexPath.item==11){
-            lightPatternOptionView.hidden = true
-            textOptionView.hidden = false
-            imageCollectionView.hidden = true
-            drawCollection.hidden = true
-            drawView.hidden = true
-            deleteButton.hidden = true
-            duplicateButton.hidden = true
-            saveButton.hidden = true
+            lightPatternOptionView.isHidden = true
+            textOptionView.isHidden = false
+            imageCollectionView.isHidden = true
+            drawCollection.isHidden = true
+            drawView.isHidden = true
+            deleteButton.isHidden = true
+            duplicateButton.isHidden = true
+            saveButton.isHidden = true
         }else if(indexPath.item==12 || indexPath.item > 14){
-            textOptionView.hidden = true
-            lightPatternOptionView.hidden = false
-            imageCollectionView.hidden = true
-            drawCollection.hidden = false
-            drawView.hidden = false
-            deleteButton.hidden = false
-            duplicateButton.hidden = false
-            saveButton.hidden = false
+            textOptionView.isHidden = true
+            lightPatternOptionView.isHidden = false
+            imageCollectionView.isHidden = true
+            drawCollection.isHidden = false
+            drawView.isHidden = false
+            deleteButton.isHidden = false
+            duplicateButton.isHidden = false
+            saveButton.isHidden = false
         }else if(indexPath.item==13){
-            textOptionView.hidden = true
-            lightPatternOptionView.hidden = true
-            imageCollectionView.hidden = false
-            drawCollection.hidden = true
-            drawView.hidden = true
-            deleteButton.hidden = true
-            duplicateButton.hidden = true
-            saveButton.hidden = true
+            textOptionView.isHidden = true
+            lightPatternOptionView.isHidden = true
+            imageCollectionView.isHidden = false
+            drawCollection.isHidden = true
+            drawView.isHidden = true
+            deleteButton.isHidden = true
+            duplicateButton.isHidden = true
+            saveButton.isHidden = true
             FetchCustomAlbumPhotos()
         }else{
-            drawCollection.hidden = true
-            lightPatternOptionView.hidden = true
-            textOptionView.hidden = true
-            imageCollectionView.hidden = true
-            drawView.hidden = true
-            deleteButton.hidden = true
-            duplicateButton.hidden = true
-            saveButton.hidden = true
+            drawCollection.isHidden = true
+            lightPatternOptionView.isHidden = true
+            textOptionView.isHidden = true
+            imageCollectionView.isHidden = true
+            drawView.isHidden = true
+            deleteButton.isHidden = true
+            duplicateButton.isHidden = true
+            saveButton.isHidden = true
         }
         
         if(indexPath.item==0 || indexPath.item==14){
-            playButton.setTitle("\u{f04b}", forState: UIControlState.Normal)
-            playButton.setTitleColor(UIColor.init(white: 1, alpha: 0.25), forState: UIControlState.Normal)
-            timeProgress.thumbTintColor = UIColor.grayColor()
-            timeProgress.userInteractionEnabled = false
+            playButton.setTitle("\u{f04b}", for: UIControlState())
+            playButton.setTitleColor(UIColor.init(white: 1, alpha: 0.25), for: UIControlState())
+            timeProgress.thumbTintColor = UIColor.gray
+            timeProgress.isUserInteractionEnabled = false
             smooth.alpha = 0.5
             smoothLabel.alpha = 0.5
             backwardLoop.alpha = 0.5
@@ -514,28 +516,31 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             timer.invalidate()
             speedLabel.alpha = 1.0
             appDelegate.play = false
+            if(indexPath.item==14){
+                ip_label.text = "IP: Blaa"
+            }
             
         }else if(indexPath.item==12){
             appDelegate.seq = 0
             appDelegate.play = true
             timer.invalidate()
-            timeProgress.userInteractionEnabled = true
+            timeProgress.isUserInteractionEnabled = true
             if(appDelegate.notification == false){
                 smooth.alpha = 1.0
                 smoothLabel.alpha = 1.0
                 backwardLoop.alpha = 1.0
                 backwardsLabel.alpha = 1.0
-                timeProgress.thumbTintColor = UIColor.whiteColor()
+                timeProgress.thumbTintColor = UIColor.white
             }
             timeProgress.alpha = 1.0
             stepper.alpha = 1.0
             speedLabel.alpha = 1.0
             notification.alpha = 1.0
             notificationLabel.alpha = 1.0
-            playButton.setTitleColor(UIColor.init(white: 1, alpha: 1), forState: UIControlState.Normal)
-            playButton .setTitle("\u{f04b}", forState: UIControlState.Normal)
+            playButton.setTitleColor(UIColor.init(white: 1, alpha: 1), for: UIControlState())
+            playButton .setTitle("\u{f04b}", for: UIControlState())
             timer.invalidate()
-            drawTimer = NSTimer.scheduledTimerWithTimeInterval(0.05, target:self, selector: #selector(ViewController.drawTimerUpdate), userInfo: nil, repeats: true)
+            drawTimer = Timer.scheduledTimer(timeInterval: 0.05, target:self, selector: #selector(ViewController.drawTimerUpdate), userInfo: nil, repeats: true)
             speedLabel.alpha = 1.0
             appDelegate.play = false
             drawCollection.reloadData()
@@ -545,24 +550,24 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             appDelegate.seq = indexPath.item - 14
             appDelegate.play = true
             timer.invalidate()
-            timeProgress.userInteractionEnabled = true
+            timeProgress.isUserInteractionEnabled = true
             if(appDelegate.notification == false){
                 smooth.alpha = 1.0
                 smoothLabel.alpha = 1.0
                 backwardLoop.alpha = 1.0
                 backwardsLabel.alpha = 1.0
-                timeProgress.thumbTintColor = UIColor.whiteColor()
+                timeProgress.thumbTintColor = UIColor.white
             }
             timeProgress.alpha = 1.0
             stepper.alpha = 1.0
             speedLabel.alpha = 1.0
             notification.alpha = 1.0
             notificationLabel.alpha = 1.0
-            playButton.setTitleColor(UIColor.init(white: 1, alpha: 1), forState: UIControlState.Normal)
-            playButton .setTitle("\u{f04b}", forState: UIControlState.Normal)
+            playButton.setTitleColor(UIColor.init(white: 1, alpha: 1), for: UIControlState())
+            playButton .setTitle("\u{f04b}", for: UIControlState())
             timer.invalidate()
-            drawTimer = NSTimer.scheduledTimerWithTimeInterval(0.05, target:self, selector: #selector(ViewController.drawTimerUpdate), userInfo: nil, repeats: true)
-            timer = NSTimer.scheduledTimerWithTimeInterval(0.05, target:self, selector: #selector(ViewController.updateCounter), userInfo: nil, repeats: true)
+            drawTimer = Timer.scheduledTimer(timeInterval: 0.05, target:self, selector: #selector(ViewController.drawTimerUpdate), userInfo: nil, repeats: true)
+            timer = Timer.scheduledTimer(timeInterval: 0.05, target:self, selector: #selector(ViewController.updateCounter), userInfo: nil, repeats: true)
             speedLabel.alpha = 1.0
             appDelegate.play = false
             drawCollection.reloadData()
@@ -571,43 +576,43 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         }else{
             appDelegate.play = true
             timer.invalidate()
-            timeProgress.userInteractionEnabled = true
+            timeProgress.isUserInteractionEnabled = true
             if(appDelegate.notification == false){
                 smooth.alpha = 1.0
                 smoothLabel.alpha = 1.0
                 backwardLoop.alpha = 1.0
                 backwardsLabel.alpha = 1.0
-                timeProgress.thumbTintColor = UIColor.whiteColor()
+                timeProgress.thumbTintColor = UIColor.white
             }
             timeProgress.alpha = 1.0
             stepper.alpha = 1.0
             speedLabel.alpha = 1.0
             notification.alpha = 1.0
             notificationLabel.alpha = 1.0
-            playButton.setTitleColor(UIColor.init(white: 1, alpha: 1), forState: UIControlState.Normal)
-            playButton .setTitle("\u{f04c}", forState: UIControlState.Normal)
-            timer = NSTimer.scheduledTimerWithTimeInterval(0.05, target:self, selector: #selector(ViewController.updateCounter), userInfo: nil, repeats: true)
+            playButton.setTitleColor(UIColor.init(white: 1, alpha: 1), for: UIControlState())
+            playButton .setTitle("\u{f04c}", for: UIControlState())
+            timer = Timer.scheduledTimer(timeInterval: 0.05, target:self, selector: #selector(ViewController.updateCounter), userInfo: nil, repeats: true)
         }
             
         if(indexPath.item > 14){
             appDelegate.play = true
             timer.invalidate()
-            timeProgress.userInteractionEnabled = true
+            timeProgress.isUserInteractionEnabled = true
             if(appDelegate.notification == false){
                 smooth.alpha = 1.0
                 smoothLabel.alpha = 1.0
                 backwardLoop.alpha = 1.0
                 backwardsLabel.alpha = 1.0
-                timeProgress.thumbTintColor = UIColor.whiteColor()
+                timeProgress.thumbTintColor = UIColor.white
             }
             timeProgress.alpha = 1.0
             stepper.alpha = 1.0
             speedLabel.alpha = 1.0
             notification.alpha = 1.0
             notificationLabel.alpha = 1.0
-            playButton.setTitleColor(UIColor.init(white: 1, alpha: 1), forState: UIControlState.Normal)
-            playButton .setTitle("\u{f04c}", forState: UIControlState.Normal)
-            timer = NSTimer.scheduledTimerWithTimeInterval(0.05, target:self, selector: #selector(ViewController.updateCounter), userInfo: nil, repeats: true)
+            playButton.setTitleColor(UIColor.init(white: 1, alpha: 1), for: UIControlState())
+            playButton .setTitle("\u{f04c}", for: UIControlState())
+            timer = Timer.scheduledTimer(timeInterval: 0.05, target:self, selector: #selector(ViewController.updateCounter), userInfo: nil, repeats: true)
         }
         
         appDelegate.mode = indexPath.item
@@ -631,14 +636,14 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
 
                 appDelegate.play = false;
                 timer.invalidate()
-                playButton .setTitle("\u{f04b}", forState: UIControlState.Normal)
+                playButton .setTitle("\u{f04b}", for: UIControlState())
                 
                 //appDelegate.img_draw.append(UIImage())
                 //appDelegate.drawFrames++
                 //appDelegate.currentFrame = appDelegate.drawFrames-1
                 
                 appDelegate.imgSeq[appDelegate.seq].img_draw.append(UIImage())
-                appDelegate.imgSeq[appDelegate.seq].drawFrames++
+                appDelegate.imgSeq[appDelegate.seq].drawFrames += 1
                 appDelegate.imgSeq[appDelegate.seq].currentFrame = (appDelegate.imgSeq[appDelegate.seq].drawFrames)-1
                 
                 backgroundLight.setNeedsDisplay()
@@ -646,7 +651,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                 drawCollection.reloadData()
                 //self.drawCollection.scrollToItemAtIndexPath(NSIndexPath(forItem: appDelegate.drawFrames, inSection: 0), atScrollPosition: .Right, animated: true)
                 
-                self.drawCollection.scrollToItemAtIndexPath(NSIndexPath(forItem: (appDelegate.imgSeq[appDelegate.seq].drawFrames), inSection: 0), atScrollPosition: .Right, animated: true)
+                self.drawCollection.scrollToItem(at: IndexPath(item: (appDelegate.imgSeq[appDelegate.seq].drawFrames), section: 0), at: .right, animated: true)
                 
 
             }else{
@@ -666,8 +671,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         
     }
 
-    @IBAction func backwordSwitchChanged(sender: UISwitch) {
-        if(sender.on){
+    @IBAction func backwordSwitchChanged(_ sender: UISwitch) {
+        if(sender.isOn){
             appDelegate.backwardLoop = true
         }else{
             appDelegate.backwardLoop = false
@@ -675,16 +680,16 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         
     }
 
-    @IBAction func smoothSwitchChanged(sender: UISwitch) {
-        if(sender.on){
+    @IBAction func smoothSwitchChanged(_ sender: UISwitch) {
+        if(sender.isOn){
             appDelegate.smooth = true
         }else{
             appDelegate.smooth = false
         }
     }
     
-    @IBAction func notificationSwitchChanged(sender: UISwitch) {
-        if(sender.on){
+    @IBAction func notificationSwitchChanged(_ sender: UISwitch) {
+        if(sender.isOn){
             appDelegate.notification = true
             smooth.alpha = 0.5
             smoothLabel.alpha = 0.5
@@ -702,30 +707,30 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         }
     }
     
-    @IBAction func textLabelEditEnd(sender: UITextField) {
+    @IBAction func textLabelEditEnd(_ sender: UITextField) {
         print("action")
-        appDelegate.text = (sender.text?.uppercaseString)!
+        appDelegate.text = (sender.text?.uppercased())!
         backgroundLight.setNeedsDisplay()
     }
 
-    @IBAction func textEditingChanged(sender: AnyObject) {
-        appDelegate.text = (sender.text?.uppercaseString)!
+    @IBAction func textEditingChanged(_ sender: AnyObject) {
+        appDelegate.text = (sender.text?.uppercased())!
         backgroundLight.setNeedsDisplay()
     }
     
-    @IBAction func endOnExit(sender: UITextField) {
+    @IBAction func endOnExit(_ sender: UITextField) {
         print("actionTest")
     }
     
 
-    @IBAction func recordButton(sender: UIButton) {
+    @IBAction func recordButton(_ sender: UIButton) {
         
         appDelegate.record = !appDelegate.record
         if(appDelegate.record){
-            recordButtonOut.setTitle("Stop Recording", forState: UIControlState.Normal)
-            recTimer = NSTimer.scheduledTimerWithTimeInterval(0.05, target:self, selector: Selector("updateRecCounter"), userInfo: nil, repeats: true)
+            recordButtonOut.setTitle("Stop Recording", for: UIControlState())
+            recTimer = Timer.scheduledTimer(timeInterval: 0.05, target:self, selector: #selector(ViewController.updateRecCounter), userInfo: nil, repeats: true)
         }else{
-            recordButtonOut .setTitle("Record New LightPattern", forState: UIControlState.Normal)
+            recordButtonOut .setTitle("Record New LightPattern", for: UIControlState())
             recordButtonOut.alpha = 0.75
             recTimer.invalidate()
             appDelegate.recordCounter = 0.0
@@ -734,7 +739,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         
     }
     
-    @IBAction func textPosSliderChanged(sender: UISlider) {
+    @IBAction func textPosSliderChanged(_ sender: UISlider) {
         textPosLabel.text = "Row "+String((Int)(sender.value*Float(maxTextPos)))
         appDelegate.row = (Int)(sender.value*Float(maxTextPos))
         backgroundLight.setNeedsDisplay()
@@ -742,6 +747,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     func updateRecCounter() {
         appDelegate.recordCounter += 0.05
+        appDelegate.setValue(15, forKey: "recordCounter")
         if(Int(appDelegate.recordCounter)%2==0){
           recordButtonOut.alpha = 0.25
         }else{
@@ -751,7 +757,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         
     }
     
-    func roundToPlaces(value:CGFloat, places:Int) -> CGFloat {
+    func roundToPlaces(_ value:CGFloat, places:Int) -> CGFloat {
         let divisor = pow(10.0, Double(places))
         return CGFloat(round(Double(value) * divisor) / divisor)
     }
@@ -762,11 +768,11 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         var albumName = "Camera Roll"
         var assetCollection = PHAssetCollection()
         var albumFound = Bool()
-        var photoAssets = PHFetchResult()
+        var photoAssets = PHFetchResult<AnyObject>()
         
         let fetchOptions = PHFetchOptions()
         //fetchOptions.predicate = NSPredicate(format: "title = %@", albumName)
-        let collection:PHFetchResult = PHAssetCollection.fetchAssetCollectionsWithType(.SmartAlbum, subtype: .SmartAlbumUserLibrary, options: nil)
+        let collection:PHFetchResult = PHAssetCollection.fetchAssetCollections(with: .smartAlbum, subtype: .smartAlbumUserLibrary, options: nil)
         
         
         if let first_Obj:AnyObject = collection.firstObject{
@@ -777,14 +783,14 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         else { albumFound = false }
         var i = collection.count
         print(i)
-        photoAssets = PHAsset.fetchAssetsInAssetCollection(assetCollection, options: nil)
+        photoAssets = PHAsset.fetchAssets(in: assetCollection, options: nil) as! PHFetchResult<AnyObject>
         let imageManager = PHCachingImageManager()
         
         //        let imageManager = PHImageManager.defaultManager()
         
         images.removeAll()
         
-        photoAssets.enumerateObjectsUsingBlock{(object: AnyObject!,
+        photoAssets.enumerateObjects({(object: AnyObject!,
             count: Int,
             stop: UnsafeMutablePointer<ObjCBool>) in
             
@@ -793,32 +799,32 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                 print("Inside  If object is PHAsset, This is number 1")
                 
                 let imageSize = CGSize(width: asset.pixelWidth,
-                    height: asset.pixelHeight)
+                                       height: asset.pixelHeight)
                 
                 /* For faster performance, and maybe degraded image */
                 let options = PHImageRequestOptions()
-                options.deliveryMode = .FastFormat
-                options.synchronous = true
+                options.deliveryMode = .fastFormat
+                options.isSynchronous = true
                 
-                imageManager.requestImageForAsset(asset,
-                    targetSize: imageSize,
-                    contentMode: .AspectFill,
-                    options: options,
-                    resultHandler: {
-                        (image, info) -> Void in
-                        self.photo = image!
-                        /* The image is now available to us */
-                        self.addImgToArray(self.photo)
-                        print("enum for image, This is number 2")
-                        
+                imageManager.requestImage(for: asset,
+                                          targetSize: imageSize,
+                                          contentMode: .aspectFill,
+                                          options: options,
+                                          resultHandler: {
+                                            (image, info) -> Void in
+                                            self.photo = image!
+                                            /* The image is now available to us */
+                                            self.addImgToArray(self.photo)
+                                            print("enum for image, This is number 2")
+                                            
                 })
                 
             }
-        }
+        })
         imageCollectionView.reloadData()
     }
     
-    func addImgToArray(uploadImage:UIImage)
+    func addImgToArray(_ uploadImage:UIImage)
     {
         self.images.append(uploadImage)
         
@@ -826,18 +832,18 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         print(images.count)
     }
     
-    @IBAction func deleteImage(sender: AnyObject) {
+    @IBAction func deleteImage(_ sender: AnyObject) {
         print("duplicate")
         if(appDelegate.imgSeq[appDelegate.seq].drawFrames>1){
-            appDelegate.imgSeq[appDelegate.seq].img_draw.removeAtIndex((appDelegate.imgSeq[appDelegate.seq].currentFrame))
-            appDelegate.imgSeq[appDelegate.seq].drawFrames--
+            appDelegate.imgSeq[appDelegate.seq].img_draw.remove(at: (appDelegate.imgSeq[appDelegate.seq].currentFrame))
+            appDelegate.imgSeq[appDelegate.seq].drawFrames -= 1
             appDelegate.imgSeq[appDelegate.seq].currentFrame = (appDelegate.imgSeq[appDelegate.seq].drawFrames)-1
             backgroundLight.setNeedsDisplay()
             previewLight.setNeedsDisplay()
             drawCollection.reloadData()
         }else if(appDelegate.imgSeq[appDelegate.seq].drawFrames==1){
             appDelegate.imgSeq[appDelegate.seq].img_draw.append(UIImage())
-            appDelegate.imgSeq[appDelegate.seq].img_draw.removeAtIndex((appDelegate.imgSeq[appDelegate.seq].currentFrame))
+            appDelegate.imgSeq[appDelegate.seq].img_draw.remove(at: (appDelegate.imgSeq[appDelegate.seq].currentFrame))
             appDelegate.imgSeq[appDelegate.seq].currentFrame = (appDelegate.imgSeq[appDelegate.seq].drawFrames)-1
             backgroundLight.setNeedsDisplay()
             previewLight.setNeedsDisplay()
@@ -845,31 +851,31 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         }
     }
     
-    @IBAction func duplicateImage(sender: AnyObject) {
+    @IBAction func duplicateImage(_ sender: AnyObject) {
         print("delete")
-        appDelegate.imgSeq[appDelegate.seq].img_draw.insert((appDelegate.imgSeq[appDelegate.seq].img_draw[(appDelegate.imgSeq[appDelegate.seq].currentFrame)]), atIndex: (appDelegate.imgSeq[appDelegate.seq].currentFrame))
-        appDelegate.imgSeq[appDelegate.seq].drawFrames++
+        appDelegate.imgSeq[appDelegate.seq].img_draw.insert((appDelegate.imgSeq[appDelegate.seq].img_draw[(appDelegate.imgSeq[appDelegate.seq].currentFrame)]), at: (appDelegate.imgSeq[appDelegate.seq].currentFrame))
+        appDelegate.imgSeq[appDelegate.seq].drawFrames += 1
         backgroundLight.setNeedsDisplay()
         previewLight.setNeedsDisplay()
         drawCollection.reloadData()
     }
     
     // change background color when user touches cell
-    func collectionView(collectionView: UICollectionView, didHighlightItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
         if(collectionView == self.drawCollection){
-            var index = collectionView.indexPathsForVisibleItems()
+            var index = collectionView.indexPathsForVisibleItems
             print("Test")
             print(index)
             
             
-            var indexes = [NSIndexPath]()
+            var indexes = [IndexPath]()
             // assuming that tableView is your self.tableView defined somewhere
-            for i in 0...drawCollection.numberOfSections() - 1
+            for i in 0...drawCollection.numberOfSections - 1
             {
-                for j in 0...drawCollection.numberOfItemsInSection(i)-1
+                for j in 0...drawCollection.numberOfItems(inSection: i)-1
                 {
                     
-                    let index = NSIndexPath(forRow: j, inSection: i)
+                    let index = IndexPath(row: j, section: i)
                     indexes.append(index)
                     
                 }
@@ -879,50 +885,50 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             for i in 0 ..< index.count - 1 {
                 print("Count")
                 print(index[i])
-                let cell = collectionView.cellForItemAtIndexPath(index[i]) as! DrawCollectionViewCell
-                cell.contentView.layer.borderColor = UIColor.whiteColor().CGColor
+                let cell = collectionView.cellForItem(at: index[i]) as! DrawCollectionViewCell
+                cell.contentView.layer.borderColor = UIColor.white.cgColor
                 cell.contentView.layer.borderWidth = 1
             }
             
             
             if(indexPath.item != appDelegate.imgSeq[appDelegate.imgSeqCtr].drawFrames){
-                let cell = collectionView.cellForItemAtIndexPath(indexPath) as! DrawCollectionViewCell
-                cell.contentView.layer.borderColor = UIColor.whiteColor().CGColor
+                let cell = collectionView.cellForItem(at: indexPath) as! DrawCollectionViewCell
+                cell.contentView.layer.borderColor = UIColor.white.cgColor
                 cell.contentView.layer.borderWidth = 3            }
         }
     }
     
-    func textFieldShouldReturn(userText: UITextField!) -> Bool {
+    func textFieldShouldReturn(_ userText: UITextField!) -> Bool {
         userText.resignFirstResponder()
         return true;
     }
     
-    @IBAction func save(sender: AnyObject) {
+    @IBAction func save(_ sender: AnyObject) {
         print("save")
 
         UIGraphicsBeginImageContextWithOptions(CGSize(width:400, height: 280), false, 1)
         let context = UIGraphicsGetCurrentContext()
         
-        var img_bg = UIImage(named: "brightness_pattern.jpg")
-        CGContextDrawImage(context, CGRect(x:0, y:0, width:400, height:280), imageWithImage(img_bg!, scaledToSize: CGSize(width: 400, height: 280)).CGImage)
+        let img_bg = UIImage(named: "brightness_pattern.jpg")
+        context?.draw(imageWithImage(img_bg!, scaledToSize: CGSize(width: 400, height: 280)).cgImage!, in: CGRect(x:0, y:0, width:400, height:280))
         
-        CGContextSetAlpha(context, 0.7)
+        context?.setAlpha(0.7)
         
         // then flip Y axis
-        CGContextTranslateCTM(context, 0, 280);
-        CGContextScaleCTM(context, 1.0, -1.0);
+        context?.translateBy(x: 0, y: 280);
+        context?.scaleBy(x: 1.0, y: -1.0);
         
-        CGContextDrawImage(context, CGRect(x:0, y:0, width:400, height:280), imageWithImage(appDelegate.imgSeq[appDelegate.seq].img_draw[0], scaledToSize: CGSize(width:400, height:280)).CGImage)
+        context?.draw(imageWithImage(appDelegate.imgSeq[appDelegate.seq].img_draw[0], scaledToSize: CGSize(width:400, height:280)).cgImage!, in: CGRect(x:0, y:0, width:400, height:280))
         
         
         let img = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
 
         
-        logoImage.append(img)
-        appDelegate.imgSeq[appDelegate.seq].preview_image = img
+        logoImage.append(img!)
+        appDelegate.imgSeq[appDelegate.seq].preview_image = img!
         
-        var name = "Saved Pattern "+String(appDelegate.imgSeq.count)
+        let name = "Saved Pattern "+String(appDelegate.imgSeq.count)
         items.append(name)
 
         saveImageSequencePersistent()
@@ -931,7 +937,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         appDelegate.imgSeq.last?.img_draw = appDelegate.imgSeq[appDelegate.seq].img_draw
         appDelegate.imgSeq.last?.drawFrames = appDelegate.imgSeq[appDelegate.seq].drawFrames
         
-        appDelegate.imgSeqCtr++
+        appDelegate.imgSeqCtr += 1
         backgroundLight.setNeedsDisplay()
         previewLight.setNeedsDisplay()
         drawCollection.reloadData()
@@ -939,10 +945,10 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     
-    func imageWithImage(image:UIImage, scaledToSize newSize:CGSize) -> UIImage{
+    func imageWithImage(_ image:UIImage, scaledToSize newSize:CGSize) -> UIImage{
         UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0);
-        image.drawInRect(CGRectMake(0, 0, newSize.width, newSize.height))
-        let newImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        image.draw(in: CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height))
+        let newImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
         return newImage
     }
@@ -950,11 +956,11 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     func saveImageSequencePersistent(){
         
         let entityDescription =
-            NSEntityDescription.entityForName("SavedImageSequence",
-                                              inManagedObjectContext: appDelegate.managedObjectContext)
+            NSEntityDescription.entity(forEntityName: "SavedImageSequence",
+                                              in: appDelegate.managedObjectContext)
         
         let savedImageSequence = SavedImageSequence(entity: entityDescription!,
-                               insertIntoManagedObjectContext: appDelegate.managedObjectContext)
+                               insertInto: appDelegate.managedObjectContext)
         
         //savedImageSequence.activeImage = appDelegate.imgSeq[appDelegate.imgSeqCtr].activeImage
         //savedImageSequence.img_draw = appDelegate.imgSeq[appDelegate.imgSeqCtr].img_draw
@@ -962,21 +968,21 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         savedImageSequence.currentFrame = Float(appDelegate.imgSeq[appDelegate.seq].currentFrame)
         savedImageSequence.drawFrames = Float(appDelegate.imgSeq[appDelegate.seq].drawFrames)
         
-        var thumbnailImageDatas = NSMutableArray()
+        let thumbnailImageDatas = NSMutableArray()
         for image in appDelegate.imgSeq[appDelegate.seq].img_draw {
             print(image)
-            if(image.CGImage != nil){
-            thumbnailImageDatas.addObject(UIImagePNGRepresentation(image)!)
+            if(image.cgImage != nil){
+            thumbnailImageDatas.add(UIImagePNGRepresentation(image)!)
             }
             //[thumbnailImageDatas addObject:UIImagePNGRepresentation(resizedImage)];
         }
-        let thumbnailImageData = NSKeyedArchiver.archivedDataWithRootObject(thumbnailImageDatas)//[NSKeyedArchiver archivedDataWithRootObject:thumbnailImageDatas];
+        let thumbnailImageData = NSKeyedArchiver.archivedData(withRootObject: thumbnailImageDatas)//[NSKeyedArchiver archivedDataWithRootObject:thumbnailImageDatas];
         
         print(thumbnailImageData)
 
         savedImageSequence.img_draw = thumbnailImageData
         
-        var previewImageData = UIImagePNGRepresentation(appDelegate.imgSeq[appDelegate.seq].preview_image)
+        let previewImageData = UIImagePNGRepresentation(appDelegate.imgSeq[appDelegate.seq].preview_image)
         savedImageSequence.preview_image = previewImageData!
         
         savedImageSequence.name = "Saved Pattern "+String(appDelegate.imgSeq.count)
@@ -992,7 +998,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     func updateImageSequencePersistent(){
         let managedContext = appDelegate.managedObjectContext
-        let fetchRequest = NSFetchRequest(entityName: "SavedImageSequence")
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "SavedImageSequence")
         
         appDelegate.imgSeq.count
         
@@ -1002,7 +1008,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         
             var result: [AnyObject]?
             do {
-                result = try managedContext.executeFetchRequest(fetchRequest)
+                result = try managedContext.fetch(fetchRequest)
             } catch let nserror1 as NSError{
                 result = nil
             }
@@ -1013,21 +1019,21 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                 imageSequence.currentFrame = Float(appDelegate.imgSeq[i].currentFrame)
                 imageSequence.drawFrames = Float(appDelegate.imgSeq[i].drawFrames)
                 
-                var thumbnailImageDatas = NSMutableArray()
+                let thumbnailImageDatas = NSMutableArray()
                 for image in appDelegate.imgSeq[i].img_draw {
                     print(image)
-                    if(image.CGImage != nil){
-                        thumbnailImageDatas.addObject(UIImagePNGRepresentation(image)!)
+                    if(image.cgImage != nil){
+                        thumbnailImageDatas.add(UIImagePNGRepresentation(image)!)
                     }
                     //[thumbnailImageDatas addObject:UIImagePNGRepresentation(resizedImage)];
                 }
-                let thumbnailImageData = NSKeyedArchiver.archivedDataWithRootObject(thumbnailImageDatas)//[NSKeyedArchiver archivedDataWithRootObject:thumbnailImageDatas];
+                let thumbnailImageData = NSKeyedArchiver.archivedData(withRootObject: thumbnailImageDatas)//[NSKeyedArchiver archivedDataWithRootObject:thumbnailImageDatas];
                 
                 print(thumbnailImageData)
                 
                 imageSequence.img_draw = thumbnailImageData
                 
-                var previewImageData = UIImagePNGRepresentation(appDelegate.imgSeq[i].preview_image)
+                let previewImageData = UIImagePNGRepresentation(appDelegate.imgSeq[i].preview_image)
                 imageSequence.preview_image = previewImageData!
                 
                 print(imageSequence.name)
@@ -1045,7 +1051,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         let managedContext = appDelegate.managedObjectContext
         
         //2
-        let fetchRequest = NSFetchRequest(entityName: "SavedImageSequence")
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "SavedImageSequence")
         
         //3
         //var result: [AnyObject]?
@@ -1059,34 +1065,34 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         
         var result: [AnyObject]?
         do {
-            result = try managedContext.executeFetchRequest(fetchRequest)
+            result = try managedContext.fetch(fetchRequest)
         } catch let nserror1 as NSError{
             result = nil
         }
         
         for resultItem in result! {
             let imageSequence = resultItem as! SavedImageSequence
-            var image = UIImage(data: imageSequence.preview_image)//[UIImage imageWithData:selectedDance.danceImage];
+            let image = UIImage(data: imageSequence.preview_image as Data)//[UIImage imageWithData:selectedDance.danceImage];
             logoImage.append(image!)
-            var name = "Saved Pattern "+String(appDelegate.imgSeq.count)
+            let name = "Saved Pattern "+String(appDelegate.imgSeq.count)
             items.append(name)
             appDelegate.imgSeq.append(ImageSequence())
-            appDelegate.imgSeqCtr++
+            appDelegate.imgSeqCtr += 1
             appDelegate.imgSeq.last?.preview_image = image!
             
             var images = Array<UIImage>()
-            var imageDatas = NSKeyedUnarchiver.unarchiveObjectWithData(imageSequence.img_draw) as! NSArray // [NSKeyedUnarchiver unarchiveObjectWithData:self.thumbnailImagesData];
+            let imageDatas = NSKeyedUnarchiver.unarchiveObject(with: imageSequence.img_draw as Data) as! NSArray // [NSKeyedUnarchiver unarchiveObjectWithData:self.thumbnailImagesData];
             for imageData in imageDatas {
-                var img = UIImage(data: imageData as! NSData)!
+                let img = UIImage(data: imageData as! Data)!
                 
                 UIGraphicsBeginImageContextWithOptions(CGSize(width:17, height: 12), false, 1)
                 let context = UIGraphicsGetCurrentContext()
                 
-                CGContextDrawImage(context, CGRect(x:0, y:0, width:17, height:12), imageWithImage(img, scaledToSize: CGSize(width: 17, height: 12)).CGImage)
+                context?.draw(imageWithImage(img, scaledToSize: CGSize(width: 17, height: 12)).cgImage!, in: CGRect(x:0, y:0, width:17, height:12))
                 let imgCopy = UIGraphicsGetImageFromCurrentImageContext()
                 UIGraphicsEndImageContext()
                 
-                images.append(imgCopy)//[images addObject:[UIImage imageWithData:imageData]];
+                images.append(imgCopy!)//[images addObject:[UIImage imageWithData:imageData]];
             }
             appDelegate.imgSeq.last?.img_draw = images
 
@@ -1107,5 +1113,3 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
 }
-
-

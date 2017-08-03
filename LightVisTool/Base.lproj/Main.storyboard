@@ -67,7 +67,7 @@
                                 </cells>
                             </collectionView>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f1k-0r-IHh">
-                                <rect key="frame" x="146" y="50" width="462" height="217"/>
+                                <rect key="frame" x="56" y="-46" width="462" height="217"/>
                             </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="JmH-zP-uQD">
                                 <rect key="frame" x="465" y="35" width="115" height="300"/>
@@ -411,6 +411,12 @@
                                     <action selector="save:" destination="BYZ-38-t0r" eventType="touchUpInside" id="jgR-ub-bu0"/>
                                 </connections>
                             </button>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="IP: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TOr-x7-eGX">
+                                <rect key="frame" x="368" y="246" width="103" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -503,6 +509,7 @@
                         <outlet property="green" destination="3oN-fV-oQx" id="h3t-mv-PM1"/>
                         <outlet property="heightConstraint" destination="d7q-OH-VrP" id="13J-8S-5BU"/>
                         <outlet property="imageCollectionView" destination="YK9-7t-rBZ" id="otC-pe-9tQ"/>
+                        <outlet property="ip_label" destination="TOr-x7-eGX" id="mlp-MJ-5Xm"/>
                         <outlet property="lightPatternCollectionView" destination="JmH-zP-uQD" id="4zR-Zq-XgH"/>
                         <outlet property="lightPatternImage" destination="ws1-yM-Ei8" id="x6i-e6-gZ4"/>
                         <outlet property="lightPatternLabel" destination="ecf-k4-HBU" id="HM2-gS-Fh8"/>

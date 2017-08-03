@@ -12,7 +12,7 @@ class PreviewLight: UIView {
 
     let pixelWidth = 17
     let pixelHeight = 12
-    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
     var img:UIImage = UIImage()
     var draw_width:CGFloat = 17.0
@@ -31,7 +31,7 @@ class PreviewLight: UIView {
 
     // Only override drawRect: if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect) {
+    override func draw(_ rect: CGRect) {
         // Drawing code
         
         let viewSizeWidth: CGFloat = bounds.width
@@ -39,10 +39,9 @@ class PreviewLight: UIView {
 
         let context = UIGraphicsGetCurrentContext()
         //CGContextSetLineWidth(context, 4.0)
-        CGContextSetStrokeColorWithColor(context,
-            UIColor.whiteColor().CGColor)
+        context?.setStrokeColor(UIColor.white.cgColor)
         
-        self.backgroundColor = UIColor.blackColor()
+        self.backgroundColor = UIColor.black
 
         //appDelegate.img_draw[0].drawInRect(CGRectMake(0, 0, bounds.width, bounds.height))
         
@@ -54,13 +53,13 @@ class PreviewLight: UIView {
         for ix in 0...pixelWidth {
             for iy in 0...pixelHeight {
                 let (r, g, b, a) = getPixelColor(img, pos: CGPoint(x: ix,y: iy))
-                CGContextSetRGBFillColor(context, appDelegate.red * r, appDelegate.green * g, appDelegate.blue * b, appDelegate.brigtness * a)
+                context?.setFillColor(red: appDelegate.red * r, green: appDelegate.green * g, blue: appDelegate.blue * b, alpha: appDelegate.brigtness * a)
                 let x_pos : CGFloat = CGFloat(ix)*viewSizeWidth/CGFloat(pixelWidth)
                 let y_pos : CGFloat = CGFloat(iy)*viewSizeHeight/CGFloat(pixelHeight)
-                let rectangle = CGRectMake(x_pos,y_pos,viewSizeWidth/CGFloat(pixelWidth),viewSizeHeight/CGFloat(pixelHeight))
-                CGContextAddRect(context, rectangle)
-                CGContextStrokePath(context)
-                CGContextFillRect(context, rectangle)
+                let rectangle = CGRect(x: x_pos,y: y_pos,width: viewSizeWidth/CGFloat(pixelWidth),height: viewSizeHeight/CGFloat(pixelHeight))
+                context?.addRect(rectangle)
+                context?.strokePath()
+                context?.fill(rectangle)
             }
         }
         }
@@ -77,50 +76,50 @@ class PreviewLight: UIView {
     }
     
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         print("TouchesBegan")
         if(appDelegate.mode==12 || appDelegate.mode>13){
             //isSwiping    = false
             if let touch = touches.first{
-                lastPoint = touch.locationInView(self)
+                lastPoint = touch.location(in: self)
                 
                 UIGraphicsBeginImageContextWithOptions(CGSize(width: draw_width, height: draw_height), false, 1)
-                appDelegate.imgSeq[appDelegate.seq].img_draw[(appDelegate.imgSeq[appDelegate.seq].currentFrame)].drawInRect(CGRectMake(0, 0, draw_width, draw_height))
+                appDelegate.imgSeq[appDelegate.seq].img_draw[(appDelegate.imgSeq[appDelegate.seq].currentFrame)].draw(in: CGRect(x: 0, y: 0, width: draw_width, height: draw_height))
                 UIGraphicsEndImageContext()
                 
             }
         }
     }
     
-    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         print("TouchesMoved")
         if(appDelegate.mode==12 || appDelegate.mode>13){
-            NSNotificationCenter.defaultCenter().postNotificationName("reloadCollection", object: nil)
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "reloadCollection"), object: nil)
             
             //isSwiping = true;
             if let touch = touches.first{
-                let currentPoint = touch.locationInView(self)
+                let currentPoint = touch.location(in: self)
                 
                 let x1 = lastPoint.x/(self.frame.width/draw_width)
                 let y1 = lastPoint.y/(self.frame.height/draw_height)
                 let x2 = currentPoint.x/(self.frame.width/draw_width)
                 let y2 = currentPoint.y/(self.frame.height/draw_height)
                 UIGraphicsBeginImageContextWithOptions(CGSize(width: draw_width, height: draw_height), false, 1)
-                appDelegate.imgSeq[appDelegate.seq].img_draw[(appDelegate.imgSeq[appDelegate.seq].currentFrame)].drawInRect(CGRectMake(0, 0, draw_width, draw_height))
+                appDelegate.imgSeq[appDelegate.seq].img_draw[(appDelegate.imgSeq[appDelegate.seq].currentFrame)].draw(in: CGRect(x: 0, y: 0, width: draw_width, height: draw_height))
                 //self.imageView.image?.drawInRect(CGRectMake(0, 0, self.imageView.frame.size.width, self.imageView.frame.size.height))
                 //CGContextDrawImage(UIGraphicsGetCurrentContext(), CGRect(x: 0, y:0, width: 170, height: 120), img_draw2.CGImage)
-                CGContextMoveToPoint(UIGraphicsGetCurrentContext(), x1, y1)
-                CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), x2, y2)
-                CGContextSetLineCap(UIGraphicsGetCurrentContext(),CGLineCap.Round)
-                CGContextSetLineWidth(UIGraphicsGetCurrentContext(), minBrushWidth)
-                var components = CGColorGetComponents(appDelegate.selectedColor.CGColor)
+                UIGraphicsGetCurrentContext()?.move(to: CGPoint(x: x1, y: y1))
+                UIGraphicsGetCurrentContext()?.addLine(to: CGPoint(x: x2, y: y2))
+                UIGraphicsGetCurrentContext()?.setLineCap(CGLineCap.round)
+                UIGraphicsGetCurrentContext()?.setLineWidth(minBrushWidth)
+                var components = appDelegate.selectedColor.cgColor.components
                                 
-                CGContextSetRGBStrokeColor(UIGraphicsGetCurrentContext(), components[0], components[1], components[2], components[3])
-                CGContextStrokePath(UIGraphicsGetCurrentContext())
+                UIGraphicsGetCurrentContext()?.setStrokeColor(red: (components?[0])!, green: (components?[1])!, blue: (components?[2])!, alpha: (components?[3])!)
+                UIGraphicsGetCurrentContext()?.strokePath()
                 //img = UIGraphicsGetImageFromCurrentImageContext()
-                appDelegate.imgSeq[appDelegate.seq].img_draw[(appDelegate.imgSeq[appDelegate.seq].currentFrame)] = UIGraphicsGetImageFromCurrentImageContext()
+                appDelegate.imgSeq[appDelegate.seq].img_draw[(appDelegate.imgSeq[appDelegate.seq].currentFrame)] = UIGraphicsGetImageFromCurrentImageContext()!
                 //img_draw2 = UIGraphicsGetImageFromCurrentImageContext()
                 
                 UIGraphicsEndImageContext()
@@ -131,30 +130,30 @@ class PreviewLight: UIView {
         
     }
     
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         print("TouchesEnd")
         if(appDelegate.mode==12 || appDelegate.mode>13){
-            NSNotificationCenter.defaultCenter().postNotificationName("reloadCollection", object: nil)
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "reloadCollection"), object: nil)
             
             //if(!isSwiping) {
             // This is a single touch, draw a point
             let x1 = lastPoint.x/(self.frame.width/draw_width)
             let y1 = lastPoint.y/(self.frame.height/draw_height)
             UIGraphicsBeginImageContextWithOptions(CGSize(width: draw_width, height: draw_height), false, 1)
-            appDelegate.imgSeq[appDelegate.seq].img_draw[(appDelegate.imgSeq[appDelegate.seq].currentFrame)].drawInRect(CGRectMake(0, 0, draw_width, draw_height))
+            appDelegate.imgSeq[appDelegate.seq].img_draw[(appDelegate.imgSeq[appDelegate.seq].currentFrame)].draw(in: CGRect(x: 0, y: 0, width: draw_width, height: draw_height))
             //CGContextDrawImage(UIGraphicsGetCurrentContext(), CGRect(x: 0, y:0, width: 170, height: 120), img_draw2.CGImage)
-            CGContextSetLineCap(UIGraphicsGetCurrentContext(), CGLineCap.Round)
-            CGContextSetLineWidth(UIGraphicsGetCurrentContext(), minBrushWidth)
+            UIGraphicsGetCurrentContext()?.setLineCap(CGLineCap.round)
+            UIGraphicsGetCurrentContext()?.setLineWidth(minBrushWidth)
             
-            var components = CGColorGetComponents(appDelegate.selectedColor.CGColor)
+            var components = appDelegate.selectedColor.cgColor.components
             
-            CGContextSetRGBStrokeColor(UIGraphicsGetCurrentContext(), components[0], components[1], components[2], components[3])
-            CGContextMoveToPoint(UIGraphicsGetCurrentContext(), x1, y1)
-            CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), x1, y1)
-            CGContextStrokePath(UIGraphicsGetCurrentContext())
+            UIGraphicsGetCurrentContext()?.setStrokeColor(red: (components?[0])!, green: (components?[1])!, blue: (components?[2])!, alpha: (components?[3])!)
+            UIGraphicsGetCurrentContext()?.move(to: CGPoint(x: x1, y: y1))
+            UIGraphicsGetCurrentContext()?.addLine(to: CGPoint(x: x1, y: y1))
+            UIGraphicsGetCurrentContext()?.strokePath()
             //img = UIGraphicsGetImageFromCurrentImageContext()
-            appDelegate.imgSeq[appDelegate.seq].img_draw[(appDelegate.imgSeq[appDelegate.seq].currentFrame)] = UIGraphicsGetImageFromCurrentImageContext()
+            appDelegate.imgSeq[appDelegate.seq].img_draw[(appDelegate.imgSeq[appDelegate.seq].currentFrame)] = UIGraphicsGetImageFromCurrentImageContext()!
             //img_draw2 = UIGraphicsGetImageFromCurrentImageContext()
             
             UIGraphicsEndImageContext()
@@ -163,17 +162,17 @@ class PreviewLight: UIView {
         }
     }
     
-    func imageWithImage(image:UIImage, scaledToSize newSize:CGSize) -> UIImage{
+    func imageWithImage(_ image:UIImage, scaledToSize newSize:CGSize) -> UIImage{
         UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0);
-        image.drawInRect(CGRectMake(0, 0, newSize.width, newSize.height))
-        let newImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        image.draw(in: CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height))
+        let newImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
         return newImage
     }
     
-    func getPixelColor(img: UIImage, pos: CGPoint) -> (CGFloat, CGFloat, CGFloat, CGFloat) {
+    func getPixelColor(_ img: UIImage, pos: CGPoint) -> (CGFloat, CGFloat, CGFloat, CGFloat) {
         
-        let pixelData = CGDataProviderCopyData(CGImageGetDataProvider(img.CGImage))
+        let pixelData = img.cgImage?.dataProvider?.data
         let data: UnsafePointer<UInt8> = CFDataGetBytePtr(pixelData)
         
         //let pixelInfo: Int = ((Int(img.size.height) * Int(pos.y)) + Int(pos.x)) * 4

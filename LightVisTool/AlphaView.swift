@@ -16,7 +16,7 @@ class AlphaView: UIView {
 
     var point: CGPoint!
     var indicator = CAShapeLayer()
-    var indicatorColor: CGColorRef = UIColor.lightGrayColor().CGColor
+    var indicatorColor: CGColor = UIColor.lightGray.cgColor
     var indicatorBorderWidth: CGFloat = 2.0
     
     init(frame: CGRect, color: UIColor) {
@@ -26,7 +26,7 @@ class AlphaView: UIView {
         point = getPointFromColor(color)
         
         // Clear the background
-        backgroundColor = UIColor.clearColor()
+        backgroundColor = UIColor.clear
         
         // Create a gradient layer that goes from black to white
         // Create a gradient layer that goes from black to white
@@ -37,18 +37,18 @@ class AlphaView: UIView {
         }
         
         alphaLayer = CALayer()
-        alphaLayer.frame = CGRectMake(0, 7, self.frame.width, 10)
+        alphaLayer.frame = CGRect(x: 0, y: 7, width: self.frame.width, height: 10)
         alphaLayer.contents = createAlphaLayer(alphaLayer.frame.size)
         self.layer.addSublayer(alphaLayer)
         
         colorLayer = CAGradientLayer()
         colorLayer.colors = [
-            UIColor.clearColor().CGColor,
-            UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: 1).CGColor
+            UIColor.clear.cgColor,
+            UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: 1).cgColor
         ]
         colorLayer.locations = [0.0, 1.0]
-        colorLayer.startPoint = CGPointMake(0.0, 0.5)
-        colorLayer.endPoint = CGPointMake(1.0, 0.5)
+        colorLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
+        colorLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
         colorLayer.frame = CGRect(x: 0, y: 7, width: self.frame.size.width, height: 10)
         // Insert the colorLayer into this views layer as a sublayer
         self.layer.insertSublayer(colorLayer, below: layer)
@@ -67,19 +67,19 @@ class AlphaView: UIView {
         super.init(coder: aDecoder)
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         print("Touch")
         touchHandler(touches)
     }
     
-    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         touchHandler(touches)
     }
     
-    func touchHandler(touches: Set<UITouch>) {
+    func touchHandler(_ touches: Set<UITouch>) {
         // Set reference to the location of the touchesMoved in member point
         if let touch = touches.first {
-            point = touch.locationInView(self)
+            point = touch.location(in: self)
         }
         
         point.y = self.frame.height/2
@@ -90,7 +90,7 @@ class AlphaView: UIView {
         drawIndicator()
     }
     
-    func getXCoordinate(coord: CGFloat) -> CGFloat {
+    func getXCoordinate(_ coord: CGFloat) -> CGFloat {
         // Offset the x coordinate to fit the view
         if (coord < 1) {
             return 1
@@ -104,7 +104,7 @@ class AlphaView: UIView {
     func drawIndicator() {
         // Draw the indicator
         if (point != nil) {
-            indicator.path = UIBezierPath(roundedRect: CGRect(x: point.x-10, y: 2, width: 20, height: 20), cornerRadius: 3).CGPath
+            indicator.path = UIBezierPath(roundedRect: CGRect(x: point.x-10, y: 2, width: 20, height: 20), cornerRadius: 3).cgPath
         }
     }
     
@@ -113,7 +113,7 @@ class AlphaView: UIView {
         return point.x/frame.size.width
     }
     
-    func getPointFromColor(color: UIColor) -> CGPoint {
+    func getPointFromColor(_ color: UIColor) -> CGPoint {
         // Update the indicator position for a given color
         var hue: CGFloat = 0.0, saturation: CGFloat = 0.0, brightness: CGFloat = 0.0, alpha: CGFloat = 0.0
         let ok: Bool = color.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
@@ -124,7 +124,7 @@ class AlphaView: UIView {
         return CGPoint(x: alpha * frame.width, y: frame.height / 2)
     }
     
-    func setViewColor(color: UIColor!) {
+    func setViewColor(_ color: UIColor!) {
         // Update the Gradient Layer with a given color
         var hue: CGFloat = 0.0, saturation: CGFloat = 0.0, brightness: CGFloat = 0.0, alpha: CGFloat = 0.0
         let ok: Bool = color.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
@@ -132,14 +132,14 @@ class AlphaView: UIView {
             print("SwiftHSVColorPicker: exception <The color provided to SwiftHSVColorPicker is not convertible to HSV>")
         }
         colorLayer.colors = [
-            UIColor.clearColor().CGColor,
-            UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: 1).CGColor
+            UIColor.clear.cgColor,
+            UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: 1).cgColor
         ]
     }
     
-    func createAlphaLayer(size: CGSize) -> CGImageRef {
+    func createAlphaLayer(_ size: CGSize) -> CGImage {
        
-        var img = UIImage(named: "alpha.png")?.CGImage
+        let img = UIImage(named: "alpha.png")?.cgImage
     
         return img!
 

@@ -25,11 +25,11 @@ class ColorWheel: UIView {
     var indicatorLayer: CAShapeLayer!
     var point: CGPoint!
     var indicatorCircleRadius: CGFloat = 12.0
-    var indicatorColor: CGColorRef = UIColor.lightGrayColor().CGColor
+    var indicatorColor: CGColor = UIColor.lightGray.cgColor
     var indicatorBorderWidth: CGFloat = 2.0
     
     // Retina scaling factor
-    let scale: CGFloat = UIScreen.mainScreen().scale
+    let scale: CGFloat = UIScreen.main.scale
     
     var delegate: SwiftHSVColorPicker?
     
@@ -44,18 +44,18 @@ class ColorWheel: UIView {
         
         // Layer for the Hue/Saturation wheel
         wheelLayer = CALayer()
-        wheelLayer.frame = CGRectMake(0, 0, self.frame.width, self.frame.height)
+        wheelLayer.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height)
         wheelLayer.contents = createColorWheel(wheelLayer.frame.size)
         self.layer.addSublayer(wheelLayer)
         
         // Layer for the brightness
         brightnessLayer = CAShapeLayer()
-        brightnessLayer.path = UIBezierPath(roundedRect: CGRect(x: 0.5, y: 0.5, width: self.frame.width, height: self.frame.height), cornerRadius: (self.frame.height)/2).CGPath
+        brightnessLayer.path = UIBezierPath(roundedRect: CGRect(x: 0.5, y: 0.5, width: self.frame.width, height: self.frame.height), cornerRadius: (self.frame.height)/2).cgPath
         self.layer.addSublayer(brightnessLayer)
         
         // Layer for the alpha
         alphaLayer = CAShapeLayer()
-        alphaLayer.path = UIBezierPath(roundedRect: CGRect(x: 0.5, y: 0.5, width: self.frame.width, height: self.frame.height), cornerRadius: (self.frame.height)/2).CGPath
+        alphaLayer.path = UIBezierPath(roundedRect: CGRect(x: 0.5, y: 0.5, width: self.frame.width, height: self.frame.height), cornerRadius: (self.frame.height)/2).cgPath
         self.layer.addSublayer(alphaLayer)
         
         // Layer for the indicator
@@ -65,34 +65,34 @@ class ColorWheel: UIView {
         indicatorLayer.fillColor = nil
         self.layer.addSublayer(indicatorLayer)
         
-        setViewColor(UIColor.whiteColor());
+        setViewColor(UIColor.white);
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         indicatorCircleRadius = 18.0
         touchHandler(touches)
     }
     
-    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         touchHandler(touches)
     }
     
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         indicatorCircleRadius = 12.0
         touchHandler(touches)
     }
     
-    func touchHandler(touches: Set<UITouch>) {
+    func touchHandler(_ touches: Set<UITouch>) {
         // Set reference to the location of the touch in member point
         if let touch = touches.first {
-            point = touch.locationInView(self)
+            point = touch.location(in: self)
         }
         
         let indicator = getIndicatorCoordinate(point)
         point = indicator.point
         var color = (hue: CGFloat(0), saturation: CGFloat(0))
         if !indicator.isCenter  {
-            color = hueSaturationAtPoint(CGPointMake(point.x*scale, point.y*scale))
+            color = hueSaturationAtPoint(CGPoint(x: point.x*scale, y: point.y*scale))
         }
         
         self.color = UIColor(hue: color.hue, saturation: color.saturation, brightness: self.brightness, alpha: 1.0)
@@ -107,18 +107,18 @@ class ColorWheel: UIView {
     func drawIndicator() {
         // Draw the indicator
         if (point != nil) {
-            indicatorLayer.path = UIBezierPath(roundedRect: CGRect(x: point.x-indicatorCircleRadius, y: point.y-indicatorCircleRadius, width: indicatorCircleRadius*2, height: indicatorCircleRadius*2), cornerRadius: indicatorCircleRadius).CGPath
+            indicatorLayer.path = UIBezierPath(roundedRect: CGRect(x: point.x-indicatorCircleRadius, y: point.y-indicatorCircleRadius, width: indicatorCircleRadius*2, height: indicatorCircleRadius*2), cornerRadius: indicatorCircleRadius).cgPath
 
-            indicatorLayer.fillColor = self.color.CGColor
+            indicatorLayer.fillColor = self.color.cgColor
         }
     }
     
-    func getIndicatorCoordinate(coord: CGPoint) -> (point: CGPoint, isCenter: Bool) {
+    func getIndicatorCoordinate(_ coord: CGPoint) -> (point: CGPoint, isCenter: Bool) {
         // Making sure that the indicator can't get outside the Hue and Saturation wheel
         
         let dimension: CGFloat = min(wheelLayer.frame.width, wheelLayer.frame.height)
         let radius: CGFloat = dimension/2
-        let wheelLayerCenter: CGPoint = CGPointMake(wheelLayer.frame.origin.x + radius, wheelLayer.frame.origin.y + radius)
+        let wheelLayerCenter: CGPoint = CGPoint(x: wheelLayer.frame.origin.x + radius, y: wheelLayer.frame.origin.y + radius)
 
         let dx: CGFloat = coord.x - wheelLayerCenter.x
         let dy: CGFloat = coord.y - wheelLayerCenter.y
@@ -139,29 +139,29 @@ class ColorWheel: UIView {
             outputCoord.x = wheelLayerCenter.x
             outputCoord.y = wheelLayerCenter.y
             
-            print("Distance: "+String(outputCoord.x)+" "+String(outputCoord.y))
+            print("Distance: "+String(describing: outputCoord.x)+" "+String(describing: outputCoord.y))
             isCenter = true
         }
         return (outputCoord, isCenter)
     }
     
-    func createColorWheel(size: CGSize) -> CGImageRef {
+    func createColorWheel(_ size: CGSize) -> CGImage {
         // Creates a bitmap of the Hue Saturation wheel
         let originalWidth: CGFloat = size.width
         let originalHeight: CGFloat = size.height
         let dimension: CGFloat = min(originalWidth*scale, originalHeight*scale)
         let bufferLength: Int = Int(dimension * dimension * 4)
         
-        let bitmapData: CFMutableDataRef = CFDataCreateMutable(nil, 0)
+        let bitmapData: CFMutableData = CFDataCreateMutable(nil, 0)
         CFDataSetLength(bitmapData, CFIndex(bufferLength))
         let bitmap = CFDataGetMutableBytePtr(bitmapData)
         
-        for y in CGFloat(0).stride(to: dimension, by: CGFloat(1)) {
-            for x in CGFloat(0).stride(to: dimension, by: CGFloat(1)) {
+        for y in stride(from: CGFloat(0), to: dimension, by: CGFloat(1)) {
+            for x in stride(from: CGFloat(0), to: dimension, by: CGFloat(1)) {
                 var hsv: HSV = (hue: 0, saturation: 0, brightness: 0, alpha: 0)
                 var rgb: RGB = (red: 0, green: 0, blue: 0, alpha: 0)
                 
-                let color = hueSaturationAtPoint(CGPointMake(x, y))
+                let color = hueSaturationAtPoint(CGPoint(x: x, y: y))
                 let hue = color.hue
                 let saturation = color.saturation
                 var a: CGFloat = 0.0
@@ -180,25 +180,25 @@ class ColorWheel: UIView {
                     rgb = hsv2rgb(hsv)
                 }
                 let offset = Int(4 * (x + y * dimension))
-                bitmap[offset] = UInt8(rgb.red*255)
-                bitmap[offset + 1] = UInt8(rgb.green*255)
-                bitmap[offset + 2] = UInt8(rgb.blue*255)
-                bitmap[offset + 3] = UInt8(rgb.alpha*255)
+                bitmap?[offset] = UInt8(rgb.red*255)
+                bitmap?[offset + 1] = UInt8(rgb.green*255)
+                bitmap?[offset + 2] = UInt8(rgb.blue*255)
+                bitmap?[offset + 3] = UInt8(rgb.alpha*255)
             }
         }
         
         // Convert the bitmap to a CGImage
-        let colorSpace: CGColorSpaceRef? = CGColorSpaceCreateDeviceRGB()
-        let dataProvider: CGDataProviderRef? = CGDataProviderCreateWithCFData(bitmapData)
-        let bitmapInfo = CGBitmapInfo(rawValue: CGBitmapInfo.ByteOrderDefault.rawValue | CGImageAlphaInfo.Last.rawValue)
-        let imageRef: CGImageRef? = CGImageCreate(Int(dimension), Int(dimension), 8, 32, Int(dimension) * 4, colorSpace, bitmapInfo, dataProvider, nil, false, CGColorRenderingIntent.RenderingIntentDefault)
+        let colorSpace: CGColorSpace? = CGColorSpaceCreateDeviceRGB()
+        let dataProvider: CGDataProvider? = CGDataProvider(data: bitmapData)
+        let bitmapInfo = CGBitmapInfo(rawValue: CGBitmapInfo().rawValue | CGImageAlphaInfo.last.rawValue)
+        let imageRef: CGImage? = CGImage(width: Int(dimension), height: Int(dimension), bitsPerComponent: 8, bitsPerPixel: 32, bytesPerRow: Int(dimension) * 4, space: colorSpace!, bitmapInfo: bitmapInfo, provider: dataProvider!, decode: nil, shouldInterpolate: false, intent: CGColorRenderingIntent.defaultIntent)
         return imageRef!
     }
     
-    func hueSaturationAtPoint(position: CGPoint) -> (hue: CGFloat, saturation: CGFloat) {
+    func hueSaturationAtPoint(_ position: CGPoint) -> (hue: CGFloat, saturation: CGFloat) {
         // Get hue and saturation for a given point (x,y) in the wheel
         
-        let c = CGRectGetWidth(wheelLayer.frame) * scale / 2
+        let c = wheelLayer.frame.width * scale / 2
         let dx = CGFloat(position.x - c) / c
         let dy = CGFloat(position.y - c) / c
         let d = sqrt(CGFloat (dx * dx + dy * dy))
@@ -217,17 +217,17 @@ class ColorWheel: UIView {
         return (hue, saturation)
     }
     
-    func pointAtHueSaturation(hue: CGFloat, saturation: CGFloat) -> CGPoint {
+    func pointAtHueSaturation(_ hue: CGFloat, saturation: CGFloat) -> CGPoint {
         // Get a point (x,y) in the wheel for a given hue and saturation
         
         let dimension: CGFloat = min(wheelLayer.frame.width, wheelLayer.frame.height)
         let radius: CGFloat = saturation * dimension / 2
         let x = dimension / 2 + radius * cos(hue * CGFloat(M_PI) * 2) + 20;
         let y = dimension / 2 + radius * sin(hue * CGFloat(M_PI) * 2) + 20;
-        return CGPointMake(x, y)
+        return CGPoint(x: x, y: y)
     }
     
-    func setViewColor(color: UIColor!) {
+    func setViewColor(_ color: UIColor!) {
         // Update the entire view with a given color
         
         var hue: CGFloat = 0.0, saturation: CGFloat = 0.0, brightness: CGFloat = 0.0, alpha: CGFloat = 0.0
@@ -237,14 +237,14 @@ class ColorWheel: UIView {
         }
         self.color = color
         self.brightness = brightness
-        brightnessLayer.fillColor = UIColor(white: 0, alpha: 1-self.brightness).CGColor
-        alphaLayer.fillColor = UIColor(white: 0, alpha: 1-self.alpha).CGColor
+        brightnessLayer.fillColor = UIColor(white: 0, alpha: 1-self.brightness).cgColor
+        alphaLayer.fillColor = UIColor(white: 0, alpha: 1-self.alpha).cgColor
 
         point = pointAtHueSaturation(hue, saturation: saturation)
         drawIndicator()
     }
     
-    func setViewBrightness(_brightness: CGFloat) {
+    func setViewBrightness(_ _brightness: CGFloat) {
         // Update the brightness of the view
         
         var hue: CGFloat = 0.0, saturation: CGFloat = 0.0, brightness: CGFloat = 0.0, alpha: CGFloat = 0.0
@@ -253,12 +253,12 @@ class ColorWheel: UIView {
             print("SwiftHSVColorPicker: exception <The color provided to SwiftHSVColorPicker is not convertible to HSV>")
         }
         self.brightness = _brightness
-        brightnessLayer.fillColor = UIColor(white: 0, alpha: 1-self.brightness).CGColor
+        brightnessLayer.fillColor = UIColor(white: 0, alpha: 1-self.brightness).cgColor
         self.color = UIColor(hue: hue, saturation: saturation, brightness: _brightness, alpha: alpha)
         drawIndicator()
     }
     
-    func setViewAlpha(_alpha: CGFloat) {
+    func setViewAlpha(_ _alpha: CGFloat) {
         // Update the brightness of the view
         
         var hue: CGFloat = 0.0, saturation: CGFloat = 0.0, brightness: CGFloat = 0.0, alpha: CGFloat = 0.0
@@ -267,7 +267,7 @@ class ColorWheel: UIView {
             print("SwiftHSVColorPicker: exception <The color provided to SwiftHSVColorPicker is not convertible to HSV>")
         }
         self.alph = _alpha
-        alphaLayer.fillColor = UIColor(white: 1, alpha: 1-self.alph).CGColor
+        alphaLayer.fillColor = UIColor(white: 1, alpha: 1-self.alph).cgColor
         self.color = UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: _alpha)
         drawIndicator()
     }

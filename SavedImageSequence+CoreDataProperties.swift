@@ -15,8 +15,8 @@ import UIKit
 
 extension SavedImageSequence {
     
-    @NSManaged var img_draw: NSData
-    @NSManaged var preview_image: NSData
+    @NSManaged var img_draw: Data
+    @NSManaged var preview_image: Data
     @NSManaged var drawFrames: Float
     @NSManaged var currentFrame: Float
     @NSManaged var name: String
