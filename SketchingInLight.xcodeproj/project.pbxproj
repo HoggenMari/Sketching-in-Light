@@ -8,27 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		7E0342411D2FC5F50050043F /* RedLightPattern.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0342401D2FC5F50050043F /* RedLightPattern.swift */; };
-		7E0644121D36359A00772B68 /* AlphaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0644111D36359A00772B68 /* AlphaView.swift */; };
 		7E3D8EC01CC8C353002ABA9B /* LightPatternCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3D8EBF1CC8C353002ABA9B /* LightPatternCollectionViewCell.swift */; };
-		7E40DD381CC4CFBE00440435 /* FontAwesome.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7E40DD371CC4CF0D00440435 /* FontAwesome.otf */; };
 		7E4F55591D3213E70019B66E /* DrawCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4F55581D3213E70019B66E /* DrawCollectionViewCell.swift */; };
 		7E5F066F1D2F8E7800CE5A62 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5F066E1D2F8E7800CE5A62 /* ImageCollectionViewCell.swift */; };
-		7E788C0C1D3F076A00D539A2 /* ImageSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E788C0B1D3F076A00D539A2 /* ImageSequence.swift */; };
 		7E788C0F1D3F456A00D539A2 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7E788C0D1D3F456A00D539A2 /* Model.xcdatamodeld */; };
-		7E788C8D1D3F702F00D539A2 /* ImgSeq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E788C8C1D3F702F00D539A2 /* ImgSeq.swift */; };
 		7E788C921D3F74A800D539A2 /* SavedImageSequence+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E788C901D3F74A800D539A2 /* SavedImageSequence+CoreDataProperties.swift */; };
 		7E788C931D3F74A800D539A2 /* SavedImageSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E788C911D3F74A800D539A2 /* SavedImageSequence.swift */; };
-		7E806EA01D32597B0003B679 /* BrightnessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E806E9B1D32597B0003B679 /* BrightnessView.swift */; };
-		7E806EA11D32597B0003B679 /* SwiftHSVColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E806E9C1D32597B0003B679 /* SwiftHSVColorPicker.swift */; };
-		7E806EA21D32597B0003B679 /* ColorUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E806E9D1D32597B0003B679 /* ColorUtils.swift */; };
-		7E806EA31D32597B0003B679 /* ColorWheel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E806E9E1D32597B0003B679 /* ColorWheel.swift */; };
-		7E806EA41D32597B0003B679 /* SelectedColorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E806E9F1D32597B0003B679 /* SelectedColorView.swift */; };
-		7E93B6191D6BDFB40079FF9E /* ysocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E93B6141D6BDFB40079FF9E /* ysocket.swift */; };
 		7E93B61A1D6BDFB40079FF9E /* ytcpsocket.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E93B6151D6BDFB40079FF9E /* ytcpsocket.c */; };
-		7E93B61B1D6BDFB40079FF9E /* ytcpsocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E93B6161D6BDFB40079FF9E /* ytcpsocket.swift */; };
 		7E93B61C1D6BDFB40079FF9E /* yudpsocket.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E93B6171D6BDFB40079FF9E /* yudpsocket.c */; };
-		7E93B61D1D6BDFB40079FF9E /* yudpsocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E93B6181D6BDFB40079FF9E /* yudpsocket.swift */; };
-		7EAE0F091D167FDA005C5DFF /* TextCharacter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EAE0F081D167FDA005C5DFF /* TextCharacter.swift */; };
 		7ED00A471CC124BD00AC0A16 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED00A461CC124BD00AC0A16 /* AppDelegate.swift */; };
 		7ED00A491CC124BD00AC0A16 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED00A481CC124BD00AC0A16 /* ViewController.swift */; };
 		7ED00A4C1CC124BD00AC0A16 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7ED00A4A1CC124BD00AC0A16 /* Main.storyboard */; };
@@ -38,6 +25,17 @@
 		7ED00A671CC124BD00AC0A16 /* LightVisToolUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED00A661CC124BD00AC0A16 /* LightVisToolUITests.swift */; };
 		7ED00A751CC2737A00AC0A16 /* PreviewLight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED00A741CC2737A00AC0A16 /* PreviewLight.swift */; };
 		7ED00A771CC3338E00AC0A16 /* UIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED00A761CC3338E00AC0A16 /* UIDevice.swift */; };
+		7EE223281F3BB5E300955707 /* SwiftHSVColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE2231F1F3BB5E300955707 /* SwiftHSVColorPicker.swift */; };
+		7EE223291F3BB5E300955707 /* yudpsocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE223201F3BB5E300955707 /* yudpsocket.swift */; };
+		7EE2232A1F3BB5E300955707 /* ytcpsocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE223211F3BB5E300955707 /* ytcpsocket.swift */; };
+		7EE2232B1F3BB5E300955707 /* AlphaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE223221F3BB5E300955707 /* AlphaView.swift */; };
+		7EE2232C1F3BB5E300955707 /* BrightnessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE223231F3BB5E300955707 /* BrightnessView.swift */; };
+		7EE2232D1F3BB5E300955707 /* ColorUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE223241F3BB5E300955707 /* ColorUtils.swift */; };
+		7EE2232E1F3BB5E300955707 /* ColorWheel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE223251F3BB5E300955707 /* ColorWheel.swift */; };
+		7EE2232F1F3BB5E300955707 /* SelectedColorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE223261F3BB5E300955707 /* SelectedColorView.swift */; };
+		7EE223301F3BB5E300955707 /* ysocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE223271F3BB5E300955707 /* ysocket.swift */; };
+		7EE223371F3BC3A100955707 /* ImageSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE223351F3BC3A100955707 /* ImageSequence.swift */; };
+		7EE223381F3BC3A100955707 /* TextCharacter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE223361F3BC3A100955707 /* TextCharacter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,29 +69,16 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		7E0342401D2FC5F50050043F /* RedLightPattern.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RedLightPattern.swift; sourceTree = "<group>"; };
-		7E0644111D36359A00772B68 /* AlphaView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlphaView.swift; sourceTree = "<group>"; };
-		7E3D8EBF1CC8C353002ABA9B /* LightPatternCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LightPatternCollectionViewCell.swift; path = ../LightPatternCollectionViewCell.swift; sourceTree = "<group>"; };
-		7E40DD371CC4CF0D00440435 /* FontAwesome.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome.otf; path = ../FontAwesome.otf; sourceTree = "<group>"; };
-		7E4F55581D3213E70019B66E /* DrawCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawCollectionViewCell.swift; sourceTree = "<group>"; };
-		7E5F066E1D2F8E7800CE5A62 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
-		7E788C0B1D3F076A00D539A2 /* ImageSequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageSequence.swift; sourceTree = "<group>"; };
+		7E0342401D2FC5F50050043F /* RedLightPattern.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RedLightPattern.swift; path = View/RedLightPattern.swift; sourceTree = "<group>"; };
+		7E3D8EBF1CC8C353002ABA9B /* LightPatternCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LightPatternCollectionViewCell.swift; path = View/Cells/LightPatternCollectionViewCell.swift; sourceTree = "<group>"; };
+		7E4F55581D3213E70019B66E /* DrawCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DrawCollectionViewCell.swift; path = View/Cells/DrawCollectionViewCell.swift; sourceTree = "<group>"; };
+		7E5F066E1D2F8E7800CE5A62 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageCollectionViewCell.swift; path = View/Cells/ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		7E788C0E1D3F456A00D539A2 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
-		7E788C8C1D3F702F00D539A2 /* ImgSeq.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImgSeq.swift; sourceTree = "<group>"; };
 		7E788C901D3F74A800D539A2 /* SavedImageSequence+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "SavedImageSequence+CoreDataProperties.swift"; path = "../SavedImageSequence+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		7E788C911D3F74A800D539A2 /* SavedImageSequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SavedImageSequence.swift; path = ../SavedImageSequence.swift; sourceTree = "<group>"; };
-		7E806E9B1D32597B0003B679 /* BrightnessView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrightnessView.swift; sourceTree = "<group>"; };
-		7E806E9C1D32597B0003B679 /* SwiftHSVColorPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftHSVColorPicker.swift; sourceTree = "<group>"; };
-		7E806E9D1D32597B0003B679 /* ColorUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorUtils.swift; sourceTree = "<group>"; };
-		7E806E9E1D32597B0003B679 /* ColorWheel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorWheel.swift; sourceTree = "<group>"; };
-		7E806E9F1D32597B0003B679 /* SelectedColorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectedColorView.swift; sourceTree = "<group>"; };
-		7E93B6141D6BDFB40079FF9E /* ysocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ysocket.swift; sourceTree = "<group>"; };
 		7E93B6151D6BDFB40079FF9E /* ytcpsocket.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ytcpsocket.c; sourceTree = "<group>"; };
-		7E93B6161D6BDFB40079FF9E /* ytcpsocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ytcpsocket.swift; sourceTree = "<group>"; };
 		7E93B6171D6BDFB40079FF9E /* yudpsocket.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = yudpsocket.c; sourceTree = "<group>"; };
-		7E93B6181D6BDFB40079FF9E /* yudpsocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = yudpsocket.swift; sourceTree = "<group>"; };
 		7E93B61E1D6BE1030079FF9E /* LightVisTool-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LightVisTool-Bridging-Header.h"; sourceTree = "<group>"; };
-		7EAE0F081D167FDA005C5DFF /* TextCharacter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextCharacter.swift; sourceTree = "<group>"; };
 		7ED00A431CC124BD00AC0A16 /* SketchingInLight.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SketchingInLight.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7ED00A461CC124BD00AC0A16 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7ED00A481CC124BD00AC0A16 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -107,8 +92,19 @@
 		7ED00A621CC124BD00AC0A16 /* SketchingInLightUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SketchingInLightUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7ED00A661CC124BD00AC0A16 /* LightVisToolUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightVisToolUITests.swift; sourceTree = "<group>"; };
 		7ED00A681CC124BD00AC0A16 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		7ED00A741CC2737A00AC0A16 /* PreviewLight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewLight.swift; sourceTree = "<group>"; };
+		7ED00A741CC2737A00AC0A16 /* PreviewLight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PreviewLight.swift; path = View/PreviewLight.swift; sourceTree = "<group>"; };
 		7ED00A761CC3338E00AC0A16 /* UIDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIDevice.swift; sourceTree = "<group>"; };
+		7EE2231F1F3BB5E300955707 /* SwiftHSVColorPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftHSVColorPicker.swift; sourceTree = "<group>"; };
+		7EE223201F3BB5E300955707 /* yudpsocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = yudpsocket.swift; sourceTree = "<group>"; };
+		7EE223211F3BB5E300955707 /* ytcpsocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ytcpsocket.swift; sourceTree = "<group>"; };
+		7EE223221F3BB5E300955707 /* AlphaView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlphaView.swift; sourceTree = "<group>"; };
+		7EE223231F3BB5E300955707 /* BrightnessView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrightnessView.swift; sourceTree = "<group>"; };
+		7EE223241F3BB5E300955707 /* ColorUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorUtils.swift; sourceTree = "<group>"; };
+		7EE223251F3BB5E300955707 /* ColorWheel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorWheel.swift; sourceTree = "<group>"; };
+		7EE223261F3BB5E300955707 /* SelectedColorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectedColorView.swift; sourceTree = "<group>"; };
+		7EE223271F3BB5E300955707 /* ysocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ysocket.swift; sourceTree = "<group>"; };
+		7EE223351F3BC3A100955707 /* ImageSequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageSequence.swift; path = Model/ImageSequence.swift; sourceTree = "<group>"; };
+		7EE223361F3BC3A100955707 /* TextCharacter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextCharacter.swift; path = Model/TextCharacter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,36 +155,18 @@
 		7ED00A451CC124BD00AC0A16 /* SketchingInLight */ = {
 			isa = PBXGroup;
 			children = (
-				7E93B6141D6BDFB40079FF9E /* ysocket.swift */,
-				7E93B6151D6BDFB40079FF9E /* ytcpsocket.c */,
-				7E93B6161D6BDFB40079FF9E /* ytcpsocket.swift */,
-				7E93B6171D6BDFB40079FF9E /* yudpsocket.c */,
-				7E93B6181D6BDFB40079FF9E /* yudpsocket.swift */,
+				7EE223341F3BBFED00955707 /* Model */,
+				7EE223311F3BBAF600955707 /* VIew */,
+				7EE2231E1F3BB4E500955707 /* Helper */,
 				7E788C901D3F74A800D539A2 /* SavedImageSequence+CoreDataProperties.swift */,
 				7E788C911D3F74A800D539A2 /* SavedImageSequence.swift */,
-				7E806E9B1D32597B0003B679 /* BrightnessView.swift */,
-				7E0644111D36359A00772B68 /* AlphaView.swift */,
-				7E806E9C1D32597B0003B679 /* SwiftHSVColorPicker.swift */,
-				7E806E9D1D32597B0003B679 /* ColorUtils.swift */,
-				7E806E9E1D32597B0003B679 /* ColorWheel.swift */,
-				7E806E9F1D32597B0003B679 /* SelectedColorView.swift */,
-				7E4F55581D3213E70019B66E /* DrawCollectionViewCell.swift */,
-				7E3D8EBF1CC8C353002ABA9B /* LightPatternCollectionViewCell.swift */,
-				7E0342401D2FC5F50050043F /* RedLightPattern.swift */,
 				7ED00A461CC124BD00AC0A16 /* AppDelegate.swift */,
 				7E788C0D1D3F456A00D539A2 /* Model.xcdatamodeld */,
 				7ED00A481CC124BD00AC0A16 /* ViewController.swift */,
-				7E5F066E1D2F8E7800CE5A62 /* ImageCollectionViewCell.swift */,
 				7ED00A4A1CC124BD00AC0A16 /* Main.storyboard */,
-				7ED00A761CC3338E00AC0A16 /* UIDevice.swift */,
 				7ED00A4D1CC124BD00AC0A16 /* Assets.xcassets */,
-				7E40DD371CC4CF0D00440435 /* FontAwesome.otf */,
 				7ED00A4F1CC124BD00AC0A16 /* LaunchScreen.storyboard */,
 				7ED00A521CC124BD00AC0A16 /* Info.plist */,
-				7ED00A741CC2737A00AC0A16 /* PreviewLight.swift */,
-				7EAE0F081D167FDA005C5DFF /* TextCharacter.swift */,
-				7E788C0B1D3F076A00D539A2 /* ImageSequence.swift */,
-				7E788C8C1D3F702F00D539A2 /* ImgSeq.swift */,
 				7E93B61E1D6BE1030079FF9E /* LightVisTool-Bridging-Header.h */,
 			);
 			path = SketchingInLight;
@@ -210,6 +188,54 @@
 				7ED00A681CC124BD00AC0A16 /* Info.plist */,
 			);
 			path = SketchingInLightUITests;
+			sourceTree = "<group>";
+		};
+		7EE2231E1F3BB4E500955707 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				7ED00A761CC3338E00AC0A16 /* UIDevice.swift */,
+				7E93B6151D6BDFB40079FF9E /* ytcpsocket.c */,
+				7E93B6171D6BDFB40079FF9E /* yudpsocket.c */,
+				7EE2231F1F3BB5E300955707 /* SwiftHSVColorPicker.swift */,
+				7EE223201F3BB5E300955707 /* yudpsocket.swift */,
+				7EE223211F3BB5E300955707 /* ytcpsocket.swift */,
+				7EE223221F3BB5E300955707 /* AlphaView.swift */,
+				7EE223231F3BB5E300955707 /* BrightnessView.swift */,
+				7EE223241F3BB5E300955707 /* ColorUtils.swift */,
+				7EE223251F3BB5E300955707 /* ColorWheel.swift */,
+				7EE223261F3BB5E300955707 /* SelectedColorView.swift */,
+				7EE223271F3BB5E300955707 /* ysocket.swift */,
+			);
+			path = Helper;
+			sourceTree = "<group>";
+		};
+		7EE223311F3BBAF600955707 /* VIew */ = {
+			isa = PBXGroup;
+			children = (
+				7E0342401D2FC5F50050043F /* RedLightPattern.swift */,
+				7ED00A741CC2737A00AC0A16 /* PreviewLight.swift */,
+				7EE223321F3BBB1900955707 /* Cells */,
+			);
+			name = VIew;
+			sourceTree = "<group>";
+		};
+		7EE223321F3BBB1900955707 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				7E5F066E1D2F8E7800CE5A62 /* ImageCollectionViewCell.swift */,
+				7E4F55581D3213E70019B66E /* DrawCollectionViewCell.swift */,
+				7E3D8EBF1CC8C353002ABA9B /* LightPatternCollectionViewCell.swift */,
+			);
+			name = Cells;
+			sourceTree = "<group>";
+		};
+		7EE223341F3BBFED00955707 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				7EE223351F3BC3A100955707 /* ImageSequence.swift */,
+				7EE223361F3BC3A100955707 /* TextCharacter.swift */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -321,7 +347,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7E40DD381CC4CFBE00440435 /* FontAwesome.otf in Resources */,
 				7ED00A511CC124BD00AC0A16 /* LaunchScreen.storyboard in Resources */,
 				7ED00A4E1CC124BD00AC0A16 /* Assets.xcassets in Resources */,
 				7ED00A4C1CC124BD00AC0A16 /* Main.storyboard in Resources */,
@@ -350,30 +375,29 @@
 			buildActionMask = 2147483647;
 			files = (
 				7E93B61C1D6BDFB40079FF9E /* yudpsocket.c in Sources */,
-				7E93B6191D6BDFB40079FF9E /* ysocket.swift in Sources */,
 				7ED00A491CC124BD00AC0A16 /* ViewController.swift in Sources */,
+				7EE223381F3BC3A100955707 /* TextCharacter.swift in Sources */,
 				7E4F55591D3213E70019B66E /* DrawCollectionViewCell.swift in Sources */,
+				7EE2232B1F3BB5E300955707 /* AlphaView.swift in Sources */,
 				7E0342411D2FC5F50050043F /* RedLightPattern.swift in Sources */,
-				7E806EA41D32597B0003B679 /* SelectedColorView.swift in Sources */,
-				7E806EA21D32597B0003B679 /* ColorUtils.swift in Sources */,
-				7EAE0F091D167FDA005C5DFF /* TextCharacter.swift in Sources */,
+				7EE223281F3BB5E300955707 /* SwiftHSVColorPicker.swift in Sources */,
 				7E5F066F1D2F8E7800CE5A62 /* ImageCollectionViewCell.swift in Sources */,
 				7E788C921D3F74A800D539A2 /* SavedImageSequence+CoreDataProperties.swift in Sources */,
+				7EE223371F3BC3A100955707 /* ImageSequence.swift in Sources */,
 				7E3D8EC01CC8C353002ABA9B /* LightPatternCollectionViewCell.swift in Sources */,
+				7EE2232A1F3BB5E300955707 /* ytcpsocket.swift in Sources */,
 				7E788C0F1D3F456A00D539A2 /* Model.xcdatamodeld in Sources */,
-				7E806EA11D32597B0003B679 /* SwiftHSVColorPicker.swift in Sources */,
 				7ED00A751CC2737A00AC0A16 /* PreviewLight.swift in Sources */,
-				7E93B61B1D6BDFB40079FF9E /* ytcpsocket.swift in Sources */,
-				7E788C0C1D3F076A00D539A2 /* ImageSequence.swift in Sources */,
-				7E806EA31D32597B0003B679 /* ColorWheel.swift in Sources */,
+				7EE2232D1F3BB5E300955707 /* ColorUtils.swift in Sources */,
+				7EE2232F1F3BB5E300955707 /* SelectedColorView.swift in Sources */,
+				7EE223301F3BB5E300955707 /* ysocket.swift in Sources */,
 				7E788C931D3F74A800D539A2 /* SavedImageSequence.swift in Sources */,
-				7E0644121D36359A00772B68 /* AlphaView.swift in Sources */,
 				7ED00A471CC124BD00AC0A16 /* AppDelegate.swift in Sources */,
-				7E788C8D1D3F702F00D539A2 /* ImgSeq.swift in Sources */,
 				7ED00A771CC3338E00AC0A16 /* UIDevice.swift in Sources */,
-				7E93B61D1D6BDFB40079FF9E /* yudpsocket.swift in Sources */,
+				7EE223291F3BB5E300955707 /* yudpsocket.swift in Sources */,
 				7E93B61A1D6BDFB40079FF9E /* ytcpsocket.c in Sources */,
-				7E806EA01D32597B0003B679 /* BrightnessView.swift in Sources */,
+				7EE2232C1F3BB5E300955707 /* BrightnessView.swift in Sources */,
+				7EE2232E1F3BB5E300955707 /* ColorWheel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
