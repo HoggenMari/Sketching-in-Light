@@ -11,14 +11,14 @@ import Darwin
 
 class RedLightPattern: UIView {
 
-    let pixelWidth = 17
-    let pixelHeight = 12
+    var pixelWidth = 17
+    var pixelHeight = 12
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
     var img:UIImage = UIImage()
 
-    var draw_width:CGFloat = 17.0
-    var draw_height:CGFloat = 12.0
+    var draw_width:CGFloat = 34.0
+    var draw_height:CGFloat = 24.0
     var minBrushWidth:CGFloat = 12.0/12.0
 
     var lightSequence = Array<UIImage>()
@@ -75,6 +75,18 @@ class RedLightPattern: UIView {
         
     ]
     
+    init(frame: CGRect, pixelWidth: Int, pixelHeight: Int){
+        
+        self.pixelWidth = pixelWidth
+        self.pixelHeight = pixelHeight
+        super.init(frame: frame)
+        
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
     // Only override drawRect: if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
     override func draw(_ rect: CGRect) {
@@ -92,17 +104,19 @@ class RedLightPattern: UIView {
         
         print(appDelegate.mode)
         
+        img = img.imageWithSize(size: CGSize(width: pixelWidth, height: pixelHeight))
+
         if(appDelegate.mode == 5){
             if(appDelegate.notification){
                 if(appDelegate.counterUp){
-                    img = drawEllipse(0.7)
+                    img = img.drawEllipse(0.7)
                 }else{
-                    img = drawEllipse(0)
+                    img = img.drawEllipse(0)
                 }
             }else if(appDelegate.smooth){
-                img = drawEllipse(appDelegate.counter)
+                img = img.drawEllipse(appDelegate.counter)
             }else{
-                img = drawEllipse(roundToPlaces(appDelegate.counter, places:1))
+                img = img.drawEllipse(roundToPlaces(appDelegate.counter, places:1))
             }
         }else if(appDelegate.mode == 6){
             if(appDelegate.notification){
@@ -186,19 +200,19 @@ class RedLightPattern: UIView {
             if(appDelegate.play || appDelegate.sliderChanged){
                 if(appDelegate.notification){
                     if(appDelegate.counterUp){
-                        img = imageWithImage(drawImageSequence(0), scaledToSize: CGSize(width: 17, height: 12))
+                        img = imageWithImage(drawImageSequence(0), scaledToSize: CGSize(width: pixelWidth, height: pixelHeight))
                     }else{
-                        img = imageWithImage(drawImageSequence(1), scaledToSize: CGSize(width: 17, height: 12))
+                        img = imageWithImage(drawImageSequence(1), scaledToSize: CGSize(width: pixelWidth, height: pixelHeight))
                     }
                 }else{
                     //print(appDelegate.drawFrames)
                     if(appDelegate.imgSeq[appDelegate.seq].drawFrames>1){
-                        img = imageWithImage(drawImageSeqInterpolate(appDelegate.counter), scaledToSize: CGSize(width: 17, height: 12))
+                        img = imageWithImage(drawImageSeqInterpolate(appDelegate.counter), scaledToSize: CGSize(width: pixelWidth, height: pixelHeight))
                     }
                 }
             }else{
-                //img = imageWithImage(appDelegate.img_draw[appDelegate.currentFrame], scaledToSize: CGSize(width: 17, height: 12))
-                img = imageWithImage((appDelegate.imgSeq[appDelegate.seq].img_draw[(appDelegate.imgSeq[appDelegate.seq].currentFrame)]), scaledToSize: CGSize(width: 17, height: 12))
+                //img = imageWithImage(appDelegate.img_draw[appDelegate.currentFrame], scaledToSize: CGSize(width: pixelWidth, height: pixelWidth))
+                img = imageWithImage((appDelegate.imgSeq[appDelegate.seq].img_draw[(appDelegate.imgSeq[appDelegate.seq].currentFrame)]), scaledToSize: CGSize(width: pixelWidth, height: pixelHeight))
 
             }
             
@@ -222,12 +236,12 @@ class RedLightPattern: UIView {
         
         self.backgroundColor = UIColor.black
         
-        
+        let pixelData = img.pixelData()
         
 
         //CGContextSetFillColorWithColor(context, UIColor.grayColor().CGColor)
-        for ix in 0...pixelWidth-1 {
-            for iy in 0...pixelHeight-1 {
+        for iy in 0...pixelHeight-1 {
+            for ix in 0...pixelWidth-1 {
                 if(appDelegate.mode == 0){
                     context?.setFillColor(red: appDelegate.red
                         , green: appDelegate.green, blue: appDelegate.blue, alpha: appDelegate.brigtness)
@@ -295,76 +309,18 @@ class RedLightPattern: UIView {
                         context?.setFillColor(red: appDelegate.red - roundToPlaces(appDelegate.counter, places: 1)
                             , green: appDelegate.green - roundToPlaces(appDelegate.counter, places: 1), blue: appDelegate.blue, alpha: appDelegate.brigtness)
                     }
-                }else if(appDelegate.mode == 5){
-                    let (r, g, b, a) = getPixelColor(img, pos: CGPoint(x: ix,y: iy))
-                    context?.setFillColor(red: appDelegate.red * r, green: appDelegate.green * g, blue: appDelegate.blue * b, alpha: appDelegate.brigtness * a)
+                }else if(appDelegate.mode >= 5){
                     
-                    //NSLog("pixel %d %d", ix, iy)
-                    //NSLog("image %f", img.size.width)
+                    let pixelInfo = ((((pixelHeight-1)-iy)*pixelWidth)+ix)*4
+                    let r = CGFloat(pixelData![pixelInfo]) / CGFloat(255.0)
+                    let g = CGFloat(pixelData![pixelInfo+1]) / CGFloat(255.0)
+                    let b = CGFloat(pixelData![pixelInfo+2]) / CGFloat(255.0)
+                    let a = CGFloat(pixelData![pixelInfo+3]) / CGFloat(255.0)
+                    
+                    context?.setFillColor(red: appDelegate.red * r, green: appDelegate.green * g, blue: appDelegate.blue * b, alpha: appDelegate.brigtness * a)
                 
-                }else if(appDelegate.mode == 6){
-                    let (r, g, b, a) = getPixelColor(img, pos: CGPoint(x: ix,y: 11-iy))
-                    context?.setFillColor(red: appDelegate.red * r, green: appDelegate.green * g, blue: appDelegate.blue * b, alpha: appDelegate.brigtness * a)
-                }else if(appDelegate.mode == 7){
-                    let (r, g, b, a) = getPixelColor(img, pos: CGPoint(x: ix,y: 11-iy))
-                    context?.setFillColor(red: appDelegate.red * r, green: appDelegate.green * g, blue: appDelegate.blue * b, alpha: appDelegate.brigtness * a)
-                }else if(appDelegate.mode == 8){
-                    let (r, g, b, a) = getPixelColor(img, pos: CGPoint(x: ix,y: 11-iy))
-                    context?.setFillColor(red: appDelegate.red * r, green: appDelegate.green * g, blue: appDelegate.blue * b, alpha: appDelegate.brigtness * a)
-                }else if(appDelegate.mode == 9){
-                    let (r, g, b, a) = getPixelColor(img, pos: CGPoint(x: ix,y: 11-iy))
-                    context?.setFillColor(red: appDelegate.red * r, green: appDelegate.green * g, blue: appDelegate.blue * b, alpha: appDelegate.brigtness * a)
-                }else if(appDelegate.mode == 10){
-                    let (r, g, b, a) = getPixelColor(img, pos: CGPoint(x: ix,y: 11-iy))
-                    context?.setFillColor(red: appDelegate.red * r, green: appDelegate.green * g, blue: appDelegate.blue * b, alpha: appDelegate.brigtness * a)
-                }else if(appDelegate.mode == 11){
-                    let (r, g, b, a) = getPixelColor(img, pos: CGPoint(x: ix,y: 11-iy))
-                    context?.setFillColor(red: appDelegate.red * r, green: appDelegate.green * g, blue: appDelegate.blue * b, alpha: appDelegate.brigtness * a)
-                }else if(appDelegate.mode == 12 || appDelegate.mode > 13){
-                    if((appDelegate.play || appDelegate.sliderChanged) && (appDelegate.imgSeq[appDelegate.seq].img_draw.count > 2)){
-                        let (r, g, b, a) = getPixelColor(img, pos: CGPoint(x: ix,y: 11-iy))
-                        context?.setFillColor(red: appDelegate.red * r, green: appDelegate.green * g, blue: appDelegate.blue * b, alpha: appDelegate.brigtness * a)
-                    }else{
-                        let (r, g, b, a) = getPixelColor(img, pos: CGPoint(x: ix,y: iy))
-                        context?.setFillColor(red: appDelegate.red * r, green: appDelegate.green * g, blue: appDelegate.blue * b, alpha: appDelegate.brigtness * a)
-                        
-                        //let intCol = interpolateRGBColorFrom(UIColor.redColor(), end: UIColor.blueColor(), endWithFraction: 0.5)
-                        //let c1 = CGColorGetComponents(intCol.CGColor)
-                        //CGContextSetRGBFillColor(context, c1[0], c1[1], c1[2], c1[3])
-                        
-                    }
-                    /*if(appDelegate.recordCounter != lastRecCounterInc){
-                        lightSequence.append(img)
-                        sequenceCounter++
-                        lastRecCounterInc = appDelegate.recordCounter
-                    }*/
-                }else if(appDelegate.mode == 13){
-                    let (r, g, b, a) = getPixelColor(img, pos: CGPoint(x: ix,y: 11-iy))
-                    context?.setFillColor(red: appDelegate.red * r, green: appDelegate.green * g, blue: appDelegate.blue * b, alpha: appDelegate.brigtness * a)
-                }else if(appDelegate.mode == 14){
-                    let (r, g, b, a) = getPixelColor(img, pos: CGPoint(x: ix,y: 11-iy))
-                    context?.setFillColor(red: appDelegate.red * r, green: appDelegate.green * g, blue: appDelegate.blue * b, alpha: appDelegate.brigtness * a)
-                }/*else{
-                //CGContextSetRGBFillColor(context, appDelegate.red, appDelegate.green, appDelegate.blue, CGFloat(appDelegate.brigtness-CGFloat(1.0/((CGFloat(ix)*appDelegate.counter)))))
-                    CGContextSetRGBFillColor(context, appDelegate.red, appDelegate.green, appDelegate.blue, appDelegate.brigtness)
-                    
-                    if(CGFloat(iy)<6.0 + sqrt(50.0*appDelegate.counter-pow((CGFloat(ix)-8.0),2.0)) && CGFloat(iy)>=6.0){
-                    
-                    CGContextSetRGBFillColor(context, appDelegate.red, appDelegate.green, appDelegate.blue, 0.5)
-                    
-                    
-                    }
-                    
-                    if(CGFloat(iy)>6.0 - sqrt(50.0*appDelegate.counter-pow((CGFloat(ix)-8.0),2.0)) && CGFloat(iy)<=6.0){
-                        
-                        CGContextSetRGBFillColor(context, appDelegate.red, appDelegate.green, appDelegate.blue, 0.5)
-                        
-                        
-                    }
-                    
-                //NSLog("Test %f",(5.0 + sqrt(10.0-pow((CGFloat(ix)-10.0),2.0))))
-                    
-                }*/
+                }
+                
                 if(iy==0){
                     //CGContextSetRGBFillColor(context, 255, 0, 0, 255)
                 }
@@ -374,6 +330,10 @@ class RedLightPattern: UIView {
                 let rectangle = CGRect(x: round(x_pos),y: round(y_pos),width: round(viewSizeWidth/CGFloat(pixelWidth)),height: round(viewSizeHeight/CGFloat(pixelHeight)))
                 
                 context?.addRect(rectangle)
+                
+                if let imgCopy = img.cgImage {
+                    context?.draw(imgCopy, in: CGRect(x: 0,y: 0, width: imgCopy.width, height: imgCopy.height))
+                }
 
                 if((appDelegate.mode==12 || appDelegate.mode > 13) && !appDelegate.play && !appDelegate.sliderChanged){
                     //CGContextSetStrokeColorWithColor(context, UIColor.whiteColor().CGColor)
@@ -387,20 +347,6 @@ class RedLightPattern: UIView {
         }
 
         UIGraphicsEndImageContext()
-
-        //let rectangle = CGRectMake(10,10,170,120)
-        //CGContextDrawImage(context, rectangle,  drawEllipse(roundToPlaces(appDelegate.counter, places:1)).CGImage)
-        
-
-        
-        //let rectangle = CGRectMake(0,0,viewSizeWidth/17,viewSizeheight/12)
-        //CGContextAddRect(context, rectangle)
-        //CGContextStrokePath(context)
-        
-        
-        //var path = UIBezierPath(ovalInRect: rect)
-        //UIColor.greenColor().setFill()
-        //path.fill()
     }
     
     
@@ -437,7 +383,7 @@ class RedLightPattern: UIView {
     func drawProcessing() -> UIImage {
         
         var img:UIImage!
-        UIGraphicsBeginImageContextWithOptions(CGSize(width: 17, height: 12), false, 1)
+        UIGraphicsBeginImageContextWithOptions(CGSize(width: pixelWidth, height: pixelHeight), false, 1)
         let context = UIGraphicsGetCurrentContext()
         
         print(appDelegate.processing.count)
@@ -450,7 +396,7 @@ class RedLightPattern: UIView {
                 let color:UIColor = hexStringToUIColor(appDelegate.processing[counter+1])
                 context?.setLineWidth(0)
                 context?.setFillColor(color.cgColor)
-                //CGContextFillRect(context, CGRect(x: 0, y: 0, width: 17, height: 12))
+                //CGContextFillRect(context, CGRect(x: 0, y: 0, width: 17, height: pixelWidth))
                 //CGContextSetFillColorWithColor(context, UIColor.init(red: 1, green: 0, blue: 0, alpha: 1).CGColor)
                 context?.addRect(rectangle)
                 context?.drawPath(using: .fillStroke)
@@ -469,14 +415,14 @@ class RedLightPattern: UIView {
         var img:UIImage!
         
         if(appDelegate.notification){
-            UIGraphicsBeginImageContextWithOptions(CGSize(width: 17, height: 12), false, 1)
+            UIGraphicsBeginImageContextWithOptions(CGSize(width: pixelWidth, height: pixelHeight), false, 1)
             let context = UIGraphicsGetCurrentContext()
             
             let rectangle = CGRect(x: -1, y: (Int)((value)*11), width: 19, height: 1)
             
             context?.setLineWidth(0)
             context?.setFillColor(UIColor.black.cgColor)
-            context?.fill(CGRect(x: 0, y: 0, width: 17, height: 12))
+            context?.fill(CGRect(x: 0, y: 0, width: pixelWidth, height: pixelHeight))
             context?.setFillColor(UIColor.white.cgColor)
             context?.addRect(rectangle)
             context?.drawPath(using: .fillStroke)
@@ -485,14 +431,14 @@ class RedLightPattern: UIView {
             UIGraphicsEndImageContext()
 
         }else if(!appDelegate.smooth){
-            UIGraphicsBeginImageContextWithOptions(CGSize(width: 17, height: 12), false, 1)
+            UIGraphicsBeginImageContextWithOptions(CGSize(width: pixelWidth, height: pixelHeight), false, 1)
             let context = UIGraphicsGetCurrentContext()
             
             let rectangle = CGRect(x: -1, y: (Int)(0.9+(value)*11), width: 19, height: 1)
             
             context?.setLineWidth(0)
             context?.setFillColor(UIColor.black.cgColor)
-            context?.fill(CGRect(x: 0, y: 0, width: 17, height: 12))
+            context?.fill(CGRect(x: 0, y: 0, width: pixelWidth, height: pixelHeight))
             context?.setFillColor(UIColor.white.cgColor)
             context?.addRect(rectangle)
             context?.drawPath(using: .fillStroke)
@@ -503,7 +449,7 @@ class RedLightPattern: UIView {
             UIGraphicsBeginImageContextWithOptions(CGSize(width: 170, height: 120), false, 1)
             let context = UIGraphicsGetCurrentContext()
         
-            let rectangle = CGRect(x: -10, y: (Int)((value)*110), width: 190, height: 12)
+            let rectangle = CGRect(x: -10, y: (Int)((value)*110), width: 190, height: pixelHeight)
         
             context?.setLineWidth(0)
             context?.setFillColor(UIColor.black.cgColor)
@@ -516,7 +462,7 @@ class RedLightPattern: UIView {
             UIGraphicsEndImageContext()
         
             //return img
-            img = imageWithImage(img, scaledToSize: CGSize(width: 17,height: 12))
+            img = imageWithImage(img, scaledToSize: CGSize(width: pixelWidth,height: pixelHeight))
         }
         return img
     }
@@ -526,7 +472,7 @@ class RedLightPattern: UIView {
         var img:UIImage!
         
         if(appDelegate.notification){
-            UIGraphicsBeginImageContextWithOptions(CGSize(width: 17, height: 12), false, 1)
+            UIGraphicsBeginImageContextWithOptions(CGSize(width: pixelWidth, height: pixelHeight), false, 1)
             let context = UIGraphicsGetCurrentContext()
             
             var rectangle:CGRect!
@@ -538,7 +484,7 @@ class RedLightPattern: UIView {
             
             context?.setLineWidth(0)
             context?.setFillColor(UIColor.black.cgColor)
-            context?.fill(CGRect(x: 0, y: 0, width: 17, height: 12))
+            context?.fill(CGRect(x: 0, y: 0, width: pixelWidth, height: pixelHeight))
             context?.setFillColor(UIColor.white.cgColor)
             context?.addRect(rectangle)
             context?.drawPath(using: .fillStroke)
@@ -547,7 +493,7 @@ class RedLightPattern: UIView {
             UIGraphicsEndImageContext()
             
         }else if(!appDelegate.smooth){
-            UIGraphicsBeginImageContextWithOptions(CGSize(width: 17, height: 12), false, 1)
+            UIGraphicsBeginImageContextWithOptions(CGSize(width: pixelWidth, height: pixelHeight), false, 1)
             let context = UIGraphicsGetCurrentContext()
             
             //let rectangle = CGRect(x: -1, y: (Int)((value)*11), width: 19, height: 1)
@@ -563,7 +509,7 @@ class RedLightPattern: UIView {
             
             context?.setLineWidth(0)
             context?.setFillColor(UIColor.black.cgColor)
-            context?.fill(CGRect(x: 0, y: 0, width: 17, height: 12))
+            context?.fill(CGRect(x: 0, y: 0, width: pixelWidth, height: pixelHeight))
             context?.setFillColor(UIColor.white.cgColor)
             context?.addRect(rectangle)
             context?.drawPath(using: .fillStroke)
@@ -592,14 +538,14 @@ class RedLightPattern: UIView {
             UIGraphicsEndImageContext()
             
             //return img
-            img = imageWithImage(img, scaledToSize: CGSize(width: 17,height: 12))
+            img = imageWithImage(img, scaledToSize: CGSize(width: pixelWidth,height: pixelHeight))
         }
         return img
     }
     
     func drawImageSeqInterpolate(_ value:CGFloat) -> UIImage {
         
-        UIGraphicsBeginImageContextWithOptions(CGSize(width: 17, height: 12), false, 1)
+        UIGraphicsBeginImageContextWithOptions(CGSize(width: pixelWidth, height: pixelHeight), false, 1)
         let context = UIGraphicsGetCurrentContext()
         
         
@@ -608,13 +554,13 @@ class RedLightPattern: UIView {
             context?.setAlpha(1)
             if(value==0){
                 
-                //CGContextDrawImage(context, CGRect(x: 0, y:0, width: 17, height: 12), appDelegate.img_draw[0].CGImage)
-                context?.draw(appDelegate.imgSeq[appDelegate.seq].img_draw[0].cgImage!, in: CGRect(x: 0, y:0, width: 17, height: 12))
+                //CGContextDrawImage(context, CGRect(x: 0, y:0, width: 17, height: pixelWidth), appDelegate.img_draw[0].CGImage)
+                context?.draw(appDelegate.imgSeq[appDelegate.seq].img_draw[0].cgImage!, in: CGRect(x: 0, y:0, width: pixelWidth, height: pixelHeight))
                 
             }else{
                 
-                //CGContextDrawImage(context, CGRect(x: 0, y:0, width: 17, height: 12), appDelegate.img_draw[appDelegate.drawFrames-1].CGImage)
-                context?.draw(appDelegate.imgSeq[appDelegate.seq].img_draw[(appDelegate.imgSeq[appDelegate.seq].drawFrames)-1].cgImage!, in: CGRect(x: 0, y:0, width: 17, height: 12))
+                //CGContextDrawImage(context, CGRect(x: 0, y:0, width: 17, height: pixelWidth), appDelegate.img_draw[appDelegate.drawFrames-1].CGImage)
+                context?.draw(appDelegate.imgSeq[appDelegate.seq].img_draw[(appDelegate.imgSeq[appDelegate.seq].drawFrames)-1].cgImage!, in: CGRect(x: 0, y:0, width: pixelWidth, height: pixelHeight))
 
             }
             
@@ -630,9 +576,9 @@ class RedLightPattern: UIView {
             print("Number")
             print(num)
 
-            //CGContextDrawImage(context, CGRect(x: 0, y:0, width: 17, height: 12), appDelegate.img_draw[num].CGImage)
+            //CGContextDrawImage(context, CGRect(x: 0, y:0, width: 17, height: pixelWidth), appDelegate.img_draw[num].CGImage)
             if(num < appDelegate.imgSeq[appDelegate.seq].img_draw.count){
-                context?.draw(appDelegate.imgSeq[appDelegate.seq].img_draw[num].cgImage!, in: CGRect(x: 0, y:0, width: 17, height: 12))
+                context?.draw(appDelegate.imgSeq[appDelegate.seq].img_draw[num].cgImage!, in: CGRect(x: 0, y:0, width: pixelWidth, height: pixelHeight))
             }
             
             img = UIGraphicsGetImageFromCurrentImageContext()!
@@ -683,8 +629,8 @@ class RedLightPattern: UIView {
                         //let (r1, g1, b1, a1) = getPixelColor(appDelegate.img_draw[num2], pos: CGPoint(x: ix,y: 11-iy))
 
                         if(num2<appDelegate.imgSeq[appDelegate.seq].drawFrames && num2>=0 && num<appDelegate.imgSeq[appDelegate.seq].drawFrames && num>=0){
-                        let (r, g, b, a) = getPixelColor((appDelegate.imgSeq[appDelegate.seq].img_draw[num]), pos: CGPoint(x: ix,y: 11-iy))
-                        let (r1, g1, b1, a1) = getPixelColor((appDelegate.imgSeq[appDelegate.seq].img_draw[num2]), pos: CGPoint(x: ix,y: 11-iy))
+                        let (r, g, b, a) = appDelegate.imgSeq[appDelegate.seq].img_draw[num].getPixelColor(pos: CGPoint(x: ix,y: iy))
+                        let (r1, g1, b1, a1) = appDelegate.imgSeq[appDelegate.seq].img_draw[num2].getPixelColor(pos: CGPoint(x: ix,y: iy))
                                 
     
                             
@@ -722,12 +668,12 @@ class RedLightPattern: UIView {
                     for iy in 0...pixelHeight-1 {
                         
                         //if(num2<appDelegate.drawFrames && num2>=0 && num<appDelegate.drawFrames && num>=0){
-                        //let (r, g, b, a) = getPixelColor(appDelegate.img_draw[num2], pos: CGPoint(x: ix,y: 11-iy))
-                        //let (r1, g1, b1, a1) = getPixelColor(appDelegate.img_draw[num], pos: CGPoint(x: ix,y: 11-iy))
+                        //let (r, g, b, a) = getPixelColor(appDelegate.img_draw[num2], pos: CGPoint(x: ix,y: (pixelHeight-1)-iy))
+                        //let (r1, g1, b1, a1) = getPixelColor(appDelegate.img_draw[num], pos: CGPoint(x: ix,y: (pixelHeight-1)-iy))
                         
                         if(num2<appDelegate.imgSeq[appDelegate.seq].drawFrames && num2>=0 && num<appDelegate.imgSeq[appDelegate.seq].drawFrames && num>=0){
-                            let (r, g, b, a) = getPixelColor((appDelegate.imgSeq[appDelegate.seq].img_draw[num2]), pos: CGPoint(x: ix,y: 11-iy))
-                            let (r1, g1, b1, a1) = getPixelColor((appDelegate.imgSeq[appDelegate.seq].img_draw[num]), pos: CGPoint(x: ix,y: 11-iy))
+                            let (r, g, b, a) = appDelegate.imgSeq[appDelegate.seq].img_draw[num2].getPixelColor(pos: CGPoint(x: ix,y: iy))
+                            let (r1, g1, b1, a1) = appDelegate.imgSeq[appDelegate.seq].img_draw[num].getPixelColor(pos: CGPoint(x: ix,y: iy))
                         
                         let interpol = interpolateRGBColorFrom(UIColor(red: r, green: g, blue: b, alpha: a), end: UIColor(red: r1, green: g1, blue: b1, alpha: a1), endWithFraction: pow(timer,1))
                         
@@ -765,16 +711,16 @@ class RedLightPattern: UIView {
     
     func drawImageSequence(_ value:CGFloat) -> UIImage {
         
-        UIGraphicsBeginImageContextWithOptions(CGSize(width: 17, height: 12), false, 1)
+        UIGraphicsBeginImageContextWithOptions(CGSize(width: pixelWidth, height: pixelHeight), false, 1)
         let context = UIGraphicsGetCurrentContext()
         
         if(appDelegate.notification){
             
             context?.setAlpha(1)
             if(value==0){
-            context?.draw(appDelegate.imgSeq[appDelegate.seq].img_draw[0].cgImage!, in: CGRect(x: 0, y:0, width: 17, height: 12))
+            context?.draw(appDelegate.imgSeq[appDelegate.seq].img_draw[0].cgImage!, in: CGRect(x: 0, y:0, width: pixelWidth, height: pixelHeight))
             }else{
-            context?.draw(appDelegate.imgSeq[appDelegate.seq].img_draw[(appDelegate.imgSeq[appDelegate.seq].drawFrames)-1].cgImage!, in: CGRect(x: 0, y:0, width: 17, height: 12))
+            context?.draw(appDelegate.imgSeq[appDelegate.seq].img_draw[(appDelegate.imgSeq[appDelegate.seq].drawFrames)-1].cgImage!, in: CGRect(x: 0, y:0, width: pixelWidth, height: pixelHeight))
             }
             
             img = UIGraphicsGetImageFromCurrentImageContext()!
@@ -785,7 +731,7 @@ class RedLightPattern: UIView {
            
         let num = Int((value)*CGFloat((appDelegate.imgSeq[appDelegate.seq].drawFrames)))
             
-        context?.draw(appDelegate.imgSeq[appDelegate.seq].img_draw[num].cgImage!, in: CGRect(x: 0, y:0, width: 17, height: 12))
+        context?.draw(appDelegate.imgSeq[appDelegate.seq].img_draw[num].cgImage!, in: CGRect(x: 0, y:0, width: pixelWidth, height: pixelHeight))
             
         img = UIGraphicsGetImageFromCurrentImageContext()!
             UIGraphicsEndImageContext()
@@ -818,22 +764,22 @@ class RedLightPattern: UIView {
         if(appDelegate.counterUp){
             if(num != num2){
                 context?.setAlpha(1-pow((timer-0.25),5))
-                context?.draw(appDelegate.imgSeq[appDelegate.seq].img_draw[num].cgImage!, in: CGRect(x: 0, y:0, width: 17, height: 12))
+                context?.draw(appDelegate.imgSeq[appDelegate.seq].img_draw[num].cgImage!, in: CGRect(x: 0, y:0, width: pixelWidth, height: pixelHeight))
                 context?.setAlpha(pow((timer),2))
-                context?.draw(appDelegate.imgSeq[appDelegate.seq].img_draw[num2].cgImage!, in: CGRect(x: 0, y:0, width: 17, height: 12))
+                context?.draw(appDelegate.imgSeq[appDelegate.seq].img_draw[num2].cgImage!, in: CGRect(x: 0, y:0, width: pixelWidth, height: pixelHeight))
             }else{
                 context?.setAlpha(1)
-                context?.draw(appDelegate.imgSeq[appDelegate.seq].img_draw[num].cgImage!, in: CGRect(x: 0, y:0, width: 17, height: 12))
+                context?.draw(appDelegate.imgSeq[appDelegate.seq].img_draw[num].cgImage!, in: CGRect(x: 0, y:0, width: pixelWidth, height: pixelHeight))
             }
         }else{
             if(num != num2){
                 context?.setAlpha(1-pow(((1-timer)-0.25),5))
-                context?.draw(appDelegate.imgSeq[appDelegate.seq].img_draw[num].cgImage!, in: CGRect(x: 0, y:0, width: 17, height: 12))
+                context?.draw(appDelegate.imgSeq[appDelegate.seq].img_draw[num].cgImage!, in: CGRect(x: 0, y:0, width: pixelWidth, height: pixelHeight))
                 context?.setAlpha(pow((1-timer),2))
-                context?.draw(appDelegate.imgSeq[appDelegate.seq].img_draw[num2].cgImage!, in: CGRect(x: 0, y:0, width: 17, height: 12))
+                context?.draw(appDelegate.imgSeq[appDelegate.seq].img_draw[num2].cgImage!, in: CGRect(x: 0, y:0, width: pixelWidth, height: pixelHeight))
             }else{
                 context?.setAlpha(1)
-                context?.draw(appDelegate.imgSeq[appDelegate.seq].img_draw[num].cgImage!, in: CGRect(x: 0, y:0, width: 17, height: 12))
+                context?.draw(appDelegate.imgSeq[appDelegate.seq].img_draw[num].cgImage!, in: CGRect(x: 0, y:0, width: pixelWidth, height: pixelHeight))
             }
         }
         img = UIGraphicsGetImageFromCurrentImageContext()!
@@ -851,10 +797,10 @@ class RedLightPattern: UIView {
         
         var img:UIImage!
     
-        UIGraphicsBeginImageContextWithOptions(CGSize(width: 17, height: 12), false, 1)
+        UIGraphicsBeginImageContextWithOptions(CGSize(width: pixelWidth, height: pixelHeight), false, 1)
         let context = UIGraphicsGetCurrentContext()
             
-        //let rectangle = CGRect(x: -1, y: (Int)((value)*11), width: 19, height: 1)
+        //let rectangle = CGRect(x: -1, y: (Int)((value)*(pixelHeight-1)), width: 19, height: 1)
         
         
         var i: UIImage
@@ -868,19 +814,19 @@ class RedLightPattern: UIView {
         
         context?.translateBy(x: 0, y: 12);
         context?.scaleBy(x: 1.0, y: -1.0);
-        context?.draw(i.cgImage!, in: CGRect(x: 0, y:0, width: 17, height: 12))
+        context?.draw(i.cgImage!, in: CGRect(x: 0, y:0, width: pixelWidth, height: pixelHeight))
         
         //var rectangle:CGRect!
         //if(appDelegate.counterUp){
-        //    rectangle = CGRect(x: -1, y: 0, width: 19, height: (Int)((value)*12))
+        //    rectangle = CGRect(x: -1, y: 0, width: 19, height: (Int)((value)*pixelWidth))
         //}else{
-        //    rectangle = CGRect(x: -1, y: 0, width: 19, height: (Int)((value)*12))
+        //    rectangle = CGRect(x: -1, y: 0, width: 19, height: (Int)((value)*pixelWidth))
         //}
             
             
         /*CGContextSetLineWidth(context, 0)
         CGContextSetFillColorWithColor(context, UIColor.blackColor().CGColor)
-        CGContextFillRect(context, CGRect(x: 0, y: 0, width: 17, height: 12))
+        CGContextFillRect(context, CGRect(x: 0, y: 0, width: 17, height: pixelWidth))
         CGContextSetFillColorWithColor(context, UIColor.whiteColor().CGColor)
         CGContextAddRect(context, rectangle)
         CGContextDrawPath(context, .FillStroke)*/
@@ -899,7 +845,7 @@ class RedLightPattern: UIView {
         var img:UIImage!
         
         if(appDelegate.notification){
-            UIGraphicsBeginImageContextWithOptions(CGSize(width: 17, height: 12), false, 1)
+            UIGraphicsBeginImageContextWithOptions(CGSize(width: pixelWidth, height: pixelHeight), false, 1)
             let context = UIGraphicsGetCurrentContext()
             
             var rectangle:CGRect!
@@ -911,7 +857,7 @@ class RedLightPattern: UIView {
             
             context?.setLineWidth(0)
             context?.setFillColor(UIColor.black.cgColor)
-            context?.fill(CGRect(x: 0, y: 0, width: 17, height: 12))
+            context?.fill(CGRect(x: 0, y: 0, width: pixelWidth, height: pixelHeight))
             context?.setFillColor(UIColor.white.cgColor)
             context?.addRect(rectangle)
             context?.drawPath(using: .fillStroke)
@@ -920,10 +866,10 @@ class RedLightPattern: UIView {
             UIGraphicsEndImageContext()
             
         }else if(!appDelegate.smooth){
-            UIGraphicsBeginImageContextWithOptions(CGSize(width: 17, height: 12), false, 1)
+            UIGraphicsBeginImageContextWithOptions(CGSize(width: pixelWidth, height: pixelHeight), false, 1)
             let context = UIGraphicsGetCurrentContext()
             
-            //let rectangle = CGRect(x: -1, y: (Int)((value)*11), width: 19, height: 1)
+            //let rectangle = CGRect(x: -1, y: (Int)((value)*(pixelHeight-1)), width: 19, height: 1)
             
             
             var rectangle:CGRect!
@@ -936,7 +882,7 @@ class RedLightPattern: UIView {
             
             context?.setLineWidth(0)
             context?.setFillColor(UIColor.black.cgColor)
-            context?.fill(CGRect(x: 0, y: 0, width: 17, height: 12))
+            context?.fill(CGRect(x: 0, y: 0, width: pixelWidth, height: pixelHeight))
             context?.setFillColor(UIColor.white.cgColor)
             context?.addRect(rectangle)
             context?.drawPath(using: .fillStroke)
@@ -965,7 +911,7 @@ class RedLightPattern: UIView {
             UIGraphicsEndImageContext()
             
             //return img
-            img = imageWithImage(img, scaledToSize: CGSize(width: 17,height: 12))
+            img = imageWithImage(img, scaledToSize: CGSize(width: pixelWidth,height: pixelHeight))
         }
         return img
     }
@@ -982,7 +928,7 @@ class RedLightPattern: UIView {
         var img:UIImage!
         
         if(appDelegate.notification){
-            UIGraphicsBeginImageContextWithOptions(CGSize(width: 17, height: 12), false, 1)
+            UIGraphicsBeginImageContextWithOptions(CGSize(width: pixelWidth, height: pixelHeight), false, 1)
             let context = UIGraphicsGetCurrentContext()
             
             let rectangle = CGRect(x: (Int)(0.5+(value)*16), y: -1, width: 1, height: 14)
@@ -991,7 +937,7 @@ class RedLightPattern: UIView {
             
             context?.setLineWidth(0)
             context?.setFillColor(UIColor.black.cgColor)
-            context?.fill(CGRect(x: 0, y: 0, width: 17, height: 12))
+            context?.fill(CGRect(x: 0, y: 0, width: pixelWidth, height: pixelHeight))
             context?.setFillColor(UIColor.white.cgColor)
             //CGContextAddRect(context, rectangle)
             context?.drawPath(using: .fillStroke)
@@ -1019,7 +965,7 @@ class RedLightPattern: UIView {
             UIGraphicsEndImageContext()
             
         }else if(!appDelegate.smooth){
-            UIGraphicsBeginImageContextWithOptions(CGSize(width: 17, height: 12), false, 1)
+            UIGraphicsBeginImageContextWithOptions(CGSize(width: pixelWidth, height: pixelHeight), false, 1)
             let context = UIGraphicsGetCurrentContext()
             
             let rectangle = CGRect(x: (Int)(0.5+(value)*16), y: -1, width: 1, height: 14)
@@ -1028,7 +974,7 @@ class RedLightPattern: UIView {
             
             context?.setLineWidth(0)
             context?.setFillColor(UIColor.black.cgColor)
-            context?.fill(CGRect(x: 0, y: 0, width: 17, height: 12))
+            context?.fill(CGRect(x: 0, y: 0, width: pixelWidth, height: pixelHeight))
             context?.setFillColor(UIColor.white.cgColor)
             //CGContextAddRect(context, rectangle)
             context?.drawPath(using: .fillStroke)
@@ -1053,7 +999,7 @@ class RedLightPattern: UIView {
             img = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
         }else{
-            UIGraphicsBeginImageContextWithOptions(CGSize(width: 17, height: 12), false, 1)
+            UIGraphicsBeginImageContextWithOptions(CGSize(width: pixelWidth, height: pixelHeight), false, 1)
             let context = UIGraphicsGetCurrentContext()
             
             let rectangle = CGRect(x: (Int)(0.5+(value)*16), y: -1, width: 1, height: 14)
@@ -1062,7 +1008,7 @@ class RedLightPattern: UIView {
             
             context?.setLineWidth(0)
             context?.setFillColor(UIColor.black.cgColor)
-            context?.fill(CGRect(x: 0, y: 0, width: 17, height: 12))
+            context?.fill(CGRect(x: 0, y: 0, width: pixelWidth, height: pixelHeight))
             context?.setFillColor(UIColor.white.cgColor)
             //CGContextAddRect(context, rectangle)
             context?.drawPath(using: .fillStroke)
@@ -1106,14 +1052,14 @@ class RedLightPattern: UIView {
         var img:UIImage!
         
         if(appDelegate.notification){
-            UIGraphicsBeginImageContextWithOptions(CGSize(width: 17, height: 12), false, 1)
+            UIGraphicsBeginImageContextWithOptions(CGSize(width: pixelWidth, height: pixelHeight), false, 1)
             let context = UIGraphicsGetCurrentContext()
             
             let rectangle = CGRect(x: (Int)((value)*16), y: -1, width: 1, height: 14)
             
             context?.setLineWidth(0)
             context?.setFillColor(UIColor.black.cgColor)
-            context?.fill(CGRect(x: 0, y: 0, width: 17, height: 12))
+            context?.fill(CGRect(x: 0, y: 0, width: pixelWidth, height: pixelHeight))
             context?.setFillColor(UIColor.white.cgColor)
             context?.addRect(rectangle)
             context?.drawPath(using: .fillStroke)
@@ -1122,7 +1068,7 @@ class RedLightPattern: UIView {
             UIGraphicsEndImageContext()
             
         }else if(!appDelegate.smooth){
-            UIGraphicsBeginImageContextWithOptions(CGSize(width: 17, height: 12), false, 1)
+            UIGraphicsBeginImageContextWithOptions(CGSize(width: pixelWidth, height: pixelHeight), false, 1)
             let context = UIGraphicsGetCurrentContext()
             
             let rectangle = CGRect(x: (Int)(0.5+(value)*16), y: -1, width: 1, height: 14)
@@ -1130,7 +1076,7 @@ class RedLightPattern: UIView {
 
             context?.setLineWidth(0)
             context?.setFillColor(UIColor.black.cgColor)
-            context?.fill(CGRect(x: 0, y: 0, width: 17, height: 12))
+            context?.fill(CGRect(x: 0, y: 0, width: pixelWidth, height: pixelHeight))
             context?.setFillColor(UIColor.white.cgColor)
             context?.addRect(rectangle)
             context?.drawPath(using: .fillStroke)
@@ -1155,7 +1101,7 @@ class RedLightPattern: UIView {
             UIGraphicsEndImageContext()
             
             //return img
-            img = imageWithImage(img, scaledToSize: CGSize(width: 17,height: 12))
+            img = imageWithImage(img, scaledToSize: CGSize(width: pixelWidth,height: pixelHeight))
         }
         return img
     }
@@ -1180,19 +1126,19 @@ class RedLightPattern: UIView {
         let img = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
-        return imageWithImage(img!, scaledToSize: CGSize(width: 17,height: 12))
+        return imageWithImage(img!, scaledToSize: CGSize(width: pixelWidth,height: pixelHeight))
     }
     
     func drawEllipse(_ value:CGFloat) -> UIImage {
         
-        UIGraphicsBeginImageContextWithOptions(CGSize(width: 170, height: 120), false, 1)
+        UIGraphicsBeginImageContextWithOptions(CGSize(width: 17, height: 12), false, 1)
         let context = UIGraphicsGetCurrentContext()
         
-        let rectangle = CGRect(x: 85-(value+0.05)*85, y: 60-(value+0.05)*85, width: value*170, height: value*170)
+        let rectangle = CGRect(x: 8.5-(value+0.005)*8.5, y: 6.0-(value+0.005)*8.5, width: value*17.0, height: value*17.0)
         
         context?.setLineWidth(0)
         context?.setFillColor(UIColor.black.cgColor)
-        context?.fill(CGRect(x: 0, y: 0, width: 170, height: 120))
+        context?.fill(CGRect(x: 0, y: 0, width: 17.0, height: 12.0))
         context?.setFillColor(UIColor.white.cgColor)
         context?.addEllipse(in: rectangle)
         context?.drawPath(using: .fillStroke)
@@ -1200,7 +1146,7 @@ class RedLightPattern: UIView {
         let img = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
-        return imageWithImage(img!, scaledToSize: CGSize(width: 17,height: 12))
+        return img! //imageWithImage(img!, scaledToSize: CGSize(width: pixelWidth,height: pixelHeight))
     }
 
     func drawImage(_ value:CGFloat) -> UIImage {
@@ -1214,7 +1160,7 @@ class RedLightPattern: UIView {
         let img = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
-        return imageWithImage(img!, scaledToSize: CGSize(width: 17,height: 12))
+        return imageWithImage(img!, scaledToSize: CGSize(width: pixelWidth,height: pixelHeight))
     }
 
 
@@ -1244,9 +1190,9 @@ class RedLightPattern: UIView {
             let currentPoint = touch.location(in: self)
             
             let x1 = lastPoint.x/(self.frame.width/draw_width)
-            let y1 = lastPoint.y/(self.frame.height/draw_height)
+            let y1 = (self.frame.height-lastPoint.y)/(self.frame.height/draw_height)
             let x2 = currentPoint.x/(self.frame.width/draw_width)
-            let y2 = currentPoint.y/(self.frame.height/draw_height)
+            let y2 = (self.frame.height-currentPoint.y)/(self.frame.height/draw_height)
             UIGraphicsBeginImageContextWithOptions(CGSize(width: draw_width, height: draw_height), false, 1)
 
             //appDelegate.img_draw[appDelegate.currentFrame].drawInRect(CGRectMake(0, 0, draw_width, draw_height))
@@ -1286,7 +1232,7 @@ class RedLightPattern: UIView {
         //if(!isSwiping) {
             // This is a single touch, draw a point
             let x1 = lastPoint.x/(self.frame.width/draw_width)
-            let y1 = lastPoint.y/(self.frame.height/draw_height)
+            let y1 = (self.frame.height-lastPoint.y)/(self.frame.height/draw_height)
             UIGraphicsBeginImageContextWithOptions(CGSize(width: draw_width, height: draw_height), false, 1)
             
             //appDelegate.img_draw[appDelegate.currentFrame].drawInRect(CGRectMake(0, 0, draw_width, draw_height))
@@ -1318,40 +1264,7 @@ class RedLightPattern: UIView {
         }
 
     }
-    
-    
-    func getPixelColor(_ img: UIImage, pos: CGPoint) -> (CGFloat, CGFloat, CGFloat, CGFloat) {
-        
-        if(img.cgImage != nil){
-        let pixelData = img.cgImage?.dataProvider?.data
-        let data: UnsafePointer<UInt8> = CFDataGetBytePtr(pixelData)
-        
-        //let pixelInfo: Int = ((Int(img.size.height) * Int(pos.y)) + Int(pos.x)) * 4
 
-        //NSLog("Pixel length: %d", data)
-        
-        let numberOfColorComponents = 4; // R,G,B, and A
-        let x = pos.x;
-        let y = pos.y;
-        let w = 24;
-        let pixelInfo = ((Int(w) * Int(y)) + Int(x)) * numberOfColorComponents;
-        
-        //NSLog("pixelInfo: %d", pixelInfo)
-        
-        let r = CGFloat(data[pixelInfo+2]) / CGFloat(255.0)
-        let g = CGFloat(data[pixelInfo+1]) / CGFloat(255.0)
-        let b = CGFloat(data[pixelInfo]) / CGFloat(255.0)
-        let a = CGFloat(data[pixelInfo+3]) / CGFloat(255.0)
-        
-        //NSLog("Pixel: %f %f %f %f %f", pos.x, pos.y, r, g, b)
-
-        return (r, g, b, a)
-        
-        }else{
-            print("nil")
-            return(0, 0, 0, 0)
-        }
-    }
     
     func roundToPlaces(_ value:CGFloat, places:Int) -> CGFloat {
         let divisor = pow(10.0, Double(places))
@@ -1375,41 +1288,5 @@ class RedLightPattern: UIView {
         return UIColor(red: r, green: g, blue: b, alpha: a) //UIColor (colorLiteralRed: r, green: g, blue: b, alpha: a)
         
     }
-    
-    /*+ (UIColor *)interpolateRGBColorFrom:(UIColor *)start to:(UIColor *)end withFraction:(float)f {
-    
-    f = MAX(0, f);
-    f = MIN(1, f);
-    
-    const CGFloat *c1 = CGColorGetComponents(start.CGColor);
-    const CGFloat *c2 = CGColorGetComponents(end.CGColor);
-    
-    CGFloat r = c1[0] + (c2[0] - c1[0]) * f;
-    CGFloat g = c1[1] + (c2[1] - c1[1]) * f;
-    CGFloat b = c1[2] + (c2[2] - c1[2]) * f;
-    CGFloat a = c1[3] + (c2[3] - c1[3]) * f;
-    
-    return [UIColor colorWithRed:r green:g blue:b alpha:a];
-    }
-    
-    + (UIColor *)interpolateHSVColorFrom:(UIColor *)start to:(UIColor *)end withFraction:(float)f {
-    
-    f = MAX(0, f);
-    f = MIN(1, f);
-    
-    CGFloat h1,s1,v1,a1;
-    [start getHue:&h1 saturation:&s1 brightness:&v1 alpha:&a1];
-    
-    CGFloat h2,s2,v2,a2;
-    [end getHue:&h2 saturation:&s2 brightness:&v2 alpha:&a2];
-    
-    CGFloat h = h1 + (h2 - h1) * f;
-    CGFloat s = s1 + (s2 - s1) * f;
-    CGFloat v = v1 + (v2 - v1) * f;
-    CGFloat a = a1 + (a2 - a1) * f;
-    
-    return [UIColor colorWithHue:h saturation:s brightness:v alpha:a];
-    }*/
-
 
 }

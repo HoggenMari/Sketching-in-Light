@@ -50,9 +50,17 @@ class PreviewLight: UIView {
             
         img = imageWithImage((appDelegate.imgSeq[appDelegate.seq].img_draw[(appDelegate.imgSeq[appDelegate.seq].currentFrame)]), scaledToSize: CGSize(width: 17, height: 12))
     
-        for ix in 0...pixelWidth {
-            for iy in 0...pixelHeight {
-                let (r, g, b, a) = getPixelColor(img, pos: CGPoint(x: ix,y: iy))
+        let pixelData = img.pixelData()
+
+        for iy in 0...pixelHeight-1 {
+            for ix in 0...pixelWidth-1 {
+                
+                let pixelInfo = ((((pixelHeight-1)-iy)*pixelWidth)+ix)*4
+                let r = CGFloat(pixelData![pixelInfo]) / CGFloat(255.0)
+                let g = CGFloat(pixelData![pixelInfo+1]) / CGFloat(255.0)
+                let b = CGFloat(pixelData![pixelInfo+2]) / CGFloat(255.0)
+                let a = CGFloat(pixelData![pixelInfo]) / CGFloat(255.0)
+                
                 context?.setFillColor(red: appDelegate.red * r, green: appDelegate.green * g, blue: appDelegate.blue * b, alpha: appDelegate.brigtness * a)
                 let x_pos : CGFloat = CGFloat(ix)*viewSizeWidth/CGFloat(pixelWidth)
                 let y_pos : CGFloat = CGFloat(iy)*viewSizeHeight/CGFloat(pixelHeight)
@@ -103,9 +111,9 @@ class PreviewLight: UIView {
                 let currentPoint = touch.location(in: self)
                 
                 let x1 = lastPoint.x/(self.frame.width/draw_width)
-                let y1 = lastPoint.y/(self.frame.height/draw_height)
+                let y1 = (self.frame.height-lastPoint.y)/(self.frame.height/draw_height)
                 let x2 = currentPoint.x/(self.frame.width/draw_width)
-                let y2 = currentPoint.y/(self.frame.height/draw_height)
+                let y2 = (self.frame.height-currentPoint.y)/(self.frame.height/draw_height)
                 UIGraphicsBeginImageContextWithOptions(CGSize(width: draw_width, height: draw_height), false, 1)
                 appDelegate.imgSeq[appDelegate.seq].img_draw[(appDelegate.imgSeq[appDelegate.seq].currentFrame)].draw(in: CGRect(x: 0, y: 0, width: draw_width, height: draw_height))
                 //self.imageView.image?.drawInRect(CGRectMake(0, 0, self.imageView.frame.size.width, self.imageView.frame.size.height))
@@ -139,7 +147,7 @@ class PreviewLight: UIView {
             //if(!isSwiping) {
             // This is a single touch, draw a point
             let x1 = lastPoint.x/(self.frame.width/draw_width)
-            let y1 = lastPoint.y/(self.frame.height/draw_height)
+            let y1 = (self.frame.height-lastPoint.y)/(self.frame.height/draw_height)
             UIGraphicsBeginImageContextWithOptions(CGSize(width: draw_width, height: draw_height), false, 1)
             appDelegate.imgSeq[appDelegate.seq].img_draw[(appDelegate.imgSeq[appDelegate.seq].currentFrame)].draw(in: CGRect(x: 0, y: 0, width: draw_width, height: draw_height))
             //CGContextDrawImage(UIGraphicsGetCurrentContext(), CGRect(x: 0, y:0, width: 170, height: 120), img_draw2.CGImage)
@@ -168,33 +176,6 @@ class PreviewLight: UIView {
         let newImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
         return newImage
-    }
-    
-    func getPixelColor(_ img: UIImage, pos: CGPoint) -> (CGFloat, CGFloat, CGFloat, CGFloat) {
-        
-        let pixelData = img.cgImage?.dataProvider?.data
-        let data: UnsafePointer<UInt8> = CFDataGetBytePtr(pixelData)
-        
-        //let pixelInfo: Int = ((Int(img.size.height) * Int(pos.y)) + Int(pos.x)) * 4
-        
-        //NSLog("Pixel length: %d", data)
-        
-        let numberOfColorComponents = 4; // R,G,B, and A
-        let x = pos.x;
-        let y = pos.y;
-        let w = 24;
-        let pixelInfo = ((Int(w) * Int(y)) + Int(x)) * numberOfColorComponents;
-        
-        //NSLog("pixelInfo: %d", pixelInfo)
-        
-        let r = CGFloat(data[pixelInfo+2]) / CGFloat(255.0)
-        let g = CGFloat(data[pixelInfo+1]) / CGFloat(255.0)
-        let b = CGFloat(data[pixelInfo]) / CGFloat(255.0)
-        let a = CGFloat(data[pixelInfo+3]) / CGFloat(255.0)
-        
-        //NSLog("Pixel: %f %f %f %f %f", pos.x, pos.y, r, g, b)
-        
-        return (r, g, b, a)
     }
 
 }

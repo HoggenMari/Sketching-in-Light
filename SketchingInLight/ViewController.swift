@@ -31,9 +31,6 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         UIImage(named: "light_pattern.jpg")!,
         UIImage(named: "image_pattern.jpg")!,
         UIImage(named: "wlan.jpg")!
-
-
-
     ]
 
     @IBOutlet var smooth: UISwitch!
@@ -44,8 +41,10 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     @IBOutlet var stepper: UIStepper!
     
     
-    @IBOutlet var backgroundLight: RedLightPattern!
-    @IBOutlet var previewLight: PreviewLight!
+    //@IBOutlet var backgroundLight: RedLightPattern!
+    var backgroundLight: RedLightPattern!
+    //@IBOutlet var previewLight: PreviewLight!
+    var previewLight: RedLightPattern!
     
     @IBOutlet var heightConstraint: NSLayoutConstraint!
     @IBOutlet var widthConstraint: NSLayoutConstraint!
@@ -112,10 +111,13 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     var speed: CGFloat = 1.0
     
     var maxTextPos:Int = 7
-        
+    
+    fileprivate var lPCollectionView: LightPatternCollectionViewController?
+    
+    //let lPCollectionView = LightPatternCollectionViewController()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         
         DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.background).async(execute: { () -> Void in
             let server:UDPServer=UDPServer(addr:"",port:53282)
@@ -140,6 +142,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         
         NSLog("Model-Name %@", modelName)
         
+        
         if(modelName == "iPad 3"){
             NSLog("GOOOO")
             ipadDiagonal = 9.7
@@ -150,6 +153,13 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             
             backgroundLightSizeWidth = (screenSizeWidth/ipadSizeWidth)*0.85*5.9
             backgroundLightSizeHeight = (screenSizeWidth/ipadSizeWidth)*0.87*4.03
+            
+            backgroundLightSizeWidth = round(backgroundLightSizeWidth/34)*34
+            backgroundLightSizeHeight = round(backgroundLightSizeHeight/24)*24
+            
+            backgroundLight = RedLightPattern(frame:CGRect(x: 0, y: 0, width: backgroundLightSizeWidth, height: backgroundLightSizeHeight), pixelWidth: 34, pixelHeight: 24)
+            self.view.addSubview(backgroundLight)
+            
         }else{
             ipadDiagonal = 12.9
             ipadFormat = 1.3333
@@ -160,8 +170,15 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             backgroundLightSizeWidth = (screenSizeWidth/ipadSizeWidth)*0.95*5.9*1.32989690721649
             backgroundLightSizeHeight = (screenSizeWidth/ipadSizeWidth)*0.98*4.03*1.32989690721649
             
-            backgroundLightSizeWidth = round(backgroundLightSizeWidth/17)*17
-            backgroundLightSizeHeight = round(backgroundLightSizeHeight/12)*12
+            backgroundLightSizeWidth = round(backgroundLightSizeWidth/34)*34
+            backgroundLightSizeHeight = round(backgroundLightSizeHeight/24)*24
+            
+            backgroundLight = RedLightPattern(frame:CGRect(x: 50, y: 50, width: backgroundLightSizeWidth, height: backgroundLightSizeHeight), pixelWidth: 17, pixelHeight: 12)
+            self.view.addSubview(backgroundLight)
+            
+            previewLight = RedLightPattern(frame:CGRect(x: 450, y: 450, width: 170, height: 120), pixelWidth: 17, pixelHeight: 12)
+            self.view.addSubview(previewLight)
+
         }
         
         lightPatternCollectionView.dataSource = self
@@ -200,7 +217,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         appDelegate.play = false
         
         
-        var A:Chard = Chard()
+        //var A:Chard = Chard()
         
         
         lightPatternCollectionView.delegate = self
@@ -243,11 +260,28 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         NotificationCenter.default.addObserver(self, selector: #selector(updateImageSequencePersistent), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
 
         NotificationCenter.default.addObserver(self, selector: #selector(updateImageSequencePersistent), name: NSNotification.Name.UIApplicationWillTerminate, object: nil)
-
-        var client:TCPClient = TCPClient(addr: "www.apple.com", port: 80)
         
         self.textLabel.delegate = self
         
+        //self.addChildViewController(lPCollectionView)
+        
+        //lPCollectionView.view.frame = self.view.frame
+        //self.view.addSubview(lPCollectionView.view)
+        
+        //lPCollectionView.didMove(toParentViewController: self)
+        
+        //lPCollectionView.view.frame = self.view.bounds
+        //lPCollectionView.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        
+        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destination = segue.destination
+        if let controller = destination as? LightPatternCollectionViewController {
+            lPCollectionView = controller
+            controller.delegate = self // as? LightPatternSelectionDelegate
+        }
     }
     
     func reloadCollection(){
@@ -1111,5 +1145,10 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         print(appDelegate.imgSeq.count)
         
     }
-    
+}
+
+extension ViewController: LightPatternSelectionDelegate {
+    func didSelectLightPattern(_ pattern: LightPattern) {
+        print(pattern.name)
+    }
 }

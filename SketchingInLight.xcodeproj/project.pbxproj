@@ -9,13 +9,16 @@
 /* Begin PBXBuildFile section */
 		7E0342411D2FC5F50050043F /* RedLightPattern.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0342401D2FC5F50050043F /* RedLightPattern.swift */; };
 		7E3D8EC01CC8C353002ABA9B /* LightPatternCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3D8EBF1CC8C353002ABA9B /* LightPatternCollectionViewCell.swift */; };
+		7E48A75F1F75BC20002EB71C /* antik-gold.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E48A75E1F75BC20002EB71C /* antik-gold.png */; };
 		7E4F55591D3213E70019B66E /* DrawCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4F55581D3213E70019B66E /* DrawCollectionViewCell.swift */; };
 		7E5F066F1D2F8E7800CE5A62 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5F066E1D2F8E7800CE5A62 /* ImageCollectionViewCell.swift */; };
 		7E788C0F1D3F456A00D539A2 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7E788C0D1D3F456A00D539A2 /* Model.xcdatamodeld */; };
 		7E788C921D3F74A800D539A2 /* SavedImageSequence+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E788C901D3F74A800D539A2 /* SavedImageSequence+CoreDataProperties.swift */; };
 		7E788C931D3F74A800D539A2 /* SavedImageSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E788C911D3F74A800D539A2 /* SavedImageSequence.swift */; };
+		7E7BC2B31FAA2A8A004C9590 /* LightPatternCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E7BC2B21FAA2A8A004C9590 /* LightPatternCollectionViewController.swift */; };
 		7E93B61A1D6BDFB40079FF9E /* ytcpsocket.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E93B6151D6BDFB40079FF9E /* ytcpsocket.c */; };
 		7E93B61C1D6BDFB40079FF9E /* yudpsocket.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E93B6171D6BDFB40079FF9E /* yudpsocket.c */; };
+		7E9FB33C1FA3B5B000D5237B /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9FB33B1FA3B5B000D5237B /* Extensions.swift */; };
 		7ED00A471CC124BD00AC0A16 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED00A461CC124BD00AC0A16 /* AppDelegate.swift */; };
 		7ED00A491CC124BD00AC0A16 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ED00A481CC124BD00AC0A16 /* ViewController.swift */; };
 		7ED00A4C1CC124BD00AC0A16 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7ED00A4A1CC124BD00AC0A16 /* Main.storyboard */; };
@@ -71,14 +74,17 @@
 /* Begin PBXFileReference section */
 		7E0342401D2FC5F50050043F /* RedLightPattern.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RedLightPattern.swift; path = View/RedLightPattern.swift; sourceTree = "<group>"; };
 		7E3D8EBF1CC8C353002ABA9B /* LightPatternCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LightPatternCollectionViewCell.swift; path = View/Cells/LightPatternCollectionViewCell.swift; sourceTree = "<group>"; };
+		7E48A75E1F75BC20002EB71C /* antik-gold.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "antik-gold.png"; sourceTree = "<group>"; };
 		7E4F55581D3213E70019B66E /* DrawCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DrawCollectionViewCell.swift; path = View/Cells/DrawCollectionViewCell.swift; sourceTree = "<group>"; };
 		7E5F066E1D2F8E7800CE5A62 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageCollectionViewCell.swift; path = View/Cells/ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		7E788C0E1D3F456A00D539A2 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		7E788C901D3F74A800D539A2 /* SavedImageSequence+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "SavedImageSequence+CoreDataProperties.swift"; path = "../SavedImageSequence+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		7E788C911D3F74A800D539A2 /* SavedImageSequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SavedImageSequence.swift; path = ../SavedImageSequence.swift; sourceTree = "<group>"; };
+		7E7BC2B21FAA2A8A004C9590 /* LightPatternCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LightPatternCollectionViewController.swift; path = View/LightPatternCollectionViewController.swift; sourceTree = "<group>"; };
 		7E93B6151D6BDFB40079FF9E /* ytcpsocket.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ytcpsocket.c; sourceTree = "<group>"; };
 		7E93B6171D6BDFB40079FF9E /* yudpsocket.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = yudpsocket.c; sourceTree = "<group>"; };
 		7E93B61E1D6BE1030079FF9E /* LightVisTool-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LightVisTool-Bridging-Header.h"; sourceTree = "<group>"; };
+		7E9FB33B1FA3B5B000D5237B /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		7ED00A431CC124BD00AC0A16 /* SketchingInLight.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SketchingInLight.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7ED00A461CC124BD00AC0A16 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7ED00A481CC124BD00AC0A16 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -164,7 +170,9 @@
 				7E788C0D1D3F456A00D539A2 /* Model.xcdatamodeld */,
 				7ED00A481CC124BD00AC0A16 /* ViewController.swift */,
 				7ED00A4A1CC124BD00AC0A16 /* Main.storyboard */,
+				7E7BC2B21FAA2A8A004C9590 /* LightPatternCollectionViewController.swift */,
 				7ED00A4D1CC124BD00AC0A16 /* Assets.xcassets */,
+				7E48A75E1F75BC20002EB71C /* antik-gold.png */,
 				7ED00A4F1CC124BD00AC0A16 /* LaunchScreen.storyboard */,
 				7ED00A521CC124BD00AC0A16 /* Info.plist */,
 				7E93B61E1D6BE1030079FF9E /* LightVisTool-Bridging-Header.h */,
@@ -205,6 +213,7 @@
 				7EE223251F3BB5E300955707 /* ColorWheel.swift */,
 				7EE223261F3BB5E300955707 /* SelectedColorView.swift */,
 				7EE223271F3BB5E300955707 /* ysocket.swift */,
+				7E9FB33B1FA3B5B000D5237B /* Extensions.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -350,6 +359,7 @@
 				7ED00A511CC124BD00AC0A16 /* LaunchScreen.storyboard in Resources */,
 				7ED00A4E1CC124BD00AC0A16 /* Assets.xcassets in Resources */,
 				7ED00A4C1CC124BD00AC0A16 /* Main.storyboard in Resources */,
+				7E48A75F1F75BC20002EB71C /* antik-gold.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -384,6 +394,7 @@
 				7E5F066F1D2F8E7800CE5A62 /* ImageCollectionViewCell.swift in Sources */,
 				7E788C921D3F74A800D539A2 /* SavedImageSequence+CoreDataProperties.swift in Sources */,
 				7EE223371F3BC3A100955707 /* ImageSequence.swift in Sources */,
+				7E7BC2B31FAA2A8A004C9590 /* LightPatternCollectionViewController.swift in Sources */,
 				7E3D8EC01CC8C353002ABA9B /* LightPatternCollectionViewCell.swift in Sources */,
 				7EE2232A1F3BB5E300955707 /* ytcpsocket.swift in Sources */,
 				7E788C0F1D3F456A00D539A2 /* Model.xcdatamodeld in Sources */,
@@ -394,6 +405,7 @@
 				7E788C931D3F74A800D539A2 /* SavedImageSequence.swift in Sources */,
 				7ED00A471CC124BD00AC0A16 /* AppDelegate.swift in Sources */,
 				7ED00A771CC3338E00AC0A16 /* UIDevice.swift in Sources */,
+				7E9FB33C1FA3B5B000D5237B /* Extensions.swift in Sources */,
 				7EE223291F3BB5E300955707 /* yudpsocket.swift in Sources */,
 				7E93B61A1D6BDFB40079FF9E /* ytcpsocket.c in Sources */,
 				7EE2232C1F3BB5E300955707 /* BrightnessView.swift in Sources */,
@@ -552,7 +564,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "SketchingInLight/LightVisTool-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
 		};
@@ -572,7 +584,7 @@
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "SketchingInLight/LightVisTool-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;
 		};
